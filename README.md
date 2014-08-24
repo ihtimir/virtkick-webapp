@@ -33,6 +33,7 @@ gem install bundler
 ```
 bundle install
 bundle exec rails s
+bundle exec guard
 xdg-open http://0.0.0.0:3000/ # open a browser
 ```
 
