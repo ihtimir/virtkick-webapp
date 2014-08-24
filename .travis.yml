@@ -1,0 +1,15 @@
+language: ruby
+cache: bundler
+rvm:
+- 2.1.2
+before_script:
+- bundle exec rake db:migrate
+script:
+- bundle exec rake spec
+notifications:
+  email: false
+  irc:
+    channels:
+    - 'chat.freenode.net#virtkick'
+    template:
+    - '%{result}: %{repository} %{commit} %{commit_message}'
