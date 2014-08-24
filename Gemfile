@@ -22,3 +22,7 @@ group :development, :test do
   gem 'spring'
   gem 'web-console', '~> 2.0.0.beta2'
 end
+
+group :test do
+  gem 'codeclimate-test-reporter'
+end

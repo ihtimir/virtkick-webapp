@@ -13,3 +13,6 @@ notifications:
     - 'chat.freenode.net#virtkick'
     template:
     - '%{result}: %{repository} %{commit} %{commit_message}'
+addons:
+  code_climate:
+    repo_token: oMHZfZLfXcxW/TiXTB0A3CxkNc5MXfsSg4hk86zxLy73QH9EvvAR9+HXmDhcxceA/TCptWZ5qcEZGsCjaVoaEeSXxcCjVSMwu02JTv8Qu6A85vCgWdSxaCCqDM496rQ5x4iPOdmCVYgolgLcIP1zbIyHIMXBv8lQHqSgRAt1pYU=
