@@ -1,0 +1,62 @@
+@import 'bootstrap-customize';
+
+#page-index {
+  $item-total-width: 200px;
+
+  .items {
+    list-style: none;
+    text-align: center;
+
+    padding: 30px 0px 5px;
+    margin: 0;
+    @include grouping;
+
+    ul {
+      padding: 0;
+    }
+
+    li {
+      $item-width: 120px;
+      width: $item-width;
+      display: inline-block;
+
+      margin: 0 5px;
+      @media(min-width: $screen-sm) {
+        margin: 0 20px;
+      }
+      @media(min-width: $screen-lg) {
+        margin: 0 ($item-total-width - $item-width) / 2;
+      }
+
+      padding: 10px 0;
+      background-color: $light;
+      border-radius: 10px;
+
+      span {
+        font-size: 150%;
+      }
+
+      i {
+        color: $brand-primary;
+        margin-right: 10px;
+      }
+
+      .value {
+        background-color: #FAF9F3;
+        font-size: 24px;
+        padding: 5px 0;
+      }
+    }
+  }
+
+  table {
+    margin-top: 50px;
+
+    .name {
+      width: 70%;
+    }
+    .memory, .storage {
+      text-align: right;
+    }
+  }
+}

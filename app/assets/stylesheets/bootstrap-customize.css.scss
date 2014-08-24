@@ -1,0 +1,60 @@
+$bg: #ffffff;
+$dark: #5D2749;
+$medium-dark: #EC4863;
+$medium: #EC4863;
+$medium-light: #FF733E;
+
+$grouping: #F4F2E9;
+$grouping-active: #F7F0F1;
+$light: $grouping;
+
+// Bootstrap overrides, lookup the names at http://getbootstrap.com/customize/
+$text-color: #554F57;
+$brand-primary: $medium-dark;
+$body-bg: $bg;
+$grid-columns: 12;
+$grid-float-breakpoint: 992px;
+$font-family-sans-serif: 'Source Sans Pro', sans-serif;
+$font-size-base: 18px;
+$font-size-h1: 32px;
+$font-size-h2: 26px;
+$font-size-h3: $font-size-base;
+
+$input-border-focus: $medium-dark;
+$table-border-color: #F0DDEB;
+
+$brand-info: $grouping;
+$btn-info-color: $text-color;
+
+$navbar-margin-top: 0;
+$navbar-default-border: #A73E5C;
+$navbar-default-bg: $grouping;
+$navbar-default-color: #9E8697;
+
+$navbar-default-link-color: $navbar-default-color;
+$navbar-default-link-active-bg: $navbar-default-bg;
+$navbar-default-link-active-color: $brand-primary;
+$navbar-default-link-hover-bg: $light;
+$navbar-default-link-hover-color: $medium-dark;
+
+$navbar-padding-vertical: 7px;
+$navbar-height: 68px;
+
+
+$nav-link-hover-bg: $light;
+$nav-tabs-active-link-hover-color: $brand-primary;
+$nav-tabs-border-color: $medium-dark;
+$nav-tabs-active-link-hover-border-color: $nav-tabs-border-color;
+
+label {
+  font-weight: normal !important;
+}
+
+$icon-font-path: '/assets/';
+
+@mixin grouping {
+  background-color: $grouping;
+  border-radius: 4px;
+}
+
+@import 'bootstrap/_variables';

@@ -28,5 +28,6 @@ module VirtkickWebapp
     config.assets.version = '1.0'
     config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
     config.assets.precompile += %w(.svg .eot .woff .ttf)
+    config.stylesheets_dir = '/css'
   end
 end
