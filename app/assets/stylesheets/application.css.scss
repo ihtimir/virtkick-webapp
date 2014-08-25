@@ -101,6 +101,10 @@
     .navbar-collapse {
       border: 0;
     }
+
+    .home {
+      margin-top: 30px;
+    }
   }
 
   .navbar-brand {
@@ -153,6 +157,10 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+h3 {
+  font-size: 20px;
+}
+
 .mobile-newsletter {
   padding-top: 20px;
   padding-bottom: 10px;
@@ -170,6 +178,10 @@ h1, h2, h3, h4, h5, h6 {
 
   a.back {
     margin-top: 20px;
+  }
+
+  h3 {
+    color: $brand-primary;
   }
 }
 

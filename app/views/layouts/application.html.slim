@@ -20,7 +20,7 @@ html
       .row.header
         .menu.col-md-3.hidden-xs.hidden-sm
           a href='/'
-            = image_tag 'virtkick-logo-pixelart-100.png'
+            = image_tag 'logo/virtkick-logo-pixelart-100.png'
 
         .header.col-md-6
           - if @header
@@ -46,7 +46,7 @@ html
                   span.icon-bar
                   span.icon-bar
                 a.navbar-brand href='/'
-                  = image_tag 'virtkick-logo-pixelart-48.png', class: 'pix'
+                  = image_tag 'logo/virtkick-logo-pixelart-48.png', class: 'pix'
                   |  virt
                   span.kick kick
               #navbar-collapsable.collapse.navbar-collapse
@@ -66,16 +66,13 @@ html
                   = navbar_item '/support.html' do
                     span.oi.oi-flag
                     | Support
-                  = navbar_item 'https://www.virtkick.io', class: 'hidden-md hidden-lg' do
+                  = navbar_item 'https://www.virtkick.io', class: 'home' do
                     span.fa.fa-rocket
-                    | Back to VirtKick.io
+                    | VirtKick.io
 
-          .desktop.hidden-xs.hidden-sm.text-center
+          .desktop-newsletter.hidden-xs.hidden-sm.text-center
             = render partial: 'layouts/newsletter'
 
-            a.back href='https://www.virtkick.io/' class='btn btn-primary'
-              | Back to VirtKick.io&nbsp;&nbsp;
-              i.fa.fa-sign-out
 
         .col-md-9
           = yield
