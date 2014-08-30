@@ -40,6 +40,6 @@
         - @machines.each do |machine|
           tr
             td.name
-              a href='/machine.html' = machine.name
+              a href=machine_path(machine.name) = machine.name
             td.memory = number_to_human_size(machine.memory.megabytes)
             td.storage = number_to_human_size(machine.storage.map(&:capacity).inject(0, &:+))

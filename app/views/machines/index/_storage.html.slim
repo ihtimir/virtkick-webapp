@@ -1,0 +1,78 @@
+#page-storage.text-center
+
+  .create
+    a.btn.btn-default.btn-block
+      | Create a new disk
+
+  table.table.table-striped.text-left
+    thead
+      tr
+        th.name Disk name
+        th.type Type
+        th.size Size
+        th.actions
+    tbody
+      - for disk in [['root.qcow2', 'SSD', '20 GB'], ['home.qcow2', 'SSD', '40 GB'], ['backup.qcow2', 'HDD', '100 GB']]
+        tr
+          td.name
+            = disk[0]
+            | &nbsp;&nbsp;
+            a.expand-snapshots.fa.fa-plus-square
+          td.type = disk[1]
+          td.size = disk[2]
+          td.actions
+            a.btn.btn-default Resize
+            a.btn.btn-default Snapshot
+            a.btn.btn-danger Delete
+        tr.snapshot.hidden
+          td.name colspan='3'
+            | Version 4 of 2014-06-19
+          td.actions
+            a.btn.btn-danger Restore
+        tr.snapshot.hidden
+          td.name colspan='3'
+            | Version 3 of 2014-06-15
+          td.actions
+            a.btn.btn-danger Restore
+        tr.snapshot.hidden
+          td.name colspan='3'
+            | Version 2 of 2014-05-02
+          td.actions
+            a.btn.btn-danger Restore
+        tr.snapshot.hidden
+          td.name colspan='3'
+            | Version 1 of 2014-05-23 &nbsp;
+          td.actions
+            a.btn.btn-danger Restore
+      tr.new
+        td.name
+          input.form-control placeholder='disk name'
+          |  .qcow2
+        td.type
+          select.form-control
+            option SSD
+            option HDD
+        td.size
+          select.size.form-control
+            option 20
+            option 50
+            option 100
+            option 250
+          |  GB
+        td.actions
+          a.btn.btn-default Create
+
+
+- content_for :scripts do
+  javascript:
+    $(function() {
+      $('a.expand-snapshots').click(function() {
+        $(this).closest('tr').nextAll('tr.snapshot').slice(0, 4).removeClass('hidden');
+      });
+
+      //$('#page-storage .new').hide();
+
+      $('#page-storage .create').click(function() {
+        $('#page-storage .new').show();
+      });
+    });

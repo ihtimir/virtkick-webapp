@@ -1,0 +1,51 @@
+@import '../../bootstrap-customize';
+
+#page-machine #power {
+  .stats {
+    margin: 0;
+    border: solid 1px $table-border-color;
+    border-radius: 4px;
+    color: $navbar-default-color;
+
+    padding: 30px 20px;
+
+    .key {
+      min-height: 40px;
+    }
+
+    .val {
+      background-color: #FAF9F3;
+      border: solid 1px $table-border-color;
+      border-radius: 4px;
+      padding: 8px 0px;
+      text-align: center;
+      font-weight: bold;
+
+      &.bigger {
+        padding: 17px 0px;
+      }
+
+      &.power-state {
+        background-color: $brand-secondary;
+        color: #ffffff;
+        font-weight: normal;
+
+        i {
+          margin-right: 7px;
+        }
+      }
+    }
+
+    .progress {
+      margin-top: 8px;
+      height: 10px;
+      margin-bottom: 0;
+    }
+  }
+
+  .controls {
+    margin-top: 40px;
+    text-align: center;
+
+  }
+}

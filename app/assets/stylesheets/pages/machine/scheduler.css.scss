@@ -1,0 +1,53 @@
+#page-machine #scheduler {
+  text-align: left;
+
+  p {
+    text-align: center;
+  }
+
+  .create {
+    margin-bottom: 30px;
+  }
+
+  .input-group {
+    .input-group-addon, .glyphicon {
+      line-height: 12px;
+    }
+  }
+
+  select {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  table {
+    width: 100%;
+    margin: 0 auto;
+
+    td, th {
+      vertical-align: middle;
+    }
+
+    th.action {
+      width: 15%;
+    }
+
+    th.cron {
+      width: 35%;
+    }
+
+    td.actions {
+      text-align: right;
+
+      a.btn {
+        display: inline-block;
+        margin-left: 3px;
+        margin-right: 3px;
+      }
+    }
+  }
+}

@@ -18,6 +18,13 @@ namespace :import do
     css = 'app/assets/stylesheets/application.css.scss'
     `cp ~/projekty/ruby/virtkick-prototype/source/css/virtkick.css.scss #{css}`
     replace "@import 'vendor/*';", "@import 'vendor/*.css.scss'; // ignore .less for now", css
+
+    `cp ~/projekty/ruby/virtkick-prototype/source/css/bootstrap-customize.css.scss app/assets/stylesheets`
+    replace "$icon-font-path: '/font/';", "$icon-font-path: '/assets/';", css
+
+    css_dir = '~/projekty/ruby/virtkick-prototype/source/css'
+    `mkdir -p app/assets/stylesheets/pages`
+    `cp -r #{css_dir}/pages app/assets/stylesheets`
   end
 
   def replace what, with, where

@@ -1,4 +1,4 @@
-class MachineController < ApplicationController
+class MachinesController < ApplicationController
   def index
     @machines = Machine.all.sort_by &:name
 
@@ -9,5 +9,10 @@ class MachineController < ApplicationController
       memory: memory > 0 ? memory : 'N/A',
       storage: storage > 0 ? storage : 'N/A',
     }
+  end
+
+  def show
+    @machine = Machine.find params[:id]
+    raise if @machine.nil?
   end
 end

@@ -1,0 +1,63 @@
+@import '../bootstrap-customize';
+@import 'machine/*';
+
+.state-running {
+  color: #20A11A;
+}
+
+#page-machine {
+  .nav {
+    li {
+      background-color: $grouping-bg;
+
+      a {
+        color: $navbar-default-color;
+      }
+
+      a:hover {
+        color: $navbar-default-link-active-color;
+      }
+
+      &.active {
+        a {
+          color: white;
+          border-radius: 0px;
+        }
+      }
+    }
+
+    @media(min-width: $screen-md-min) {
+      border: solid 1px $table-border-color;
+      border-radius: 4px;
+
+      li {
+        & + li {
+          border-left: solid 1px $table-border-color;
+        }
+
+        a {
+          border-radius: 0px;
+        }
+
+        &.active:first-child {
+          a {
+            border-top-left-radius: 3px !important;
+            border-bottom-left-radius: 3px !important;
+          }
+        }
+
+        &.active:last-child {
+          a {
+            border-top-right-radius: 3px !important;
+            border-bottom-right-radius: 3px !important;
+          }
+        }
+      }
+    }
+  }
+
+  .tab-content {
+    margin-top: 25px;
+    text-align: left;
+  }
+}

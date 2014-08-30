@@ -4,13 +4,17 @@ $medium-dark: #EC4863;
 $medium: #EC4863;
 $medium-light: #FF733E;
 
-$grouping: #F4F2E9;
+$highlight-bg: #FAF9F3;
+$grouping-bg: #F4F2E9;
 $grouping-active: #F7F0F1;
-$light: $grouping;
+$grouping-color: #9E8697;
+$light: $grouping-bg;
 
 // Bootstrap overrides, lookup the names at http://getbootstrap.com/customize/
 $text-color: #554F57;
 $brand-primary: $medium-dark;
+$brand-secondary: #8F6E84;
+
 $body-bg: $bg;
 $grid-columns: 12;
 $grid-float-breakpoint: 992px;
@@ -23,13 +27,15 @@ $font-size-h3: $font-size-base;
 $input-border-focus: $medium-dark;
 $table-border-color: #F0DDEB;
 
-$brand-info: $grouping;
+$brand-info: $grouping-bg;
 $btn-info-color: $text-color;
+$btn-default-bg: $grouping-bg;
+$btn-default-color: $brand-secondary;
 
 $navbar-margin-top: 0;
 $navbar-default-border: #A73E5C;
-$navbar-default-bg: $grouping;
-$navbar-default-color: #9E8697;
+$navbar-default-bg: $grouping-bg;
+$navbar-default-color: $grouping-color;
 
 $navbar-default-link-color: $navbar-default-color;
 $navbar-default-link-active-bg: $navbar-default-bg;
@@ -46,14 +52,21 @@ $nav-tabs-active-link-hover-color: $brand-primary;
 $nav-tabs-border-color: $medium-dark;
 $nav-tabs-active-link-hover-border-color: $nav-tabs-border-color;
 
+$progress-bg: $highlight-bg;
+.progress {
+  box-shadow: none !important;
+  border: solid 1px $table-border-color;
+  border-radius: 3px !important;
+}
+
 label {
   font-weight: normal !important;
 }
 
-$icon-font-path: '/assets/';
+$icon-font-path: '/font/';
 
 @mixin grouping {
-  background-color: $grouping;
+  background-color: $grouping-bg;
   border-radius: 4px;
 }
 

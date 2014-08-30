@@ -1,0 +1,61 @@
+#page-machine #storage {
+  text-align: left;
+
+  .create {
+    margin-bottom: 30px;
+  }
+
+  table {
+    margin: 0 auto;
+
+    td, th {
+      vertical-align: middle;
+    }
+
+    th.name {
+      width: 45%;
+    }
+
+    th.type {
+      width: 10%;
+    }
+
+    td.actions {
+      text-align: right;
+
+      a.btn {
+        display: inline-block;
+        margin-left: 3px;
+        margin-right: 3px;
+      }
+    }
+
+    tr.snapshot {
+      td.name {
+        padding-left: 30px;
+      }
+
+      * {
+        font-size: 14px !important;
+      }
+    }
+
+    .form-control {
+      height: 30px;
+    }
+
+    input {
+      display: inline-block;
+      width: 75%;
+    }
+
+    select {
+      display: inline-block;
+      padding: 0;
+
+      &.size {
+        width: 60px;
+      }
+    }
+  }
+}

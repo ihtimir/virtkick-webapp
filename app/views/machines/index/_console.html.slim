@@ -1,0 +1,46 @@
+#page-console.text-center
+  div
+    canvas
+  p
+    | VM stuck? Sometimes this may help. &nbsp;
+    button.ctrlaltdel
+      i.fa-refresh.fa
+      |  Send Ctrl+Alt+Del
+  p
+    | If the VNC console doesn't appear, please upgrade your browser or trying a different one.
+
+  = javascript_include_tag '/js/novnc.js'
+
+- content_for :scripts do
+  javascript:
+    $(function() {
+      $('.console').click(function() {
+        var rfb = new RFB({
+          'target': $('canvas')[0],
+          'repeaterID': '',
+          'encrypt': true,
+          'true_color': true,
+          'local_cursor': true,
+          'shared': true,
+          'updateState': function() {},
+          'view_only': false,
+          'onPasswordRequired': function() {
+            console.log('VNC: Password required');
+          }
+        });
+
+        var host = 'asgard.pacmanvps.com';
+        var port = 6923;
+        var password = null;
+
+        rfb.connect(host, port, password, '');
+
+        $('.ctrlaltdel').click(function() {
+          rfb.sendCtrlAltDel();
+        });
+
+        $('.nav-tabs a').click(function() {
+          rfb.disconnect();
+        });
+      });
+    });

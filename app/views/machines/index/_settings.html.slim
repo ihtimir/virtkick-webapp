@@ -1,0 +1,57 @@
+#page-settings
+  h3 Networks
+
+  label
+    input type='checkbox' checked='checked'
+    |  global network
+  br
+  label
+    input type='checkbox' checked='checked'
+    |  IPv6 for global network
+  br
+  label
+    input type='checkbox'
+    |  private network between your VMs
+
+
+  h3 CD image
+
+  label
+    input type='checkbox' checked='checked'
+    |  mount ISO as CD-ROM &nbsp;
+    select
+      - for distro in ['Arch Linux', 'Ubuntu Server', 'Fedora', 'FreeBSD', 'OpenNebula', 'SmartOS', 'ReactOS']
+        option = distro
+
+  h3 Users
+
+  p These users are able to manage this machine as well:
+
+  ul.users
+    - for user in %w(kwiat Rush m13 johndoe)
+      li
+        a.user
+          i.fa.fa-times
+        = " #{user} (#{user.downcase}@mailinator.com)"
+
+
+
+  h3 Danger Zone
+
+  p
+    button.btn.btn-danger
+      | Transfer ownership
+
+  p
+    button.btn.btn-danger
+      | Delete machine
+
+
+
+- content_for :scripts do
+  javascript:
+    $(function() {
+      $('#page-settings a.user').click(function() {
+        $(this).closest('li').remove();
+      });
+    });

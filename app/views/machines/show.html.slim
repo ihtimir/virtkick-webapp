@@ -1,0 +1,30 @@
+- content_for :header do
+  h1
+    i.oi.oi-monitor
+    = @machine.name
+
+
+#page-machine
+  - tabs = %w(power console stats storage scheduler settings)
+  ul.nav.nav-pills.nav-justified
+    - for tab in tabs
+      li class="#{'active' if tab == 'power'}"
+        a data-toggle='tab' href="##{tab}" class=tab = tab.capitalize
+
+  .tab-content
+    - for page in tabs
+      .tab-pane id=page class="#{'active' if page == 'power'}"
+        = render partial: "machines/index/#{page}"
+
+- content_for :scripts do
+  javascript:
+    $(function() {
+      var hash = window.location.hash.substring(1);
+      if (hash.length > 0) {
+        $('a.' + hash).click();
+      }
+
+      $('.nav-tabs a').click(function() {
+        window.location.hash = $(this).attr('class');
+      });
+    });

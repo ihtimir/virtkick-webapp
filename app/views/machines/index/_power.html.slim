@@ -1,0 +1,71 @@
+#page-power
+  .row.stats
+    .col-sm-3
+      .key Memory:
+      .val.bigger = number_to_human_size(@machine.memory.megabytes)
+    .col-sm-3
+      .key Processors:
+      .val
+        = @machine.vcpu
+        |  CPU
+      .progress
+        .progress-bar role='progressbar' aria-valuenow=@machine.cpu_usage aria-valuemin='0' aria-valuemax='160' style="width: #{@machine.cpu_usage}%"
+          span.sr-only = @machine.cpu_usage
+    .col-sm-3
+      .key Storage:
+      .val = number_to_human_size(@machine.disks.map(&:capacity).inject(0, &:+))
+      .progress
+        - storage_used = 90 # TODO
+        .progress-bar role='progressbar' aria-valuenow=storage_used aria-valuemin='0' aria-valuemax='160' style="width: #{storage_used}%"
+          span.sr-only = storage_used
+    .col-sm-3
+      .key State:
+      .val.power-state.bigger
+        span
+          - case @machine.status
+          - when 5
+            i.fa.fa-stop
+            = @machine.has_managed_save_image == 1 ? 'Saved' : 'Stopped'
+          - when 1
+            i.fa.fa-play
+            | Running
+          - when 3
+            i.fa.fa-pause
+            | Suspended
+          - else
+            i.fa.fa-question
+            | Unknown
+
+  .controls
+    .btn-group
+      a.action.start.btn.btn-default type='button'
+        i.fa.fa-play
+        | &nbsp; Start
+      a.action.pause.only-on.btn.btn-default type='button'
+        i.fa.fa-pause
+        | &nbsp; Pause
+      a.action.resume.only-on.btn.btn-default type='button'
+        i.fa.fa-forward
+        | &nbsp; Resume
+      a.action.stop.only-on.btn.btn-default type='button'
+        i.fa.fa-stop
+        | &nbsp; Stop
+      .btn-group
+        button.only-on.btn.btn-default.dropdown-toggle type='button' data-toggle='dropdown'
+          i.fa.fa-caret-down
+        ul.dropdown-menu
+          li
+            a.stop.only-on.action href='#'
+              span.fa.fa-power-off
+              | &nbsp; Hard stop
+      a.action.restart.only-on.btn.btn-default type='button'
+        i.fa.fa-repeat
+        | &nbsp; Restart
+      .btn-group
+        button.only-on.btn.btn-default.dropdown-toggle type='button' data-toggle='dropdown'
+          i.fa.fa-caret-down
+        ul.dropdown-menu
+          li
+            a.restart.only-on.action href='#'
+              span.fa.fa-power-off
+              | &nbsp; Hard reset
