@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.1.2'
 
-gem 'active_hash', :git => 'git@github.com:Nowaker/active_hash.git', :branch => 'feature/support-first-element' # use gem when merged
+gem 'active_hash', git: 'https://github.com/Nowaker/active_hash.git', branch: 'feature/support-first-element'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootstrap-sass', '~> 3.1'
 gem 'coffee-rails', '~> 4.0.0'
