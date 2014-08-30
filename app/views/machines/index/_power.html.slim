@@ -5,49 +5,46 @@
       .val.bigger = number_to_human_size(@machine.memory.megabytes)
     .col-sm-3
       .key Processors:
-      .val
-        = @machine.vcpu
-        |  CPU
-      .progress
-        .progress-bar role='progressbar' aria-valuenow=@machine.cpu_usage aria-valuemin='0' aria-valuemax='160' style="width: #{@machine.cpu_usage}%"
-          span.sr-only = @machine.cpu_usage
+      - if @machine.status.stopped?
+        .val.bigger
+          = @machine.processors
+          |  CPU
+      - else
+        .val
+          = @machine.processors
+          |  CPU
+        .progress
+          .progress-bar role='progressbar' style="width: #{@machine.processor_usage}%; min-width: 1%"
+            span.sr-only
+              = @machine.processor_usage
+              | % usage
     .col-sm-3
       .key Storage:
-      .val = number_to_human_size(@machine.disks.map(&:capacity).inject(0, &:+))
+      .val = number_to_human_size(@machine.space_available)
       .progress
-        - storage_used = 90 # TODO
-        .progress-bar role='progressbar' aria-valuenow=storage_used aria-valuemin='0' aria-valuemax='160' style="width: #{storage_used}%"
-          span.sr-only = storage_used
+        .progress-bar role='progressbar' style="width: #{@machine.space_usage}%; min-width: 1%"
+          span.sr-only
+            = number_to_human_size(@machine.space_usage)
+            | % used
     .col-sm-3
       .key State:
       .val.power-state.bigger
         span
-          - case @machine.status
-          - when 5
-            i.fa.fa-stop
-            = @machine.has_managed_save_image == 1 ? 'Saved' : 'Stopped'
-          - when 1
-            i.fa.fa-play
-            | Running
-          - when 3
-            i.fa.fa-pause
-            | Suspended
-          - else
-            i.fa.fa-question
-            | Unknown
+          i class=@machine.status.icon
+          = @machine.status.name
 
   .controls
     .btn-group
-      a.action.start.btn.btn-default type='button'
+      a.action.start.btn.btn-default type='button' href=start_machine_path(@machine)
         i.fa.fa-play
         | &nbsp; Start
-      a.action.pause.only-on.btn.btn-default type='button'
+      a.action.pause.only-on.btn.btn-default type='button' href=pause_machine_path(@machine)
         i.fa.fa-pause
         | &nbsp; Pause
-      a.action.resume.only-on.btn.btn-default type='button'
+      a.action.resume.only-on.btn.btn-default type='button' href=resume_machine_path(@machine)
         i.fa.fa-forward
         | &nbsp; Resume
-      a.action.stop.only-on.btn.btn-default type='button'
+      a.action.stop.only-on.btn.btn-default type='button' href=stop_machine_path(@machine)
         i.fa.fa-stop
         | &nbsp; Stop
       .btn-group
@@ -55,10 +52,10 @@
           i.fa.fa-caret-down
         ul.dropdown-menu
           li
-            a.stop.only-on.action href='#'
+            a.stop.only-on.action href=force_stop_machine_path(@machine)
               span.fa.fa-power-off
               | &nbsp; Hard stop
-      a.action.restart.only-on.btn.btn-default type='button'
+      a.action.restart.only-on.btn.btn-default type='button' href=restart_machine_path(@machine)
         i.fa.fa-repeat
         | &nbsp; Restart
       .btn-group
@@ -66,6 +63,6 @@
           i.fa.fa-caret-down
         ul.dropdown-menu
           li
-            a.restart.only-on.action href='#'
+            a.restart.only-on.action href=force_restart_machine_path(@machine)
               span.fa.fa-power-off
               | &nbsp; Hard reset

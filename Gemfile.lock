@@ -1,3 +1,11 @@
+GIT
+  remote: git@github.com:Nowaker/active_hash.git
+  revision: 94d1f151078da7d508aa3fcbf070fa363342e19f
+  branch: feature/support-first-element
+  specs:
+    active_hash (1.3.0)
+      activesupport (>= 2.2.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -28,10 +36,6 @@ GEM
       activemodel (= 4.2.0.beta1)
       activesupport (= 4.2.0.beta1)
       arel (>= 6.0.0.beta1, < 6.1)
-    activeresource (4.0.0)
-      activemodel (~> 4.0)
-      activesupport (~> 4.0)
-      rails-observers (~> 0.1.1)
     activesupport (4.2.0.beta1)
       i18n (>= 0.7.0.beta1, < 0.8)
       json (~> 1.7, >= 1.7.7)
@@ -92,6 +96,9 @@ GEM
       multi_json (~> 1.8)
     hike (1.2.3)
     http_parser.rb (0.6.0)
+    httparty (0.13.1)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.7.0.beta1)
     jbuilder (2.1.3)
       activesupport (>= 3.0.0, < 5)
@@ -114,6 +121,7 @@ GEM
     mini_portile (0.6.0)
     minitest (5.4.0)
     multi_json (1.10.1)
+    multi_xml (0.5.5)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     pry (0.10.1)
@@ -144,8 +152,6 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.0)
       loofah (~> 2.0)
-    rails-observers (0.1.2)
-      activemodel (~> 4.0)
     rails_bootstrap_navbar (2.0.1)
       bootstrap-navbar (~> 2.0)
       rails (>= 3.0.0)
@@ -158,6 +164,7 @@ GEM
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
+    recursive-open-struct (0.5.0)
     rspec-core (3.0.4)
       rspec-support (~> 3.0.0)
     rspec-expectations (3.0.4)
@@ -220,7 +227,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activeresource
+  active_hash!
   bcrypt (~> 3.1.7)
   bootstrap-sass (~> 3.1)
   byebug
@@ -228,6 +235,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   font-awesome-rails
   guard-livereload
+  httparty
   jbuilder (~> 2.0)
   jquery-rails
   rack-livereload
@@ -235,6 +243,7 @@ DEPENDENCIES
   rails-html-sanitizer (~> 1.0)
   rails_bootstrap_navbar
   rb-fsevent
+  recursive-open-struct
   rspec-rails (~> 3.0.0)
   sass-rails (~> 5.0.0.beta1)
   slim
