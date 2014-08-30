@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:Nowaker/active_hash.git
+  remote: https://github.com/Nowaker/active_hash.git
   revision: 94d1f151078da7d508aa3fcbf070fa363342e19f
   branch: feature/support-first-element
   specs:
