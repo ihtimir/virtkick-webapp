@@ -5,6 +5,7 @@ class Machine < NoModel
   attr_accessor :processors, :processor_usage
   attr_accessor :space_available, :space_usage
   attr_accessor :status
+  attr_accessor :vnc_password, :vnc_port
 
   def self.all
     Wvm::Machine.all

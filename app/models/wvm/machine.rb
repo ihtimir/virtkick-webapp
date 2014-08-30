@@ -6,6 +6,31 @@ class Wvm::Machine
   base_uri 'http://0.0.0.0:8000/'
 
 
+  def self.all
+    response = call :get, 'instances'
+
+    machines = response.instances.map do |machine|
+      Machine.new \
+          hostname: machine[:name],
+          memory: machine[:memory],
+          space_available: machine.storage.map(&:capacity).inject(0, &:+)
+    end
+
+    memory = machines.map(&:memory).inject(0, &:+).megabytes
+    storage = machines.map(&:space_available).inject(0, &:+)
+
+    machines.sort_by! &:hostname
+
+    {
+      machines: machines,
+      totals: {
+        machines: machines.size,
+        memory: memory,
+        storage: storage
+      }
+    }
+  end
+
   def self.find id
     response = call :get, "instances/#{id}"
 
@@ -21,7 +46,8 @@ class Wvm::Machine
         processors: response[:vcpu],
         status: status,
         space_available: storage_capacity,
-        space_usage: space_usage
+        space_usage: space_usage,
+        vnc_password: response[:vnc_password]
   end
 
   OPERATIONS = {

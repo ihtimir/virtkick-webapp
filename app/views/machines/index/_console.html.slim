@@ -1,6 +1,6 @@
 #page-console.text-center
   div
-    canvas
+    canvas data-password=@machine.vnc_password data-script=path_to_javascript('novnc.js')
   p
     | VM stuck? Sometimes this may help. &nbsp;
     button.ctrlaltdel
@@ -9,38 +9,45 @@
   p
     | If the VNC console doesn't appear, please upgrade your browser or trying a different one.
 
-  = javascript_include_tag '/js/novnc.js'
-
 - content_for :scripts do
   javascript:
     $(function() {
       $('.console').click(function() {
-        var rfb = new RFB({
-          'target': $('canvas')[0],
-          'repeaterID': '',
-          'encrypt': true,
-          'true_color': true,
-          'local_cursor': true,
-          'shared': true,
-          'updateState': function() {},
-          'view_only': false,
-          'onPasswordRequired': function() {
-            console.log('VNC: Password required');
-          }
-        });
+        var script = $('canvas').attr('data-script');
 
-        var host = 'asgard.pacmanvps.com';
-        var port = 6923;
-        var password = null;
+        $.getScript(script).done(function() {
+          WebUtil.init_logging(WebUtil.getQueryVar('logging', 'debug'));
 
-        rfb.connect(host, port, password, '');
+          var rfb = new RFB({
+            'target': $('canvas')[0],
+            'repeaterID': '',
+            'encrypt': false, // TODO
+            'true_color': true,
+            'local_cursor': true,
+            'shared': true,
+            'updateState': function() {
 
-        $('.ctrlaltdel').click(function() {
-          rfb.sendCtrlAltDel();
-        });
+            },
+            'view_only': false,
+            'onPasswordRequired': function() {
+              console.log('VNC: Password required');
+            }
+          });
 
-        $('.nav-tabs a').click(function() {
-          rfb.disconnect();
+          var host = 'localhost';
+          var port = 6080;
+          var password = $('canvas').attr('data-password');
+          console.log(password);
+
+          rfb.connect(host, port, password, '');
+
+          $('.ctrlaltdel').click(function() {
+            rfb.sendCtrlAltDel();
+          });
+
+          $('.nav-tabs a').click(function() {
+            rfb.disconnect();
+          });
         });
       });
     });

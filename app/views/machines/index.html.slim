@@ -12,24 +12,24 @@
         p
           i.oi.oi-monitor
           | Machines
-        p.value = @machines.size
+        p.value = @totals[:machines]
       li
         p
           i.oi.oi-puzzle-piece
           | Memory
-        p.value = number_to_human_size @sum[:memory]
+        p.value = number_to_human_size @totals[:memory]
       li
         p
           i.fa.fa-database
           | Storage
-        p.value = number_to_human_size @sum[:storage]
+        p.value = number_to_human_size @totals[:storage]
       li
         p
           i.oi.oi-credit-card
           | Monthly
         p.value free
 
-  - if @machines.size > 0
+  - if @totals[:machines] > 0
     table.table.table-striped
       thead
         tr
@@ -40,6 +40,6 @@
         - @machines.each do |machine|
           tr
             td.name
-              a href=machine_path(machine.name) = machine.name
+              a href=machine_path(machine) = machine.hostname
             td.memory = number_to_human_size(machine.memory.megabytes)
-            td.storage = number_to_human_size(machine.storage.map(&:capacity).inject(0, &:+))
+            td.storage = number_to_human_size(machine.space_available)
