@@ -42,6 +42,7 @@ class Wvm::Machine
 
     Machine.new \
         hostname: response[:name],
+        uuid: response[:uuid],
         memory: response[:cur_memory],
         processors: response[:vcpu],
         status: status,

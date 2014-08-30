@@ -1,6 +1,7 @@
 #page-console.text-center
   div
-    canvas data-password=@machine.vnc_password data-script=path_to_javascript('novnc.js')
+    canvas { data-password=@machine.vnc_password data-uuid=@machine.uuid
+      data-script=path_to_javascript('novnc.js') }
   p
     | VM stuck? Sometimes this may help. &nbsp;
     button.ctrlaltdel
@@ -16,17 +17,17 @@
         var script = $('canvas').attr('data-script');
 
         $.getScript(script).done(function() {
-          WebUtil.init_logging(WebUtil.getQueryVar('logging', 'debug'));
+          var $canvas = $('canvas');
 
           var rfb = new RFB({
-            'target': $('canvas')[0],
+            'target': $canvas[0],
             'repeaterID': '',
             'encrypt': false, // TODO
             'true_color': true,
             'local_cursor': true,
             'shared': true,
-            'updateState': function() {
-
+            'updateState': function(rfb, state, oldState, msg) {
+              console.log('VNC: State changed: ' + msg);
             },
             'view_only': false,
             'onPasswordRequired': function() {
@@ -34,12 +35,13 @@
             }
           });
 
-          var host = 'localhost';
+          var host = window.location.hostname;
           var port = 6080;
-          var password = $('canvas').attr('data-password');
-          console.log(password);
+          var password = $canvas.attr('data-password');
+          var uuid = $canvas.attr('data-uuid');
+          document.cookie = 'token=1-' + uuid + '; path=/';
 
-          rfb.connect(host, port, password, '');
+          rfb.connect(host, port, password, uuid);
 
           $('.ctrlaltdel').click(function() {
             rfb.sendCtrlAltDel();

@@ -1,7 +1,7 @@
 require 'active_hash'
 
 class Machine < NoModel
-  attr_accessor :hostname, :memory
+  attr_accessor :hostname, :uuid, :memory
   attr_accessor :processors, :processor_usage
   attr_accessor :space_available, :space_usage
   attr_accessor :status
