@@ -1,0 +1,45 @@
+- @header = 'Machines'
+- @icon = 'monitor'
+
+- content_for :action do
+  a.btn.btn-primary.btn-block href='/new-machine.html'
+    | Create a new machine
+
+#page-index
+  .items
+    ul
+      li
+        p
+          i.oi.oi-monitor
+          | Machines
+        p.value = @machines.size
+      li
+        p
+          i.oi.oi-puzzle-piece
+          | Memory
+        p.value = number_to_human_size @sum[:memory]
+      li
+        p
+          i.fa.fa-database
+          | Storage
+        p.value = number_to_human_size @sum[:storage]
+      li
+        p
+          i.oi.oi-credit-card
+          | Monthly
+        p.value free
+
+  - if @machines.size > 0
+    table.table.table-striped
+      thead
+        tr
+          th.name Name
+          th.memory Memory
+          th.storage Storage
+      tbody
+        - @machines.each do |machine|
+          tr
+            td.name
+              a href='/machine.html' = machine.name
+            td.memory = number_to_human_size(machine.memory.megabytes)
+            td.storage = number_to_human_size(machine.storage.map(&:capacity).inject(0, &:+))
