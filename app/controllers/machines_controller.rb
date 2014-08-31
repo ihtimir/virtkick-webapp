@@ -2,7 +2,7 @@ class MachinesController < ApplicationController
   def index
     machines = Machine.all
     @machines = machines[:machines]
-    @totals= machines[:totals]
+    @totals = machines[:totals]
   end
 
   def show
@@ -13,7 +13,11 @@ class MachinesController < ApplicationController
   %w(start pause resume stop force_stop restart force_restart).each do |operation|
     define_method operation do
       @machine = Machine.find params[:id]
-      @machine.send operation
+      begin
+        @machine.send operation
+      rescue Errors => e
+        flash[:power] = {error: e.errors.dup}
+      end
       redirect_to machine_path(@machine)
     end
   end

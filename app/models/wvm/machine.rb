@@ -73,7 +73,10 @@ class Wvm::Machine
 
   private
   def self.operation operation, id
-    call :post, 'instances', operation => '', name: id
+    errors = call(:post, 'instances', operation => '', name: id).errors
+    if errors.size > 0
+      raise Errors, errors
+    end
   end
 
   def self.call method, url, **body
@@ -101,28 +104,4 @@ class Wvm::Machine
     end
     Machine::Status.find status
   end
-
-  # self.element_name = 'instance'
-  #
-  # def id
-  #   name
-  # end
-  #
-  # def start
-  #   operation :start
-  # end
-  #
-  # def stop
-  #   operation :shutdown
-  # end
-  #
-  #
-  # private
-  # def operation operation_name
-  #   params = {operation_name => '', name: name}.to_param
-  #   connection.post("/1/instances.json", params, {'Content-Type' => 'application/x-www-form-urlencoded'})
-  #   raise
-  # rescue ActiveResource::Redirection
-  #   true
-  # end
 end

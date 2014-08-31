@@ -33,6 +33,8 @@
           i class=@machine.status.icon
           = @machine.status.name
 
+  = render partial: '/flash', locals: {section: 'power'}
+
   .controls
     .btn-group
       a.action.start.btn.btn-default type='button' href=start_machine_path(@machine)
