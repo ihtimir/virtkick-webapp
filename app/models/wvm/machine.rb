@@ -1,26 +1,9 @@
-require 'httparty'
-require 'recursive_open_struct'
-
-class Wvm::Machine
-  include HTTParty
-  base_uri 'http://0.0.0.0:8000/'
-
-
+class Wvm::Machine < Wvm::Base
   def self.all
     response = call :get, 'instances'
     machines = build_all_instances response
 
-    memory = sum_up(machines, &:memory).megabytes
-    storage = sum_up(machines, &:space_available)
-
-    {
-      machines: machines,
-      totals: {
-        machines: machines.size,
-        memory: memory,
-        storage: storage
-      }
-    }
+    Elements.new machines
   end
 
   def self.find id
@@ -28,19 +11,14 @@ class Wvm::Machine
 
     status = determine_status response
 
-    storage_allocated = sum_up response.disks, &:allocation
-    storage_capacity = sum_up response.disks, &:capacity
-    space_usage = storage_allocated / storage_capacity
-
     Machine.new \
         hostname: response[:name],
         uuid: response[:uuid],
         memory: response[:cur_memory],
         processors: response[:vcpu],
         status: status,
-        space_available: storage_capacity,
-        space_usage: space_usage,
-        vnc_password: response[:vnc_password]
+        vnc_password: response[:vnc_password],
+        disks: Wvm::Disk.array_of(response.disks)
   end
 
   OPERATIONS = {
@@ -106,7 +84,7 @@ class Wvm::Machine
       Machine.new \
           hostname: machine[:name],
           memory: machine[:memory],
-          space_available: sum_up(machine.storage, &:capacity)
+          disks: Wvm::Disk.array_of(machine.storage)
     end
     machines.sort_by &:hostname
   end

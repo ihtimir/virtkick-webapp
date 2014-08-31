@@ -20,12 +20,14 @@
               | % usage
     .col-sm-3
       .key Storage:
-      .val = number_to_human_size(@machine.space_available)
+      .val = number_to_human_size(@machine.disks.size)
       .progress
-        .progress-bar role='progressbar' style="width: #{@machine.space_usage}%; min-width: 1%"
+        .progress-bar role='progressbar' style="width: #{@machine.disks.usage}%; min-width: 1%"
           span.sr-only
-            = number_to_human_size(@machine.space_usage)
-            | % used
+            = number_to_human_size @machine.disks.used
+            |  used (
+            = @machine.disks.usage
+            | %)
     .col-sm-3
       .key State:
       .val.power-state.bigger

@@ -12,24 +12,24 @@
         p
           i.oi.oi-monitor
           | Machines
-        p.value = @totals[:machines]
+        p.value = @machines.count
       li
         p
           i.oi.oi-puzzle-piece
           | Memory
-        p.value = number_to_human_size @totals[:memory]
+        p.value = number_to_human_size @machines.sum(&:memory).megabytes
       li
         p
           i.fa.fa-database
           | Storage
-        p.value = number_to_human_size @totals[:storage]
+        p.value = number_to_human_size @machines.deep_sum(:disks, :size)
       li
         p
           i.oi.oi-credit-card
           | Monthly
         p.value free
 
-  - if @totals[:machines] > 0
+  - if @machines.count > 0
     table.table.table-striped
       thead
         tr
@@ -42,4 +42,4 @@
             td.name
               a href=machine_path(machine) = machine.hostname
             td.memory = number_to_human_size(machine.memory.megabytes)
-            td.storage = number_to_human_size(machine.space_available)
+            td.storage = number_to_human_size(machine.disks.sum &:size)

@@ -12,14 +12,15 @@
         th.size Size
         th.actions
     tbody
-      - for disk in [['root.qcow2', 'SSD', '20 GB'], ['home.qcow2', 'SSD', '40 GB'], ['backup.qcow2', 'HDD', '100 GB']]
+      - @machine.disks.each do |disk|
         tr
           td.name
-            = disk[0]
+            = disk.device
             | &nbsp;&nbsp;
             a.expand-snapshots.fa.fa-plus-square
-          td.type = disk[1]
-          td.size = disk[2]
+          td.type = disk.format
+          / TODO: show meaningful pool name e.g. HDD and SSD instead of image type (Qcow2)
+          td.size = number_to_human_size(disk.size)
           td.actions
             a.btn.btn-default Resize
             a.btn.btn-default Snapshot

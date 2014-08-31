@@ -1,8 +1,6 @@
 class MachinesController < ApplicationController
   def index
-    machines = Machine.all
-    @machines = machines[:machines]
-    @totals = machines[:totals]
+    @machines = Machine.all
   end
 
   def show

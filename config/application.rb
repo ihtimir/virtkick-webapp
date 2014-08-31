@@ -13,7 +13,6 @@ module VirtkickWebapp
     config.autoload_paths += %W(
       #{config.root}/app/lib
     )
-    # config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**}')]
 
     config.active_record.raise_in_transactional_callbacks = true
 
