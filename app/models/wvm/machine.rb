@@ -8,18 +8,10 @@ class Wvm::Machine
 
   def self.all
     response = call :get, 'instances'
+    machines = build_all_instances response
 
-    machines = response.instances.map do |machine|
-      Machine.new \
-          hostname: machine[:name],
-          memory: machine[:memory],
-          space_available: machine.storage.map(&:capacity).inject(0, &:+)
-    end
-
-    memory = machines.map(&:memory).inject(0, &:+).megabytes
-    storage = machines.map(&:space_available).inject(0, &:+)
-
-    machines.sort_by! &:hostname
+    memory = sum_up(machines, &:memory).megabytes
+    storage = sum_up(machines, &:space_available)
 
     {
       machines: machines,
@@ -36,8 +28,8 @@ class Wvm::Machine
 
     status = determine_status response
 
-    storage_allocated = response.disks.map(&:allocation).inject(0, &:+)
-    storage_capacity = response.disks.map(&:capacity).inject(0, &:+)
+    storage_allocated = sum_up response.disks, &:allocation
+    storage_capacity = sum_up response.disks, &:capacity
     space_usage = storage_allocated / storage_capacity
 
     Machine.new \
@@ -72,6 +64,10 @@ class Wvm::Machine
   end
 
   private
+  def self.sum_up object, &property
+    object.map(&property).inject(0, &:+)
+  end
+
   def self.operation operation, id
     errors = call(:post, 'instances', operation => '', name: id).errors
     if errors.size > 0
@@ -103,5 +99,15 @@ class Wvm::Machine
         :unknown
     end
     Machine::Status.find status
+  end
+
+  def self.build_all_instances response
+    machines = response.instances.map do |machine|
+      Machine.new \
+          hostname: machine[:name],
+          memory: machine[:memory],
+          space_available: sum_up(machine.storage, &:capacity)
+    end
+    machines.sort_by &:hostname
   end
 end
