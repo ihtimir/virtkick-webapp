@@ -11,4 +11,5 @@ notifications:
   webhooks: http://n.tkte.ch/h/3277/NNXLHHi3FclU9dLZpLNHByMf
 addons:
   code_climate:
-    repo_token: oMHZfZLfXcxW/TiXTB0A3CxkNc5MXfsSg4hk86zxLy73QH9EvvAR9+HXmDhcxceA/TCptWZ5qcEZGsCjaVoaEeSXxcCjVSMwu02JTv8Qu6A85vCgWdSxaCCqDM496rQ5x4iPOdmCVYgolgLcIP1zbIyHIMXBv8lQHqSgRAt1pYU=
+    repo_token:
+      secure: "hy2+DGUSMXdYbOacTk9boofTu93fHqmkNG9zzTJLYiCEF3R9UlWMQWDEz8O1r2RBRyglSDac6NZVNYynyKyjtv7ZivCnrCwU6R/NepW4DITNWzJJ8rEvCWyIIj9ldgiKa+0oYFyz9nxZP/utIlUwTp6KYMCrC7tLu1NPix0kwlA="
