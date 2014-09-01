@@ -7,7 +7,8 @@ class Wvm::Disk < Wvm::Base
           device: disk.dev,
           path: disk.path,
           name: disk.image,
-          format: disk.format
+          format: disk.format,
+          pool: disk.storage
     end
     Disks.new array
   end

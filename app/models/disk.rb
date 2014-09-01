@@ -3,7 +3,7 @@ require 'active_hash'
 class Disk < NoModel
   attr_accessor :path, :name, :format
   attr_accessor :size, :used
-  attr_accessor :device, :storage
+  attr_accessor :device, :pool
 
 
   def self.all

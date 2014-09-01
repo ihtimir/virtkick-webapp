@@ -18,47 +18,21 @@
             = disk.device
             | &nbsp;&nbsp;
             a.expand-snapshots.fa.fa-plus-square
-          td.type = disk.format
-          / TODO: show meaningful pool name e.g. HDD and SSD instead of image type (Qcow2)
-          td.size = number_to_human_size(disk.size)
+          td.type = disk.pool
+          td.size = number_to_human_size disk.size
           td.actions
             a.btn.btn-default Resize
             a.btn.btn-default Snapshot
             a.btn.btn-danger Delete
-        tr.snapshot.hidden
-          td.name colspan='3'
-            | Version 4 of 2014-06-19
-          td.actions
-            a.btn.btn-danger Restore
-        tr.snapshot.hidden
-          td.name colspan='3'
-            | Version 3 of 2014-06-15
-          td.actions
-            a.btn.btn-danger Restore
-        tr.snapshot.hidden
-          td.name colspan='3'
-            | Version 2 of 2014-05-02
-          td.actions
-            a.btn.btn-danger Restore
-        tr.snapshot.hidden
-          td.name colspan='3'
-            | Version 1 of 2014-05-23 &nbsp;
-          td.actions
-            a.btn.btn-danger Restore
       tr.new
         td.name
-          input.form-control placeholder='disk name'
-          |  .qcow2
+          = @machine.disks.next_device_name
         td.type
           select.form-control
             option SSD
             option HDD
         td.size
-          select.size.form-control
-            option 20
-            option 50
-            option 100
-            option 250
+          = collection_select :disk, :size, Defaults::DiskSize.all, :id, :name, {}, class: 'size form-control'
           |  GB
         td.actions
           a.btn.btn-default Create

@@ -7,7 +7,7 @@ class Wvm::Machine < Wvm::Base
   end
 
   def self.find id
-    response = call :get, "instances/#{id}"
+    response = call :get, "instance/#{id}"
 
     status = determine_status response
 
@@ -60,7 +60,7 @@ class Wvm::Machine < Wvm::Base
       params[:body] = body
     end
 
-    response = send method, "/1/#{url}.json", params
+    response = send method, "/1/#{url}", params
 
     RecursiveOpenStruct.new(response.to_hash, recurse_over_arrays: true)
   end

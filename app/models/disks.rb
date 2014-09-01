@@ -10,4 +10,8 @@ class Disks < Elements
   def used
     sum &:used
   end
+
+  def next_device_name
+    NextDeviceName.new.next *map(&:device)
+  end
 end
