@@ -1,6 +1,6 @@
 require 'active_hash'
 
-class Machine < NoModel
+class Machine < Base
   attr_accessor :hostname, :uuid, :memory
   attr_accessor :processors, :processor_usage
   attr_accessor :status
@@ -23,6 +23,11 @@ class Machine < NoModel
     define_method operation do
       Wvm::Machine.send operation, id
     end
+  end
+
+  def create_disk disk
+    Wvm::Disk.create disk, self
+    # TODO: add image to XML
   end
 
 

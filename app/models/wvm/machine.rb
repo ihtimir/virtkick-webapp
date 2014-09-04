@@ -47,22 +47,7 @@ class Wvm::Machine < Wvm::Base
   end
 
   def self.operation operation, id
-    errors = call(:post, 'instances', operation => '', name: id).errors
-    if errors.size > 0
-      raise Errors, errors
-    end
-  end
-
-  def self.call method, url, **body
-    params = {headers: {'Accept' => 'application/json'}}
-    if method == :post
-      params[:headers]['Content-Type'] = 'application/x-www-form-urlencoded'
-      params[:body] = body
-    end
-
-    response = send method, "/1/#{url}", params
-
-    RecursiveOpenStruct.new(response.to_hash, recurse_over_arrays: true)
+    call :post, 'instances', operation => '', name: id
   end
 
   def self.determine_status response

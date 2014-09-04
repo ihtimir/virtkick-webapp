@@ -1,41 +1,42 @@
 #page-storage.text-center
 
+  = render partial: '/flash', locals: {section: 'storage'}
+
   .create
     a.btn.btn-default.btn-block
       | Create a new disk
 
-  table.table.table-striped.text-left
-    thead
-      tr
-        th.name Disk name
-        th.type Type
-        th.size Size
-        th.actions
-    tbody
-      - @machine.disks.each do |disk|
+  = form_for @disk, url: machine_disks_path(@machine) do |f|
+    table.table.table-striped.text-left
+      thead
         tr
+          th.name Disk name
+          th.type Type
+          th.size Size
+          th.actions
+      tbody
+        - @machine.disks.each do |disk|
+          tr
+            td.name
+              = disk.device
+              | &nbsp;&nbsp;
+              a.expand-snapshots.fa.fa-plus-square
+            td.type = disk.type
+            td.size = number_to_human_size disk.size
+            td.actions
+              a.btn.btn-default Resize
+              a.btn.btn-default Snapshot
+              a.btn.btn-danger Delete
+        tr.new
           td.name
-            = disk.device
-            | &nbsp;&nbsp;
-            a.expand-snapshots.fa.fa-plus-square
-          td.type = disk.pool
-          td.size = number_to_human_size disk.size
+            = @machine.disks.next_device_name
+          td.type
+            = collection_select :disk, :type, @disk_types, :id, :name, {}, class: 'type form-control'
+          td.size
+            = collection_select :disk, :size_plan, Defaults::DiskSizePlan.all, :id, :name, {}, class: 'size form-control'
+            | GB
           td.actions
-            a.btn.btn-default Resize
-            a.btn.btn-default Snapshot
-            a.btn.btn-danger Delete
-      tr.new
-        td.name
-          = @machine.disks.next_device_name
-        td.type
-          select.form-control
-            option SSD
-            option HDD
-        td.size
-          = collection_select :disk, :size, Defaults::DiskSize.all, :id, :name, {}, class: 'size form-control'
-          |  GB
-        td.actions
-          a.btn.btn-default Create
+            = f.submit 'Create', class: 'btn btn-default'
 
 
 - content_for :scripts do

@@ -5,7 +5,8 @@ class MachinesController < ApplicationController
 
   def show
     @machine = Machine.find params[:id]
-    raise if @machine.nil?
+    @disk_types = DiskType.all
+    @disk = Disk.new
   end
 
   %w(start pause resume stop force_stop restart force_restart).each do |operation|

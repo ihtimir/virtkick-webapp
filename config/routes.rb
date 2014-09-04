@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       get 'restart'
       get 'force_restart'
     end
-  end
 
+    resources :disks
+  end
 end

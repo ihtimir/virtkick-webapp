@@ -17,7 +17,7 @@ module VirtkickWebapp
     config.active_record.raise_in_transactional_callbacks = true
 
     config.active_support.deprecation = :notify
-    config.log_level = :info
+    config.log_level = :warn
     config.log_formatter = ::Logger::Formatter.new
     config.autoflush_log = true
 

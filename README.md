@@ -40,7 +40,7 @@ xdg-open http://0.0.0.0:3000/ # open a browser
 ## Deployment
 
 There are a variety of ways to run a production Rails website.
-You can gor for Passenger, Thin or just WEBrick ([yes](http://stackoverflow.com/a/20941090/504845)).
+You can go for Passenger, Thin or just WEBrick ([yes](http://stackoverflow.com/a/20941090/504845)).
 
 
 ## Contributing

@@ -13,11 +13,11 @@
     }
 
     th.name {
-      width: 45%;
+      width: 35%;
     }
 
     th.type {
-      width: 10%;
+      width: 15%;
     }
 
     td.actions {
@@ -53,8 +53,13 @@
       display: inline-block;
       padding: 0;
 
+      &.type {
+        width: 100%;
+      }
+
       &.size {
         width: 60px;
+        margin-right: 8px;
       }
     }
   }
