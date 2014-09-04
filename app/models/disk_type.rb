@@ -2,6 +2,7 @@ require 'active_hash'
 
 class DiskType < Base
   attr_accessor :id, :name
+  attr_accessor :path # extract to FileDiskType
   attr_accessor :enabled
 
   def self.all

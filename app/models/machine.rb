@@ -26,8 +26,7 @@ class Machine < Base
   end
 
   def create_disk disk
-    Wvm::Disk.create disk, self
-    # TODO: add image to XML
+    Wvm::Machine.add_disk disk, self
   end
 
 

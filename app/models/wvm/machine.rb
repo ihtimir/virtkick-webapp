@@ -41,6 +41,14 @@ class Wvm::Machine < Wvm::Base
     operation :start, id
   end
 
+  def self.add_disk disk, machine
+    disk.device = machine.disks.next_device_name
+    Wvm::Disk.create disk, machine.uuid
+
+    call :post, "instance/#{machine.id}", assign_volume: '',
+        file: disk.path, device: disk.device
+  end
+
   private
   def self.sum_up object, &property
     object.map(&property).inject(0, &:+)

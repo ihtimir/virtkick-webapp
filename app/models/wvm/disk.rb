@@ -13,18 +13,22 @@ class Wvm::Disk < Wvm::Base
     Disks.new array
   end
 
-  def self.create disk, machine
-    raise unless disk.type =~ /\A[a-z]+\Z/
+  def self.create disk, uuid
+    raise unless disk.type =~ /\A[a-zA-Z]+\Z/
 
-    device = machine.disks.next_device_name
-    name = machine.uuid + '_' + device # TODO: introduce subdirectory per VM
-
+    add_missing_fields disk, uuid
 
     gigabytes = disk.size / 1.gigabytes
-    format = disk.format || 'qcow2'
-    meta_prealloc = format == 'qcow2'
+    meta_prealloc = disk.format == 'qcow2'
 
     call :post, "storage/#{disk.type}", add_volume: '',
-        name: name, size: gigabytes, format: format, meta_prealloc: meta_prealloc
+        name: disk.name, size: gigabytes, format: disk.format, meta_prealloc: meta_prealloc
+  end
+
+  def self.add_missing_fields disk, uuid
+    disk.format ||= 'qcow2'
+    disk.name = uuid + '_' + disk.device + '.' + disk.format # TODO: introduce subdirectory per VM
+    pool = Wvm::StoragePool.find disk.type
+    disk.path = pool.path + '/' + disk.name
   end
 end
