@@ -1,5 +1,6 @@
 class Disks < Elements
   def usage
+    return nil if size.zero?
     used / size
   end
 
@@ -17,5 +18,9 @@ class Disks < Elements
 
   def find disk_id
     detect { |disk| disk.device == disk_id }
+  end
+
+  def sum &prop
+    map(&prop).compact.sum
   end
 end

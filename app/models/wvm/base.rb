@@ -19,7 +19,7 @@ class Wvm::Base
     response = send method, "/1/#{url}", params
 
     errors = response['errors']
-    if errors.size > 0
+    if errors and errors.size > 0
       raise Errors, errors
     end
 

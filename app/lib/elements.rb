@@ -7,8 +7,10 @@ class Elements < Array
     obj = self
     while property = properties.shift
       proc = property.to_proc
-      obj = obj.map(&proc).flatten
+      obj = obj.map(&proc).flatten.compact
     end
-    obj.sum
+
+    puts obj.sum
+    obj ? obj.sum : 0
   end
 end
