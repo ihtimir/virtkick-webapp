@@ -29,6 +29,10 @@ class Machine < Base
     Wvm::Machine.add_disk disk, self
   end
 
+  def delete_disk disk
+    Wvm::Machine.delete_disk disk, self
+  end
+
 
   class Status < ActiveHash::Base
     # TODO: https://github.com/pluginaweek/state_machine

@@ -25,6 +25,11 @@ class Wvm::Disk < Wvm::Base
         name: disk.name, size: gigabytes, format: disk.format, meta_prealloc: meta_prealloc
   end
 
+  def self.delete disk
+    call :post, "storage/#{disk.type}", del_volume: '',
+        volname: disk.name
+  end
+
   def self.add_missing_fields disk, uuid
     disk.format ||= 'qcow2'
     disk.name = uuid + '_' + disk.device + '.' + disk.format # TODO: introduce subdirectory per VM

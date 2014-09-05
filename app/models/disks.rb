@@ -14,4 +14,8 @@ class Disks < Elements
   def next_device_name
     NextDeviceName.new.next *map(&:device)
   end
+
+  def find disk_id
+    detect { |disk| disk.device == disk_id }
+  end
 end

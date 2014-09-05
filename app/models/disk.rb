@@ -10,16 +10,8 @@ class Disk < Base
   define_attribute_methods :size_plan
 
 
-  def self.all
-    Wvm::Machine.all
-  end
-
-  def self.find id
-    Wvm::Machine.find id
-  end
-
   def id
-    name
+    device
   end
 
   def save
@@ -35,7 +27,7 @@ class Disk < Base
 
   %w(snapshot delete).each do |operation|
     define_method operation do
-      # Wvm::Disk.send operation, id
+      Wvm::Disk.send operation, id
       raise
     end
   end

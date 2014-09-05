@@ -26,7 +26,7 @@
             td.actions
               a.btn.btn-default Resize
               a.btn.btn-default Snapshot
-              a.btn.btn-danger Delete
+              = link_to 'Delete', machine_disk_path(@machine, disk), method: 'delete', class: 'btn btn-danger'
         tr.new
           td.name
             = @machine.disks.next_device_name

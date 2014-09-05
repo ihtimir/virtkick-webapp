@@ -12,6 +12,11 @@ Rails.application.routes.draw do
       get 'force_restart'
     end
 
-    resources :disks
+    resources :disks do
+      member do
+        post 'resize'
+        post 'snapshot'
+      end
+    end
   end
 end
