@@ -6,6 +6,8 @@
     a.btn.btn-default.btn-block
       | Create a new disk
 
+  / TODO: snapshot all images (the only revertable way for snapshots in libvirt)
+
   = form_for @disk, url: machine_disks_path(@machine) do |f|
     table.table.table-striped.text-left
       thead
@@ -16,6 +18,8 @@
           th.actions
       tbody
         - @machine.disks.each do |disk|
+          / TODO: Handle case when disk was detached and deleted, but virtio wasn't present in VM (e.g. boot loader screen).
+          / Such a disk should be grayed out. The tooltip should say "This disk will disappear after you stop your VM".
           tr
             td.name
               = disk.device
@@ -24,9 +28,9 @@
             td.type = disk.type
             td.size = number_to_human_size disk.size
             td.actions
-              a.btn.btn-default Resize
-              a.btn.btn-default Snapshot
-              = link_to 'Delete', machine_disk_path(@machine, disk), method: 'delete', class: 'btn btn-danger'
+              / TODO: resize. (virStorageVol.resize)
+              = link_to 'Delete', machine_disk_path(@machine, disk),
+                    method: 'delete', class: 'btn btn-danger'
         tr.new
           td.name
             = @machine.disks.next_device_name

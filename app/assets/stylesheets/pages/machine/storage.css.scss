@@ -12,16 +12,21 @@
       vertical-align: middle;
     }
 
-    th.name {
-      width: 35%;
+    td.name {
     }
 
-    th.type {
+    td.type {
       width: 15%;
+    }
+
+    td.size {
+      width: 20%;
     }
 
     td.actions {
       text-align: right;
+      width: 1px !important;
+      white-space: nowrap;
 
       a.btn {
         display: inline-block;
@@ -30,23 +35,13 @@
       }
     }
 
-    tr.snapshot {
-      td.name {
-        padding-left: 30px;
-      }
-
-      * {
-        font-size: 14px !important;
-      }
-    }
-
     .form-control {
       height: 30px;
     }
 
     input {
-      display: inline-block;
-      width: 75%;
+      margin-left: 3px;
+      margin-right: 3px;
     }
 
     select {

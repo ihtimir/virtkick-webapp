@@ -10,7 +10,6 @@ class Elements < Array
       obj = obj.map(&proc).flatten.compact
     end
 
-    puts obj.sum
     obj ? obj.sum : 0
   end
 end

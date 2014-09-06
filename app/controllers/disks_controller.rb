@@ -13,19 +13,17 @@ class DisksController < ApplicationController
   end
 
   def create
-    disk = params.require(:disk).permit(:size_plan, :type)
-    @disk = Disk.new disk
-    @machine.create_disk @disk
-  rescue Errors => e
-    flash[:storage] = {error: e.errors.dup}
-  ensure
-    index
+    handle_errors :storage, :index do
+      disk = params.require(:disk).permit(:size_plan, :type)
+      @disk = Disk.new disk
+      @machine.create_disk @disk
+    end
   end
 
   def destroy
-    disk = @machine.disks.find params[:id]
-    @machine.delete_disk disk
-  ensure
-    index
+    handle_errors :storage, :index do
+      disk = @machine.disks.find params[:id]
+      @machine.delete_disk disk
+    end
   end
 end

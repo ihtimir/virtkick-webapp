@@ -1,5 +1,6 @@
 class Wvm::Disk < Wvm::Base
   def self.array_of disks
+    disks ||= []
     array = disks.map do |disk|
       ::Disk.new \
           used: disk.allocation,
