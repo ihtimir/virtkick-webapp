@@ -33,6 +33,10 @@ class Machine < Base
     Wvm::Machine.delete_disk disk, self
   end
 
+  def snapshot_disk disk
+    Wvm::Machine.snapshot_disk disk, self
+  end
+
 
   class Status < ActiveHash::Base
     # TODO: https://github.com/pluginaweek/state_machine

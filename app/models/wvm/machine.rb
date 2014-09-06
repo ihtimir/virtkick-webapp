@@ -56,6 +56,19 @@ class Wvm::Machine < Wvm::Base
     Wvm::Disk.delete disk
   end
 
+  def self.snapshot_disks machine
+    call :post, "instance/#{machine.id}", internal_storage_snapshot: ''
+    # libvirt can't perform single-disk snapshots: https://bugzilla.redhat.com/show_bug.cgi?id=1044691#c9
+  end
+
+  def self.backup_disk disk, machine
+    call :post, "instance/#{machine.id}", external_storage_snapshot: '',
+        device: disk.device
+    # libvirt doesn't handle reverting from external snapshots: https://bugzilla.redhat.com/show_bug.cgi?id=1044691#c9
+    # External snapshots can be used for backups only - perform the snapshot, copy the file, then merge it back.
+  end
+
+
   private
   def self.sum_up object, &property
     object.map(&property).inject(0, &:+)

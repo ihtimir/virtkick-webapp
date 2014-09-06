@@ -26,4 +26,11 @@ class DisksController < ApplicationController
       @machine.delete_disk disk
     end
   end
+
+  def snapshot
+    handle_errors :storage, :index do
+      disk = @machine.disks.find params[:id]
+      @machine.snapshot_disk disk
+    end
+  end
 end
