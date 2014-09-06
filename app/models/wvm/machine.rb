@@ -84,7 +84,8 @@ class Wvm::Machine < Wvm::Base
       Machine.new \
           hostname: machine[:name],
           memory: machine[:memory],
-          disks: Wvm::Disk.array_of(machine.storage)
+          disks: Wvm::Disk.array_of(machine.storage),
+          status: determine_status(machine)
     end
     machines.sort_by &:hostname
   end

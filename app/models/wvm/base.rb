@@ -23,6 +23,7 @@ class Wvm::Base
       raise Errors, errors
     end
 
-    RecursiveOpenStruct.new(response['response'].to_hash, recurse_over_arrays: true)
+    response = response['response'] || {}
+    RecursiveOpenStruct.new(response.to_hash, recurse_over_arrays: true)
   end
 end

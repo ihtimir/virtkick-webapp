@@ -39,7 +39,8 @@
       tbody
         - @machines.each do |machine|
           tr
-            td.name
+            td.name class=(machine.status.running? ? 'on' : 'off')
+              i class=machine.status.icon
               a href=machine_path(machine) = machine.hostname
             td.memory = number_to_human_size(machine.memory.megabytes)
             td.storage = number_to_human_size(machine.disks.sum &:size)

@@ -53,7 +53,17 @@
     margin-top: 50px;
 
     .name {
+      i {
+        min-width: 25px;
+      }
       width: 70%;
+
+      &.on * {
+        color: $brand-success;
+      }
+      &.off * {
+        color: $brand-primary;
+      }
     }
     .memory, .storage {
       text-align: right;
