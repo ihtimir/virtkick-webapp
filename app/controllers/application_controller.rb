@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+  # before_filter do
+  #   [Plans::IsoDistro, Plans::IsoImage].each { |m| m.reload true }
+  # end
+
   def handle_errors category = nil, redirect_method = nil
     yield
   rescue Errors => e

@@ -2,8 +2,7 @@
 - @icon = 'monitor'
 
 - content_for :action do
-  a.btn.btn-primary.btn-block href='/new-machine.html'
-    | Create a new machine
+  = link_to 'Create a new machine', new_machine_path, class: 'btn btn-primary btn-block'
 
 #page-index
   .items

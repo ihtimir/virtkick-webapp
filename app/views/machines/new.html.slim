@@ -1,0 +1,117 @@
+- @header = 'Create a New Machine'
+- @icon = 'monitor'
+
+#page-new-machine
+  = form_for @machine do |f|
+    .form-group.details
+      input.form-control#machine_name type='text' autofocus='' placeholder='Enter Machine Hostname (e.g. myapp.company.com)'
+
+    .form-group.appliance.text-center
+      p Arch Linux appliance with nginx, MariaDB, PHP will be used.
+
+    .form-group
+      h2
+        i.oi.oi-cart
+        | Choose a plan
+      .form-group.text-center
+        .plans.btn-group data-toggle='buttons'
+          - for plan in @plans
+            label.btn.btn-info.plan
+              input type="radio"
+              span.title
+                = number_to_human_size(plan.memory.gigabytes)
+                |  RAM
+              br
+              span.val
+                = number_to_human_size(plan.storage)
+                |  SSD
+              br
+              span.val
+                = plan.cpu
+                |  CPU
+
+    .form-group.image
+      h2
+        i.oi.oi-aperture
+        | Pick an image
+      .form-group.text-center
+        .image-types.btn-group data-toggle='buttons'
+          - for type in [['Appliance', 'appliances'], ['Mount ISO', 'isos'], ['Snapshot', 'snapshots'], ['1-Click Apps', 'apps']]
+            label.btn.btn-info.image-type
+              input type="radio" class=type[1]
+              span.title = type[0]
+
+        .image-type-group.appliances.btn-group data-toggle="buttons"
+
+        .image-type-group.isos.btn-group data-toggle="buttons"
+          - for iso in @isos
+            label.btn.btn-info.distro
+              - image = 'distros/' + iso.code + '.png'
+              .wrap
+                = image_tag image, alt: iso.name
+              input type='radio'
+              span.name = iso.name
+
+        .image-type-group.snapshots.text-left.btn-group data-toggle='buttons'
+          table.table
+            thead
+              tr
+                th.name Name
+                th.storage Size
+                th.date Taken
+            tbody
+              tr
+                td.name  HTTP Server
+                td.storage 2 GB
+                td.date 3 days ago
+              tr
+                td.name OpenStack
+                td.storage 12 GB
+                td.date a year ago
+
+        .image-type-group.containers.btn
+
+    .form-group.text-center
+      a.create.btn.btn-primary.btn-lg href='/machine.html'
+        | Create a Machine
+
+
+- content_for :scripts do
+    javascript:
+      $(function() {
+        var applianceChosen = window.location.hash == '#appliance';
+        if (!applianceChosen) {
+          $('.appliance').hide();
+        }
+
+        $('.plan').click(function() {
+          if (applianceChosen) {
+            $('.create').show();
+            $('.appliance').hide();
+          }
+        });
+
+        $('.image-type-group').hide();
+
+        $('.image-type').click(function() {
+          $('.image-type-group').hide();
+          var selected = $(this).find('input').attr('class');
+          $('.image-type-group.' + selected).show();
+        });
+
+        $('.create').hide();
+
+        $('.distro').click(function() {
+          $('.create').show();
+        });
+
+        $('.snapshots tbody tr').click(function() {
+          $(this).siblings().removeClass('selected');
+          $(this).addClass('selected');
+          $('.create').show();
+        });
+
+        if (window.location.hash == '#appliance') {
+          $('.form-group.image').hide();
+        }
+      });

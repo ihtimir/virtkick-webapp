@@ -3,6 +3,12 @@ class MachinesController < ApplicationController
     @machines = Machine.all
   end
 
+  def new
+    @machine = Machine.new
+    @plans = Defaults::MachinePlan.all
+    @isos = Plans::IsoDistro.all
+  end
+
   def show
     @machine = Machine.find params[:id]
     @disk_types = DiskType.all

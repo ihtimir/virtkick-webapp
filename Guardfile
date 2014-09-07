@@ -1,5 +1,5 @@
 guard 'livereload' do
-  watch(%r{app/.+\.(rb|erb|haml|slim)$})
+  watch(%r{app/.+\.(rb|yml|erb|haml|slim)$})
   watch(%r{public/.+\.(css|js|html)})
   watch(%r{config/locales/.+\.yml})
   # Rails Assets Pipeline
