@@ -16,6 +16,12 @@
       margin: 0 20px;
       @include grouping;
 
+      input[type='radio'], input[type='checkbox'] {
+        position: absolute;
+        z-index: -1;
+        @include opacity(0);
+      }
+
       &.btn-info.active, &.btn-info:hover {
         box-shadow: none !important;
         background-color: $grouping-active;
@@ -58,6 +64,7 @@
       margin: 0 7px;
       margin-bottom: 16px;
       width: 84px;
+      height: 100px;
       padding: 0;
 
       .wrap {

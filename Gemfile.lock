@@ -1,17 +1,11 @@
 GIT
-  remote: https://github.com/Nowaker/active_hash.git
-  revision: 94d1f151078da7d508aa3fcbf070fa363342e19f
-  branch: feature/support-first-element
-  specs:
-    active_hash (1.3.0)
-      activesupport (>= 2.2.2)
-
-GEM
-  remote: https://rubygems.org/
+  remote: https://github.com/rails/rails.git
+  revision: 42e69c352fc58f9af2c09dd7e8a7fa70bfe46898
   specs:
     actionmailer (4.2.0.beta1)
       actionpack (= 4.2.0.beta1)
       actionview (= 4.2.0.beta1)
+      activejob (= 4.2.0.beta1)
       mail (~> 2.5, >= 2.5.4)
       rails-dom-testing (~> 1.0, >= 1.0.2)
     actionpack (4.2.0.beta1)
@@ -19,15 +13,16 @@ GEM
       activesupport (= 4.2.0.beta1)
       rack (~> 1.6.0.beta)
       rack-test (~> 0.6.2)
-      rails-deprecated_sanitizer (~> 1.0, >= 1.0.2)
       rails-dom-testing (~> 1.0, >= 1.0.2)
+      rails-html-sanitizer (~> 1.0)
     actionview (4.2.0.beta1)
       activesupport (= 4.2.0.beta1)
       builder (~> 3.1)
       erubis (~> 2.7.0)
-      rails-deprecated_sanitizer (~> 1.0, >= 1.0.2)
       rails-dom-testing (~> 1.0, >= 1.0.2)
+      rails-html-sanitizer (~> 1.0)
     activejob (4.2.0.beta1)
+      activesupport (= 4.2.0.beta1)
       globalid (>= 0.2.3)
     activemodel (4.2.0.beta1)
       activesupport (= 4.2.0.beta1)
@@ -42,20 +37,43 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    rails (4.2.0.beta1)
+      actionmailer (= 4.2.0.beta1)
+      actionpack (= 4.2.0.beta1)
+      actionview (= 4.2.0.beta1)
+      activejob (= 4.2.0.beta1)
+      activemodel (= 4.2.0.beta1)
+      activerecord (= 4.2.0.beta1)
+      activesupport (= 4.2.0.beta1)
+      bundler (>= 1.3.0, < 2.0)
+      railties (= 4.2.0.beta1)
+      sprockets-rails (~> 3.0.0.beta1)
+    railties (4.2.0.beta1)
+      actionpack (= 4.2.0.beta1)
+      activesupport (= 4.2.0.beta1)
+      rake (>= 0.8.7)
+      thor (>= 0.18.1, < 2.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    active_hash (1.4.0)
+      activesupport (>= 2.2.2)
     arel (6.0.0.beta1)
     bcrypt (3.1.7)
     binding_of_caller (0.7.3.pre1)
       debug_inspector (>= 0.0.1)
-    bootstrap-navbar (2.1.4)
+    bootstrap-navbar (2.2.0)
       gem_config (~> 0.3)
-    bootstrap-sass (3.2.0.1)
+    bootstrap-sass (3.2.0.2)
       sass (~> 3.2)
     builder (3.2.2)
-    byebug (3.2.0)
+    byebug (3.4.0)
       columnize (~> 0.8)
       debugger-linecache (~> 1.2)
-    celluloid (0.15.2)
-      timers (~> 1.1.0)
+      slop (~> 3.6)
+    celluloid (0.16.0)
+      timers (~> 4.0.0)
     codeclimate-test-reporter (0.4.0)
       simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.0)
@@ -65,7 +83,7 @@ GEM
     coffee-script (2.3.0)
       coffee-script-source
       execjs
-    coffee-script-source (1.7.1)
+    coffee-script-source (1.8.0)
     columnize (0.8.9)
     debug_inspector (0.0.2)
     debugger-linecache (1.2.0)
@@ -78,7 +96,7 @@ GEM
     eventmachine (1.0.3)
     execjs (2.2.1)
     ffi (1.9.3)
-    font-awesome-rails (4.1.0.0)
+    font-awesome-rails (4.2.0.0)
       railties (>= 3.2, < 5.0)
     formatador (0.2.5)
     gem_config (0.3.1)
@@ -95,6 +113,7 @@ GEM
       guard (~> 2.0)
       multi_json (~> 1.8)
     hike (1.2.3)
+    hitimes (1.2.2)
     http_parser.rb (0.6.0)
     httparty (0.13.1)
       json (~> 1.8)
@@ -103,7 +122,7 @@ GEM
     jbuilder (2.1.3)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
-    jquery-rails (3.1.1)
+    jquery-rails (3.1.2)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.1)
@@ -119,7 +138,7 @@ GEM
     method_source (0.8.2)
     mime-types (2.3)
     mini_portile (0.6.0)
-    minitest (5.4.0)
+    minitest (5.4.1)
     multi_json (1.10.1)
     multi_xml (0.5.5)
     nokogiri (1.6.3.1)
@@ -133,17 +152,6 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
-    rails (4.2.0.beta1)
-      actionmailer (= 4.2.0.beta1)
-      actionpack (= 4.2.0.beta1)
-      actionview (= 4.2.0.beta1)
-      activejob (= 4.2.0.beta1)
-      activemodel (= 4.2.0.beta1)
-      activerecord (= 4.2.0.beta1)
-      activesupport (= 4.2.0.beta1)
-      bundler (>= 1.3.0, < 2.0)
-      railties (= 4.2.0.beta1)
-      sprockets-rails (~> 3.0.0.beta1)
     rails-deprecated_sanitizer (1.0.2)
       activesupport (>= 4.2.0.alpha)
     rails-dom-testing (1.0.2)
@@ -155,11 +163,6 @@ GEM
     rails_bootstrap_navbar (2.0.1)
       bootstrap-navbar (~> 2.0)
       rails (>= 3.0.0)
-    railties (4.2.0.beta1)
-      actionpack (= 4.2.0.beta1)
-      activesupport (= 4.2.0.beta1)
-      rake (>= 0.8.7)
-      thor (>= 0.18.1, < 2.0)
     rake (10.3.2)
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
@@ -181,7 +184,7 @@ GEM
       rspec-mocks (~> 3.0.0)
       rspec-support (~> 3.0.0)
     rspec-support (3.0.4)
-    sass (3.4.1)
+    sass (3.4.3)
     sass-rails (5.0.0.beta1)
       railties (>= 4.0.0, < 5.0)
       sass (~> 3.2)
@@ -197,7 +200,7 @@ GEM
       tilt (>= 1.3.3, < 2.1)
     slop (3.6.0)
     spring (1.1.3)
-    sprockets (2.12.1)
+    sprockets (2.12.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
@@ -211,7 +214,8 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
-    timers (1.1.0)
+    timers (4.0.0)
+      hitimes
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.5.3)
@@ -227,7 +231,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_hash!
+  active_hash
   activemodel
   bcrypt (~> 3.1.7)
   bootstrap-sass (~> 3.1)
@@ -240,7 +244,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   rack-livereload
-  rails (= 4.2.0.beta1)
+  rails!
   rails-html-sanitizer (~> 1.0)
   rails_bootstrap_navbar
   rb-fsevent

@@ -2,12 +2,12 @@
 - @icon = 'monitor'
 
 #page-new-machine
-  = form_for @machine do |f|
+  = form_for @machine, as: :machine, url: machines_path(@machine), method: :post do |f|
     .form-group.details
-      input.form-control#machine_name type='text' autofocus='' placeholder='Enter Machine Hostname (e.g. myapp.company.com)'
-
-    .form-group.appliance.text-center
-      p Arch Linux appliance with nginx, MariaDB, PHP will be used.
+      - attrs = {placeholder: 'Machine Hostname', class: 'form-control'}
+      - attrs[:autofocus] = true if @machine.hostname.nil? or errors_for?(@machine, :hostname)
+      = f.text_field :hostname, attrs
+      = errors_for @machine, :hostname
 
     .form-group
       h2
@@ -16,8 +16,9 @@
       .form-group.text-center
         .plans.btn-group data-toggle='buttons'
           - for plan in @plans
-            label.btn.btn-info.plan
-              input type="radio"
+            - active = @machine.plan == plan ? 'active' : ''
+            = f.label :plan_id, class: "btn btn-info plan #{active}" do
+              = f.radio_button :plan_id, plan.id
               span.title
                 = number_to_human_size(plan.memory.gigabytes)
                 |  RAM
@@ -36,82 +37,44 @@
         | Pick an image
       .form-group.text-center
         .image-types.btn-group data-toggle='buttons'
-          - for type in [['Appliance', 'appliances'], ['Mount ISO', 'isos'], ['Snapshot', 'snapshots'], ['1-Click Apps', 'apps']]
-            label.btn.btn-info.image-type
-              input type="radio" class=type[1]
-              span.title = type[0]
+          - for type in [['Mount ISO', 'isos'], ['Appliance', 'appliances'], ['1-Click App', 'apps']]
+            - name = type[0]
+            - id = type[1]
+            - active = @machine.image_type == id ? 'active' : ''
+            = f.label :image_type, class: "btn btn-info image-type #{active}" do
+              = f.radio_button :image_type, id, class: id
+              span.title = name
 
         .image-type-group.appliances.btn-group data-toggle="buttons"
+          p VirtKick will deliver appliances with various Linux distributions. Coming soon!
 
-        .image-type-group.isos.btn-group data-toggle="buttons"
+        - active = @machine.iso_distro ? 'active' : ''
+        div class="image-type-group isos btn-group #{active}" data-toggle="buttons"
           - for iso in @isos
-            label.btn.btn-info.distro
+            - active = @machine.iso_distro == iso ? 'active' : ''
+            = f.label :iso_distro_id, class: "btn btn-info distro #{active}" do
               - image = 'distros/' + iso.code + '.png'
               .wrap
                 = image_tag image, alt: iso.name
-              input type='radio'
+              = f.radio_button :iso_distro_id, iso.id
               span.name = iso.name
 
-        .image-type-group.snapshots.text-left.btn-group data-toggle='buttons'
-          table.table
-            thead
-              tr
-                th.name Name
-                th.storage Size
-                th.date Taken
-            tbody
-              tr
-                td.name  HTTP Server
-                td.storage 2 GB
-                td.date 3 days ago
-              tr
-                td.name OpenStack
-                td.storage 12 GB
-                td.date a year ago
+        .image-type-group.apps.btn-group data-toggle="buttons"
+          p VirtKick will deliver a 1-click integration with Sandstorm.
+          p It allows you to install many webapps with a single click. Coming soon!
 
-        .image-type-group.containers.btn
-
-    .form-group.text-center
-      a.create.btn.btn-primary.btn-lg href='/machine.html'
-        | Create a Machine
+        .form-group.text-center
+          = f.submit 'Create a Machine', class: 'create btn btn-primary btn-lg'
 
 
 - content_for :scripts do
     javascript:
       $(function() {
-        var applianceChosen = window.location.hash == '#appliance';
-        if (!applianceChosen) {
-          $('.appliance').hide();
-        }
-
-        $('.plan').click(function() {
-          if (applianceChosen) {
-            $('.create').show();
-            $('.appliance').hide();
-          }
-        });
-
-        $('.image-type-group').hide();
+        $('.image-type-group:not(.active)').hide();
 
         $('.image-type').click(function() {
           $('.image-type-group').hide();
           var selected = $(this).find('input').attr('class');
           $('.image-type-group.' + selected).show();
         });
-
-        $('.create').hide();
-
-        $('.distro').click(function() {
-          $('.create').show();
-        });
-
-        $('.snapshots tbody tr').click(function() {
-          $(this).siblings().removeClass('selected');
-          $(this).addClass('selected');
-          $('.create').show();
-        });
-
-        if (window.location.hash == '#appliance') {
-          $('.form-group.image').hide();
-        }
       });

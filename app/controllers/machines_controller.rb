@@ -4,9 +4,21 @@ class MachinesController < ApplicationController
   end
 
   def new
-    @machine = Machine.new
-    @plans = Defaults::MachinePlan.all
-    @isos = Plans::IsoDistro.all
+    @machine ||= Forms::NewMachine.new
+    @plans ||= Defaults::MachinePlan.all
+    @isos ||= Plans::IsoDistro.all
+  end
+
+  def create
+    machine_params = Forms::NewMachine.check_params params
+    @machine = Forms::NewMachine.new machine_params
+
+    if @machine.save
+      redirect_to @machine.machine
+    else
+      new
+      render 'new'
+    end
   end
 
   def show
