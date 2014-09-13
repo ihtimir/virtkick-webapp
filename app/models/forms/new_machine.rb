@@ -11,9 +11,11 @@ class Forms::NewMachine
 
   attr_reader :machine
 
+
   def save
     return if invalid?
-    @machine = Machine.all.first # TODO: create a new one
+
+    Wvm::Machine.create self
   end
 
   def plan_id

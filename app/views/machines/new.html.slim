@@ -3,6 +3,8 @@
 
 #page-new-machine
   = form_for @machine, as: :machine, url: machines_path(@machine), method: :post do |f|
+    = render partial: '/flash', locals: {section: 'new_machine'}
+
     .form-group.details
       - attrs = {placeholder: 'Machine Hostname', class: 'form-control'}
       - attrs[:autofocus] = true if @machine.hostname.nil? or errors_for?(@machine, :hostname)

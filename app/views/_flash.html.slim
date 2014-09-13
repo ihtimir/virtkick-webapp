@@ -1,4 +1,4 @@
-- flashes = section ? flash[section] : flash
+- flashes = defined?(section) ? flash[section] : flash
 
 - if flashes
   - flashes.each do |type, message|

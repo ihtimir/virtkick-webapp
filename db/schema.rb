@@ -11,6 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20140913000000) do
+
+  create_table "ip_ranges", force: true do |t|
+    t.string  "netmask"
+    t.string  "gateway"
+    t.integer "hypervisor_id", default: 1
+  end
+
+  create_table "ips", force: true do |t|
+    t.integer "ip_range_id"
+    t.string  "ip"
+    t.boolean "taken",       default: false
+    t.string  "vm_uuid"
+  end
 
 end

@@ -6,6 +6,10 @@ class Machine < Base
   attr_accessor :status
   attr_accessor :vnc_password, :vnc_port
   attr_accessor :disks
+  attr_accessor :networks
+
+  attr_writer :iso_distro_id, :iso_image_id
+
 
   def self.all
     Wvm::Machine.all
@@ -31,6 +35,14 @@ class Machine < Base
 
   def delete_disk disk
     Wvm::Machine.delete_disk disk, self
+  end
+
+  def iso_distro
+    Plans::IsoDistro.find @iso_distro_id if @iso_distro_id
+  end
+
+  def iso_image
+    Plans::IsoImage.find @iso_image_id if @iso_image_id
   end
 
 

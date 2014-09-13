@@ -1,13 +1,13 @@
 module ApplicationHelper
   def bootstrap_alert_class_for_flash type
-    case type
-      when 'success'
+    case type.to_sym
+      when :success
         'alert-success'
-      when 'error'
+      when :error
         'alert-danger'
-      when 'alert'
+      when :alert
         'alert-warning'
-      when 'notice'
+      when :notice
         'alert-info'
       else
         type.to_s

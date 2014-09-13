@@ -13,12 +13,15 @@ class MachinesController < ApplicationController
     machine_params = Forms::NewMachine.check_params params
     @machine = Forms::NewMachine.new machine_params
 
-    if @machine.save
-      redirect_to @machine.machine
-    else
-      new
-      render 'new'
+    handle_errors :new_machine do
+      if created = @machine.save
+        redirect_to created
+        return
+      end
     end
+
+    new
+    render 'new'
   end
 
   def show

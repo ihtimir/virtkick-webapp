@@ -21,6 +21,19 @@ class Wvm::Machine < Wvm::Base
         disks: Wvm::Disk.array_of(response.disks)
   end
 
+  def self.create new_machine
+    machine = build_new_machine new_machine
+
+    # TODO: create disks
+
+    template = File.dirname(__FILE__) + '/new_machine.xml.slim'
+    xml = Slim::Template.new(template, format: :xhtml).render Object.new, {machine: machine}
+    call :post, 'create', create_xml: '',
+        from_xml: xml
+
+    machine
+  end
+
   OPERATIONS = {
       start: :start,
       pause: :suspend,
@@ -88,5 +101,32 @@ class Wvm::Machine < Wvm::Base
           status: determine_status(machine)
     end
     machines.sort_by &:hostname
+  end
+
+  def self.build_new_machine new_machine
+    uuid = SecureRandom.uuid
+    networks = setup_networks uuid
+
+    ::Machine.new \
+        uuid: uuid,
+        hostname: new_machine.hostname,
+        memory: new_machine.plan.memory,
+        processors: new_machine.plan.cpu,
+        iso_distro_id: new_machine.iso_distro.id,
+        iso_image_id: new_machine.iso_distro.iso_images.first.id,
+        networks: networks
+  end
+
+  def self.setup_networks uuid
+    ip = IpReserver.new.reserve_ip uuid
+    mac = MacAddrGenerator.new.generate
+
+    networks = ::Networks.new
+    networks.public = ::Network.new \
+        mac: mac,
+        ip4: ip,
+        pool_name: 'default'
+
+    networks
   end
 end

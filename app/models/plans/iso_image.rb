@@ -3,7 +3,6 @@ class Plans::IsoImage < ActiveYaml::Base
   set_root_path 'app/models'
 
   field :id
-  field :iso_distro_id
   field :path
   field :bit
   field :short_name
