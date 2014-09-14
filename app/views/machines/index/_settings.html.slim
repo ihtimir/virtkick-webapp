@@ -1,5 +1,5 @@
 #page-settings
-  h3 Networks
+  h3 Networks (TODO)
 
   label
     input type='checkbox' checked='checked'
@@ -14,7 +14,7 @@
     |  private network between your VMs
 
 
-  h3 CD image
+  h3 CD image (TODO)
 
   label
     input type='checkbox' checked='checked'
@@ -23,7 +23,7 @@
       - for distro in ['Arch Linux', 'Ubuntu Server', 'Fedora', 'FreeBSD', 'OpenNebula', 'SmartOS', 'ReactOS']
         option = distro
 
-  h3 Users
+  h3 Users (TODO)
 
   p These users are able to manage this machine as well:
 
@@ -40,12 +40,11 @@
 
   p
     button.btn.btn-danger
-      | Transfer ownership
+      | Transfer ownership (TODO)
 
   p
-    button.btn.btn-danger
-      | Delete machine
-
+    = link_to 'Delete machine', machine_path(@machine), method: 'delete', class: 'btn btn-danger',
+          data: {confirm: 'Are you sure? This cannot be undone.', confirm_title: "Delete #{@machine.id}"}
 
 
 - content_for :scripts do

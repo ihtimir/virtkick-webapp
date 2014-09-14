@@ -45,6 +45,10 @@ class Machine < Base
     Plans::IsoImage.find @iso_image_id if @iso_image_id
   end
 
+  def delete
+    Wvm::Machine.delete self
+  end
+
 
   class Status < ActiveHash::Base
     # TODO: https://github.com/pluginaweek/state_machine

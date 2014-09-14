@@ -30,6 +30,12 @@ class MachinesController < ApplicationController
     @disk = Disk.new
   end
 
+  def destroy
+    @machine = Machine.find params[:id]
+    @machine.delete
+    redirect_to machines_path
+  end
+
   %w(start pause resume stop force_stop restart force_restart).each do |operation|
     define_method operation do
       @machine = Machine.find params[:id]

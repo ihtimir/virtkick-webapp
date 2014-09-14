@@ -73,6 +73,12 @@ class Wvm::Machine < Wvm::Base
     Wvm::Disk.delete disk
   end
 
+  def self.delete machine
+    call :post, "instance/#{machine.id}", delete: '',
+        delete_disk: ''
+  end
+
+
   private
   def self.sum_up object, &property
     object.map(&property).inject(0, &:+)
