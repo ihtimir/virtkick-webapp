@@ -19,6 +19,10 @@ class Disk < Base
     Wvm::Disk.create self
   end
 
+  def type= val
+    raise
+  end
+
   def size_plan= size_plan
     size_plan = Defaults::DiskSizePlan.find(size_plan) unless size_plan.is_a? Defaults::DiskSizePlan
     @size = size_plan.size
