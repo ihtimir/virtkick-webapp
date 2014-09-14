@@ -19,7 +19,7 @@
         .plans.btn-group data-toggle='buttons'
           - for plan in @plans
             - active = @machine.plan == plan ? 'active' : ''
-            = f.label :plan_id, class: "btn btn-info plan #{active}" do
+            = f.label :plan_id, class: "btn btn-info plan #{active} fixed-width" do
               = f.radio_button :plan_id, plan.id
               span.title
                 = number_to_human_size(plan.memory.gigabytes)

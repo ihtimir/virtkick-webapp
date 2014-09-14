@@ -5,8 +5,13 @@ class DiskType < Base
   attr_accessor :path # extract to FileDiskType
   attr_accessor :enabled
 
+
   def self.all
     Wvm::StoragePool.all
+  end
+
+  def self.find id
+    Wvm::StoragePool.find id
   end
 
   def id

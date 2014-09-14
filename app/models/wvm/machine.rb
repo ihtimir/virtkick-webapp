@@ -11,7 +11,7 @@ class Wvm::Machine < Wvm::Base
 
     status = determine_status response
 
-    Machine.new \
+    ::Machine.new \
         hostname: response[:name],
         uuid: response[:uuid],
         memory: response[:cur_memory],
@@ -24,12 +24,16 @@ class Wvm::Machine < Wvm::Base
   def self.create new_machine
     machine = build_new_machine new_machine
 
-    # TODO: create disks
-
     template = File.dirname(__FILE__) + '/new_machine.xml.slim'
     xml = Slim::Template.new(template, format: :xhtml).render Object.new, {machine: machine}
     call :post, 'create', create_xml: '',
         from_xml: xml
+
+    machine = ::Machine.find machine.id
+
+    machine.create_disk ::Disk.new \
+        size: new_machine.plan.storage,
+        type: new_machine.plan.storage_type
 
     machine
   end
