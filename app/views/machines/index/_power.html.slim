@@ -39,16 +39,16 @@
 
   .controls
     .btn-group
-      a.action.start.btn.btn-default type='button' href=start_machine_path(@machine)
+      = power_action start_machine_path(@machine), 'start' do
         i.fa.fa-play
         | &nbsp; Start
-      a.action.pause.only-on.btn.btn-default type='button' href=pause_machine_path(@machine)
+      = power_action pause_machine_path(@machine), 'pause only-on' do
         i.fa.fa-pause
         | &nbsp; Pause
-      a.action.resume.only-on.btn.btn-default type='button' href=resume_machine_path(@machine)
+      = power_action resume_machine_path(@machine), 'resume only-on' do
         i.fa.fa-forward
         | &nbsp; Resume
-      a.action.stop.only-on.btn.btn-default type='button' href=stop_machine_path(@machine)
+      = power_action stop_machine_path(@machine), 'stop only-on' do
         i.fa.fa-stop
         | &nbsp; Stop
       .btn-group
@@ -56,10 +56,10 @@
           i.fa.fa-caret-down
         ul.dropdown-menu
           li
-            a.stop.only-on.action href=force_stop_machine_path(@machine)
+            = power_action force_stop_machine_path(@machine), 'force-stop only-on', false do
               span.fa.fa-power-off
               | &nbsp; Hard stop
-      a.action.restart.only-on.btn.btn-default type='button' href=restart_machine_path(@machine)
+      = power_action restart_machine_path(@machine), 'restart only-on' do
         i.fa.fa-repeat
         | &nbsp; Restart
       .btn-group
@@ -67,6 +67,6 @@
           i.fa.fa-caret-down
         ul.dropdown-menu
           li
-            a.restart.only-on.action href=force_restart_machine_path(@machine)
+            = power_action force_restart_machine_path(@machine), 'force-restart only-on', false do
               span.fa.fa-power-off
               | &nbsp; Hard reset
