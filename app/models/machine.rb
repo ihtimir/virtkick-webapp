@@ -7,8 +7,7 @@ class Machine < Base
   attr_accessor :vnc_password, :vnc_port
   attr_accessor :disks
   attr_accessor :networks
-
-  attr_writer :iso_distro_id, :iso_image_id
+  attr_accessor :iso_distro_id, :iso_image_id
 
 
   def self.all
@@ -35,6 +34,10 @@ class Machine < Base
 
   def delete_disk disk
     Wvm::Machine.delete_disk disk, self
+  end
+
+  def mount_iso iso_image
+    Wvm::Machine.mount_iso self, iso_image
   end
 
   def iso_distro

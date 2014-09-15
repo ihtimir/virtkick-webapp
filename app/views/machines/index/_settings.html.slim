@@ -14,33 +14,14 @@
     |  private network between your VMs
 
 
-  h3 CD image (TODO)
+  h3 CD image
 
-  label
-    input type='checkbox' checked='checked'
-    |  mount ISO as CD-ROM &nbsp;
-    select
-      - for distro in ['Arch Linux', 'Ubuntu Server', 'Fedora', 'FreeBSD', 'OpenNebula', 'SmartOS', 'ReactOS']
-        option = distro
-
-  h3 Users (TODO)
-
-  p These users are able to manage this machine as well:
-
-  ul.users
-    - for user in %w(kwiat Rush m13 johndoe)
-      li
-        a.user
-          i.fa.fa-times
-        = " #{user} (#{user.downcase}@mailinator.com)"
-
-
+  = form_for @machine, as: :machine, url: mount_iso_machine_path(@machine), method: :post do |f|
+    label
+      | Mount ISO: &nbsp;
+      = f.collection_select :iso_image_id, @iso_images, :id, :long_name, prompt: true
 
   h3 Danger Zone
-
-  p
-    button.btn.btn-danger
-      | Transfer ownership (TODO)
 
   p
     = link_to 'Delete machine', machine_path(@machine), method: 'delete', class: 'btn btn-danger',
@@ -48,9 +29,7 @@
 
 
 - content_for :scripts do
-  javascript:
-    $(function() {
-      $('#page-settings a.user').click(function() {
-        $(this).closest('li').remove();
-      });
-    });
+  coffee:
+    $ ->
+      $('#machine_iso_image_id').change ->
+        $(this).closest('form').submit()

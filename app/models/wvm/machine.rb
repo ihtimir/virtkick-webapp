@@ -9,16 +9,27 @@ class Wvm::Machine < Wvm::Base
   def self.find id
     response = call :get, "instance/#{id}"
 
-    status = determine_status response
+    params = {
+      hostname: response[:name],
+      uuid: response[:uuid],
+      memory: response[:cur_memory],
+      processors: response[:vcpu],
+      status: determine_status(response),
+      vnc_password: response[:vnc_password],
+      disks: Wvm::Disk.array_of(response.disks)
+    }
 
-    ::Machine.new \
-        hostname: response[:name],
-        uuid: response[:uuid],
-        memory: response[:cur_memory],
-        processors: response[:vcpu],
-        status: status,
-        vnc_password: response[:vnc_password],
-        disks: Wvm::Disk.array_of(response.disks)
+    unless response.media.empty?
+      file = response.media.first.image
+      iso_image = Plans::IsoImage.by_file(file).first
+
+      if iso_image
+        params[:iso_image_id] = iso_image.id
+        params[:iso_distro_id] = iso_image.iso_distro.id
+      end
+    end
+
+    ::Machine.new params
   end
 
   def self.create new_machine
@@ -71,6 +82,11 @@ class Wvm::Machine < Wvm::Base
         device: disk.device
 
     Wvm::Disk.delete disk
+  end
+
+  def self.mount_iso machine, iso_image
+    call :post, "instance/#{machine.id}", mount_iso: '',
+        media: iso_image.file # device purposely omitted
   end
 
   def self.delete machine

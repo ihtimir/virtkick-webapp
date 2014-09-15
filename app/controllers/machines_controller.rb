@@ -26,25 +26,32 @@ class MachinesController < ApplicationController
 
   def show
     @machine = Machine.find params[:id]
+
     @disk_types = DiskType.all
     @disk = Disk.new
+    @iso_images = Plans::IsoImage.all
   end
 
   def destroy
-    @machine = Machine.find params[:id]
-    @machine.delete
+    machine = Machine.find params[:id]
+    machine.delete
     redirect_to machines_path
   end
 
   %w(start pause resume stop force_stop restart force_restart).each do |operation|
     define_method operation do
-      @machine = Machine.find params[:id]
-      begin
-        @machine.send operation
-      rescue Errors => e
-        flash[:power] = {error: e.errors.dup}
+      machine = Machine.find params[:id]
+      handle_errors :power do
+        machine.send operation
       end
-      redirect_to machine_path(@machine)
+      redirect_to machine_path machine, anchor: 'power'
     end
+  end
+
+  def mount_iso
+    machine = Machine.find params[:id]
+    iso_image = Plans::IsoImage.find params[:machine][:iso_image_id]
+    machine.mount_iso iso_image
+    redirect_to machine_path machine, anchor: 'settings'
   end
 end

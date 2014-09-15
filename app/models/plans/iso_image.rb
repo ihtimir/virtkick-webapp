@@ -7,7 +7,7 @@ class Plans::IsoImage < ActiveYaml::Base
   field :pool_name
   field :bit
   field :short_name
-  field :full_name
+  field :long_name
   field :enabled, default: true
 
   belongs_to :iso_distro, class_name: 'Plans::IsoDistro'
@@ -15,5 +15,9 @@ class Plans::IsoImage < ActiveYaml::Base
 
   def path
     DiskType.find(pool_name).path + '/' + file
+  end
+
+  def self.by_file file
+    self.all.select { |image| image.file == file }
   end
 end

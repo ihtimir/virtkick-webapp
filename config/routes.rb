@@ -10,6 +10,8 @@ Rails.application.routes.draw do
       get 'force_stop'
       get 'restart'
       get 'force_restart'
+
+      post 'mount_iso'
     end
 
     resources :disks do
