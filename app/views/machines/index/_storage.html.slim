@@ -35,7 +35,8 @@
           td.actions
             div.buttons
               / TODO: resize. (virStorageVol.resize)
-              = link_to machine_disk_path(@machine, disk), method: 'delete', class: 'btn' do
+              = link_to machine_disk_path(@machine, disk), method: 'delete', class: 'btn',
+                    data: {confirm: 'Are you sure? This cannot be undone.', confirm_title: "Delete #{disk.device}"} do
                 span.oi.oi-delete
                 span.action Delete
           td.type = disk.type
