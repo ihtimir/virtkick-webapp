@@ -1,3 +1,5 @@
+@import '../../bootstrap-customize';
+
 #page-machine #scheduler {
   text-align: left;
 
@@ -6,48 +8,69 @@
   }
 
   .create {
-    margin-bottom: 30px;
-  }
+    margin-bottom: 20px;
 
-  .input-group {
-    .input-group-addon, .glyphicon {
-      line-height: 12px;
+    .btn {
+      padding: 15px 35px;
+
+      &.save-button {
+        margin-left: 10px;
+      }
     }
-  }
 
-  select {
-    padding-top: 0px;
-    padding-bottom: 0px;
-  }
+    .new {
+      text-align: right;
+      vertical-align: middle;
+      display: none;
+      
+      .action, .cron, .next, .then {
+        display: inline-block;
+        margin-right: 20px; 
+        
+        &.action {
+          select {
+            display: inline-block;
+          }
+        }
 
-  input {
-    width: 100%;
+        &.cron {
+          vertical-align: middle;
+          display: inline-block;
+          margin-bottom: -3px;
+
+          .combobox-container {
+            display: inline-block;
+            width: 200px;
+            .input-group {
+              input {
+                width: 170px !important;
+              }
+            }
+          }
+        }
+
+        &.next, &.then {
+          visibility: hidden;
+          &.visible {
+            visibility: visible;
+          }
+        }
+      }
+    }    
+
   }
 
   table {
-    width: 100%;
-    margin: 0 auto;
-
-    td, th {
-      vertical-align: middle;
-    }
-
     th.action {
       width: 15%;
     }
 
     th.cron {
-      width: 35%;
+      width: 25%;
     }
 
-    td.actions {
-      text-align: right;
-
-      a.btn {
-        display: inline-block;
-        margin-left: 3px;
-        margin-right: 3px;
-      }
+    th.actions {
+      width: 25%;
     }
   }
 }

@@ -1,7 +1,12 @@
+@import 'colors';
+@import 'mixins';
 @import 'bootstrap-customize';
 @import 'bootstrap';
 @import 'fonts';
 
+.bright-violet {
+  color: $bright-violet-color;
+}
 
 .prototype-alert {
   width: 500px;
@@ -26,14 +31,14 @@
 .header.row {
   margin-top: 30px;
   margin-bottom: 20px;
-  $header-height: 100px;
+  $header-height: 64px;
 
   .menu {
     font-size: 14px;
-    text-align: center;
+    text-align: left;
 
     img {
-      padding: 10px;
+      padding: 18px 17px 14px 15px;
       width: $header-height;
       height: $header-height;
       box-sizing: content-box;
@@ -47,7 +52,7 @@
 
   @mixin bottom {
     @media(min-width: $screen-md) {
-      margin-top: 60px;
+      margin-top: 50px;
     }
   }
 
@@ -62,17 +67,15 @@
 
       span.oi {
         color: $brand-primary;
-        font-size: 40px;
         position: relative;
-        top: 8px;
-        padding-right: 12px;
+        padding-right: 17px;
       }
     }
   }
 
   .action {
     @include bottom;
-    margin-top: 24px;
+    margin-top: 40px !important;
 
     .btn-primary {
       padding-top: 15px;
@@ -102,9 +105,6 @@
       border: 0;
     }
 
-    .home {
-      margin-top: 30px;
-    }
   }
 
   .navbar-brand {
@@ -121,8 +121,8 @@
 
 nav.navbar {
   border: 0 !important;
-  padding-top: 4px;
-  padding-bottom: 4px;
+  padding-top: 26px;
+  padding-bottom: 26px;
   @include grouping;
 
   li {
@@ -134,7 +134,7 @@ nav.navbar {
 
   span.oi, span.fa {
     font-size: 24px;
-    margin-right: 10px;
+    margin-right: 15px;
     padding: 10px;
     display: inline-block;
     position: relative;
@@ -161,10 +161,6 @@ h3 {
   font-size: 20px;
 }
 
-div.field_with_errors {
-  display: inline;
-}
-
 .mobile-newsletter {
   padding-top: 20px;
   padding-bottom: 10px;
@@ -177,7 +173,9 @@ div.field_with_errors {
   }
 
   p.result {
+    color: $red-color;
     margin-top: 5px;
+    font-size: 14px;
   }
 
   a.back {
@@ -186,6 +184,15 @@ div.field_with_errors {
 
   h3 {
     color: $brand-primary;
+  }
+}
+
+.nav {
+  li a {
+    @include transition(background-color 0.25s);
+    &.active {
+      @include transition(background-color 0.25s);
+    }
   }
 }
 

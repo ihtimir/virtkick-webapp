@@ -1,61 +1,81 @@
+@import '../../bootstrap-customize';
+
 #page-machine #storage {
   text-align: left;
 
   .create {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+
+    .btn {
+      padding: 15px 35px;
+      width: 210px;
+
+      &.save-button {
+        margin-left: 10px;
+      }
+    }
+
+    .new {
+      text-align: right;
+      display: none;
+
+      .name, .type, .size {
+        display: inline-block;
+        margin-right: 20px; 
+        
+        &.name {
+          input {
+            display: inline-block;
+            width: 75%;
+          }
+        }
+
+        &.type {
+          select {
+            display: inline-block;
+            &.size {
+              width: 60px;
+            }
+          }
+        }
+
+        &.size {
+          margin-right: 5px; 
+          select {
+            display: inline-block;
+            &.size {
+              width: 90px;
+            }
+          }
+        }
+      }
+    }    
   }
 
   table {
-    margin: 0 auto;
-
-    td, th {
-      vertical-align: middle;
-    }
-
-    td.name {
-    }
-
-    td.type {
-      width: 15%;
-    }
-
-    td.size {
-      width: 20%;
-    }
-
-    td.actions {
-      text-align: right;
+    @mixin nowrap {
       width: 1px !important;
       white-space: nowrap;
-
-      a.btn {
-        display: inline-block;
-        margin-left: 3px;
-        margin-right: 3px;
-      }
     }
 
-    .form-control {
-      height: 30px;
+    .name {
+      @include nowrap;
     }
 
-    input {
-      margin-left: 3px;
-      margin-right: 3px;
+    .actions {
+      width: 100%;
+      text-align: right;
     }
 
-    select {
-      display: inline-block;
-      padding: 0;
+    .type {
+      text-align: right;
+      @include nowrap;
+    }
 
-      &.type {
-        width: 100%;
-      }
-
-      &.size {
-        width: 60px;
-        margin-right: 8px;
-      }
+    .size {
+      margin-right: 8px;
+      text-align: right;
+      @include nowrap;
     }
   }
 }

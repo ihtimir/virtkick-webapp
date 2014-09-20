@@ -19,7 +19,8 @@ namespace :import do
     `cp ~/projekty/ruby/virtkick-prototype/source/css/virtkick.css.scss #{css}`
     replace "@import 'vendor/*';", "@import 'vendor/*.css.scss'; // ignore .less for now", css
 
-    `cp ~/projekty/ruby/virtkick-prototype/source/css/bootstrap-customize.css.scss app/assets/stylesheets`
+    css_dir = '~/projekty/ruby/virtkick-prototype/source/css'
+    `cp #{css_dir}/bootstrap-customize.css.scss #{css_dir}/colors.css.scss #{css_dir}/mixins.css.scss app/assets/stylesheets`
     replace "$icon-font-path: '/font/';", "$icon-font-path: '/assets/';", css
 
     css_dir = '~/projekty/ruby/virtkick-prototype/source/css'

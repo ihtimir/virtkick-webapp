@@ -2,55 +2,58 @@
 
   = render partial: '/flash', locals: {section: 'storage'}
 
-  .create
-    a.btn.btn-default.btn-block
-      | Create a new disk
-
-  / TODO: snapshot all images (the only revertable way for snapshots in libvirt)
-
   = form_for @disk, url: machine_disks_path(@machine) do |f|
-    table.table.table-striped.text-left
-      thead
+    .create.text-right
+      a.btn.btn-primary.create-button
+        | Create a new disk
+      div.new
+        div.name
+          = @machine.disks.next_device_name
+        div.type
+          = collection_select :disk, :type, @disk_types, :id, :name, {}, class: 'type form-control'
+        div.size
+          = collection_select :disk, :size_plan, Defaults::DiskSizePlan.all, :id, :name, {}, class: 'size form-control'
+          | GB
+        = f.submit 'Create', class: 'btn btn-primary save-button'
+
+  /TODO: snapshot all images (the only revertable way for snapshots in libvirt)
+
+  table.table.table-striped.text-left
+    thead
+      tr
+        th.name Disk name
+        th.actions
+        th.type Type
+        th.size Size
+    tbody
+      - @machine.disks.each do |disk|
+        / TODO: Handle case when disk was detached and deleted, but virtio wasn't present in VM (e.g. boot loader screen).
+        / Such a disk should be grayed out. The tooltip should say "This disk will disappear after you stop your VM".
         tr
-          th.name Disk name
-          th.type Type
-          th.size Size
-          th.actions
-      tbody
-        - @machine.disks.each do |disk|
-          / TODO: Handle case when disk was detached and deleted, but virtio wasn't present in VM (e.g. boot loader screen).
-          / Such a disk should be grayed out. The tooltip should say "This disk will disappear after you stop your VM".
-          tr
-            td.name
-              = disk.device
-            td.type = disk.type
-            td.size = number_to_human_size disk.size
-            td.actions
-              / TODO: resize. (virStorageVol.resize)
-              = link_to 'Delete', machine_disk_path(@machine, disk),
-                    method: 'delete', class: 'btn btn-danger'
-        tr.new
           td.name
-            = @machine.disks.next_device_name
-          td.type
-            = collection_select :disk, :type, @disk_types, :id, :name, {}, class: 'type form-control'
-          td.size
-            = collection_select :disk, :size_plan, Defaults::DiskSizePlan.all, :id, :name, {}, class: 'size form-control'
-            | GB
+            = disk.device
           td.actions
-            = f.submit 'Create', class: 'btn btn-default'
+            div.buttons
+              / TODO: resize. (virStorageVol.resize)
+              = link_to machine_disk_path(@machine, disk), method: 'delete', class: 'btn' do
+                span.oi.oi-delete
+                span.action Delete
+          td.type = disk.type
+          td.size = number_to_human_size disk.size
 
 
 - content_for :scripts do
   javascript:
     $(function() {
-      $('a.expand-snapshots').click(function() {
-        $(this).closest('tr').nextAll('tr.snapshot').slice(0, 4).removeClass('hidden');
+      $('#page-storage .create-button').click(function() {
+        $('#page-storage .create-button').fadeOut(200, function () {
+          $('#page-storage .new').fadeIn(200);
+        });
       });
 
-      $('#page-storage .new').hide();
-
-      $('#page-storage .create').click(function() {
-        $('#page-storage .new').show();
+      $('#page-storage .save-button').click(function() {
+        $('#page-storage .new').fadeOut(200, function () {
+          $('#page-storage .create-button').fadeIn(200);
+        });
       });
     });

@@ -4,7 +4,7 @@ html
     meta charset='utf-8'
     meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'
     title
-      = @title || 'Prototype: VirtKick, 1-Click Cloud Management'
+      = @title || 'Beta: VirtKick, 1-Click Cloud Management'
     meta name='description' content='A prototype of VirtKick, a user-oriented cloud management center.'
     meta name='viewport' content='width=device-width'
     link rel='shortcut icon' href='/favicon.ico'
@@ -16,11 +16,11 @@ html
       .container
         = render partial: 'layouts/newsletter'
 
-    .container
+    .container.main
       .row.header
         .menu.col-md-3.hidden-xs.hidden-sm
           a href='/'
-            = image_tag 'logo/virtkick-logo-pixelart-100.png'
+            = image_tag 'logo/virtkick-logo-pixelart-64.png'
 
         .header.col-md-6
           - if @header

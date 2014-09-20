@@ -1,12 +1,33 @@
-@import '../bootstrap-customize';
+@import 'bootstrap-customize';
 @import 'machine/*';
 
-.state-running {
-  color: #20A11A;
+.btn-state {
+  margin-top: -3px;
+  margin-left: 20px;
+  padding: 5px 10px;
+  font-size: 11px;
+  border: 1px solid $border-pink-muted-color !important;
+
+  .state {
+    padding: 3px;
+    &.fa-play {
+      color: $running-color;
+    }
+    &.fa-pause {
+      color: $paused-color;
+    }
+    &.fa-restart {
+      color: $restart-color;
+    }
+    &.fa-stop {
+      color: $stopped-color;
+    }
+  }
 }
 
 #page-machine {
   .nav {
+    background-color: $grouping-bg;
     li {
       background-color: $grouping-bg;
 
@@ -27,14 +48,10 @@
     }
 
     @media(min-width: $screen-md-min) {
-      border: solid 1px $table-border-color;
+      border: 1px solid $cream-color;
       border-radius: 4px;
 
       li {
-        & + li {
-          border-left: solid 1px $table-border-color;
-        }
-
         a {
           border-radius: 0px;
         }
