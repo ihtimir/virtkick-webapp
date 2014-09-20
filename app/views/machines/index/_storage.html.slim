@@ -23,8 +23,6 @@
           tr
             td.name
               = disk.device
-              | &nbsp;&nbsp;
-              a.expand-snapshots.fa.fa-plus-square
             td.type = disk.type
             td.size = number_to_human_size disk.size
             td.actions
@@ -50,7 +48,7 @@
         $(this).closest('tr').nextAll('tr.snapshot').slice(0, 4).removeClass('hidden');
       });
 
-      //$('#page-storage .new').hide();
+      $('#page-storage .new').hide();
 
       $('#page-storage .create').click(function() {
         $('#page-storage .new').show();

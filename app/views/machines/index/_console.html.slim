@@ -13,7 +13,7 @@
 - content_for :scripts do
   javascript:
     $(function() {
-      $('.console').click(function() {
+      $('.console:not(.disabled)').click(function() {
         var script = $('canvas').attr('data-script');
 
         $.getScript(script).done(function() {

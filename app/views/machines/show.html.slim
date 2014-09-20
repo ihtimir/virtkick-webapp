@@ -5,7 +5,7 @@
 
 
 #page-machine
-  - tabs = %w(power console stats storage scheduler settings)
+  - tabs = %w(power console storage settings)
   ul.nav.nav-pills.nav-justified
     - for tab in tabs
       li class="#{'active' if tab == 'power'}"
@@ -24,7 +24,7 @@
         $('a.' + hash).click();
       }
 
-      $('.nav-tabs a').click(function() {
+      $('.nav-pills a').click(function() {
         window.location.hash = $(this).attr('class');
       });
     });

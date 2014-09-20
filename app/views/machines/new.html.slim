@@ -78,5 +78,7 @@
           $('.image-type-group').hide();
           var selected = $(this).find('input').attr('class');
           $('.image-type-group.' + selected).show();
+
+          $('.create.btn').attr('disabled', selected !== 'isos');
         });
       });

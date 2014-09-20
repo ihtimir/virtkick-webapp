@@ -1,19 +1,4 @@
 #page-settings
-  h3 Networks (TODO)
-
-  label
-    input type='checkbox' checked='checked'
-    |  global network
-  br
-  label
-    input type='checkbox' checked='checked'
-    |  IPv6 for global network
-  br
-  label
-    input type='checkbox'
-    |  private network between your VMs
-
-
   h3 CD image
 
   = form_for @machine, as: :machine, url: mount_iso_machine_path(@machine), method: :post do |f|
