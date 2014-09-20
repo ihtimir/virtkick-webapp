@@ -5,6 +5,7 @@ end
 
 
 RSpec.configure do |config|
+  config.backtrace_exclusion_patterns = []
   config.filter_run :focus
   config.run_all_when_everything_filtered = true
 

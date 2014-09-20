@@ -1,3 +1,5 @@
+require 'ipaddress'
+
 class Wvm::Machine < Wvm::Base
   def self.all
     response = call :get, 'instances'
@@ -144,15 +146,10 @@ class Wvm::Machine < Wvm::Base
   end
 
   def self.setup_networks uuid
-    ip = IpReserver.new.reserve_ip uuid
-    mac = MacAddrGenerator.new.generate
-
     networks = ::Networks.new
     networks.public = ::Network.new \
-        mac: mac,
-        ip4: ip,
-        pool_name: 'default'
-
+        pool_name: 'default',
+        dhcp_network: IPAddress('192.168.123.0/24') # TODO: extract to settings
     networks
   end
 end
