@@ -1,0 +1,18 @@
+@mixin box-shadow ($string) {
+  -webkit-box-shadow: $string;
+  -moz-box-shadow:    $string;
+  box-shadow:         $string;
+}
+
+@mixin transition($property, $time, $method) {
+    -webkit-transition: $property $time $method;
+    -moz-transition: $property $time $method;
+    -ms-transition: $property $time $method;
+    -o-transition: $property $time $method;
+    transition: $property $time $method;
+}
+
+@mixin grouping {
+  background-color: $grouping-bg;
+  border-radius: 4px;
+}
