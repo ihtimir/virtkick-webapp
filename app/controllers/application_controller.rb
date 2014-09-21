@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  before_filter do
+  before_action do
     next unless user_signed_in?
 
     if current_user.email.start_with? 'guest' and current_user.created_at <= 30.minutes.ago

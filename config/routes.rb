@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root 'guests#index'
 
+  devise_for :users
+
   resources :guests, only: [:index, :create]
 
   resources :machines do
