@@ -25,7 +25,7 @@ gem 'uglifier', '>= 1.3.0'
 
 group :development, :test do
   gem 'byebug'
-  gem 'rspec-rails', '~> 3.0.0'
+  gem 'rspec-rails'
   gem 'spring'
   gem 'web-console', '~> 2.0.0.beta2'
 end
