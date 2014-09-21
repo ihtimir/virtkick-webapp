@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.1.2'
+ruby '2.1.3'
 
 gem 'active_hash'
 gem 'activemodel'
@@ -21,6 +21,7 @@ gem 'recursive-open-struct'
 gem 'sass-rails', '~> 5.0.0.beta1'
 gem 'slim'
 gem 'sqlite3'
+gem 'therubyracer'
 gem 'uglifier', '>= 1.3.0'
 
 

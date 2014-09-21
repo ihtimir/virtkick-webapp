@@ -21,6 +21,7 @@ All the user and admin documentation is there too.
 - [RVM](https://rvm.io/)
 - Ruby 2.1 from RVM
 - Linux or Mac
+- [virtkick-webvirtmgr-backend](https://github.com/virtkick/virtkick-webvirtmgr-backend)
 
 ## One time setup
 
