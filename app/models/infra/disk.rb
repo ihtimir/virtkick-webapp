@@ -1,6 +1,6 @@
 require 'active_hash'
 
-class Disk < Base
+class Infra::Disk < Infra::Base
   attr_accessor :path, :name, :format
 
   attr_accessor :size, :used

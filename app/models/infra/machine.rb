@@ -1,6 +1,6 @@
 require 'active_hash'
 
-class Machine < Base
+class Infra::Machine < Infra::Base
   attr_accessor :hostname, :uuid, :memory
   attr_accessor :processors, :processor_usage
   attr_accessor :status

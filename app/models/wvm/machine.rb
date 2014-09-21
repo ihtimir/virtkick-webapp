@@ -5,7 +5,7 @@ class Wvm::Machine < Wvm::Base
     response = call :get, 'instances'
     machines = build_all_instances response
 
-    Elements.new machines
+    Infra::Elements.new machines
   end
 
   def self.find id
@@ -31,7 +31,7 @@ class Wvm::Machine < Wvm::Base
       end
     end
 
-    ::Machine.new params
+    Infra::Machine.new params
   end
 
   def self.create new_machine
@@ -42,9 +42,9 @@ class Wvm::Machine < Wvm::Base
     call :post, 'create', create_xml: '',
         from_xml: xml
 
-    machine = ::Machine.find machine.id
+    machine = Infra::Machine.find machine.id
 
-    machine.create_disk ::Disk.new \
+    machine.create_disk Infra::Disk.new \
         size: new_machine.plan.storage,
         type: new_machine.plan.storage_type
 
@@ -117,12 +117,12 @@ class Wvm::Machine < Wvm::Base
       else
         :unknown
     end
-    Machine::Status.find status
+    Infra::Machine::Status.find status
   end
 
   def self.build_all_instances response
     machines = response.instances.map do |machine|
-      Machine.new \
+      Infra::Machine.new \
           hostname: machine[:name],
           memory: machine[:memory],
           disks: Wvm::Disk.array_of(machine.storage),
@@ -135,7 +135,7 @@ class Wvm::Machine < Wvm::Base
     uuid = SecureRandom.uuid
     networks = setup_networks uuid
 
-    ::Machine.new \
+    Infra::Machine.new \
         uuid: uuid,
         hostname: new_machine.hostname,
         memory: new_machine.plan.memory,
@@ -146,8 +146,8 @@ class Wvm::Machine < Wvm::Base
   end
 
   def self.setup_networks uuid
-    networks = ::Networks.new
-    networks.public = ::Network.new \
+    networks = Infra::Networks.new
+    networks.public = Infra::Network.new \
         pool_name: 'default',
         dhcp_network: IPAddress('192.168.123.0/24') # TODO: extract to settings
     networks

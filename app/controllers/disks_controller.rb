@@ -1,6 +1,6 @@
 class DisksController < ApplicationController
   before_filter do
-    @machine = Machine.find params[:machine_id]
+    @machine = Infra::Machine.find params[:machine_id]
   end
 
 
@@ -15,7 +15,7 @@ class DisksController < ApplicationController
   def create
     handle_errors :storage, :index do
       disk = params.require(:disk).permit(:size_plan, :type)
-      @disk = Disk.new disk
+      @disk = Infra::Disk.new disk
       @machine.create_disk @disk
     end
   end

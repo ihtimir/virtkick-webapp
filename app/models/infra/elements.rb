@@ -1,6 +1,6 @@
 require 'active_hash'
 
-class Elements < Array
+class Infra::Elements < Array
   include Enumerable
 
   def deep_sum *properties

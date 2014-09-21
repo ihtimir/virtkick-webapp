@@ -14,7 +14,7 @@ class Plans::IsoImage < ActiveYaml::Base
 
 
   def path
-    DiskType.find(pool_name).path + '/' + file
+    Infra::DiskType.find(pool_name).path + '/' + file
   end
 
   def self.by_file file

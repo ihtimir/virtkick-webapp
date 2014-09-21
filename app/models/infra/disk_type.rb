@@ -1,6 +1,6 @@
 require 'active_hash'
 
-class DiskType < Base
+class Infra::DiskType < Infra::Base
   attr_accessor :id, :name
   attr_accessor :path # extract to FileDiskType
   attr_accessor :enabled

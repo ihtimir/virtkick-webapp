@@ -1,4 +1,4 @@
-class Base
+class Infra::Base
   include ActiveModel::Model
   include ActiveModel::AttributeMethods
 

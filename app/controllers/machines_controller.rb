@@ -1,6 +1,6 @@
 class MachinesController < ApplicationController
   def index
-    @machines = Machine.all
+    @machines = Infra::Machine.all
   end
 
   def new
@@ -25,22 +25,22 @@ class MachinesController < ApplicationController
   end
 
   def show
-    @machine = Machine.find params[:id]
+    @machine = Infra::Machine.find params[:id]
 
-    @disk_types = DiskType.all
-    @disk = Disk.new
+    @disk_types = Infra::DiskType.all
+    @disk = Infra::Disk.new
     @iso_images = Plans::IsoImage.all
   end
 
   def destroy
-    machine = Machine.find params[:id]
+    machine = Infra::Machine.find params[:id]
     machine.delete
     redirect_to machines_path
   end
 
   %w(start pause resume stop force_stop restart force_restart).each do |operation|
     define_method operation do
-      machine = Machine.find params[:id]
+      machine = Infra::Machine.find params[:id]
       handle_errors :power do
         machine.send operation
       end
@@ -49,7 +49,7 @@ class MachinesController < ApplicationController
   end
 
   def mount_iso
-    machine = Machine.find params[:id]
+    machine = Infra::Machine.find params[:id]
     iso_image = Plans::IsoImage.find params[:machine][:iso_image_id]
     machine.mount_iso iso_image
     redirect_to machine_path machine, anchor: 'settings'

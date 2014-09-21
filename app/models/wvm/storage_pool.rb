@@ -3,7 +3,7 @@ class Wvm::StoragePool < Wvm::Base
     response = call :get, 'storages'
 
     response.storages.map do |storage_pool|
-      DiskType.new \
+      Infra::DiskType.new \
           name: storage_pool.name,
           enabled: storage_pool.enabled
     end
@@ -13,7 +13,7 @@ class Wvm::StoragePool < Wvm::Base
     raise unless name =~ /\A[a-zA-Z]+\Z/
     storage_pool = call :get, "storage/#{name}"
 
-    DiskType.new \
+    Infra::DiskType.new \
         name: storage_pool.pool,
         path: storage_pool.path,
         enabled: storage_pool.state == 1

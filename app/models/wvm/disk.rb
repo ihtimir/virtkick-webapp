@@ -2,7 +2,7 @@ class Wvm::Disk < Wvm::Base
   def self.array_of disks
     disks ||= []
     array = disks.map do |disk|
-      ::Disk.new \
+      Infra::Disk.new \
           used: disk.allocation,
           size: disk.capacity,
           device: disk.dev,
@@ -11,7 +11,7 @@ class Wvm::Disk < Wvm::Base
           format: disk.format,
           type: disk.storage
     end
-    Disks.new array
+    Infra::Disks.new array
   end
 
   def self.create disk, uuid

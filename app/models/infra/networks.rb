@@ -1,4 +1,4 @@
-class Networks < Elements
+class Infra::Networks < Infra::Elements
   attr_accessor :public, :private
 
   def find disk_id
