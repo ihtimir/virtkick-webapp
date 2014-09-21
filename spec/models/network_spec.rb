@@ -1,8 +1,8 @@
-describe Network do
+describe Infra::Network do
   require 'ipaddress'
 
   let(:network) {
-    Network.new dhcp_network: IPAddress('192.168.123.0/24')
+    Infra::Network.new dhcp_network: IPAddress('192.168.123.0/24')
   }
 
   context 'DHCP' do
