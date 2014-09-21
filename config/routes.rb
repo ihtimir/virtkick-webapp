@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root 'machines#index'
 
+  devise_for :users
+
   resources :machines do
     member do
       post 'start'

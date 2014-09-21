@@ -1,6 +1,12 @@
 class MachinesController < ApplicationController
+  before_action :authenticate_user!
+
+  include FindMachine
+  find_machine_before_action :id, except: [:index, :new, :create]
+
+
   def index
-    @machines = Infra::Machine.all
+    @machines = current_user.machines
   end
 
   def new
@@ -10,7 +16,7 @@ class MachinesController < ApplicationController
   end
 
   def create
-    machine_params = Forms::NewMachine.check_params params
+    machine_params = Forms::NewMachine.check_params params, current_user
     @machine = Forms::NewMachine.new machine_params
 
     handle_errors :new_machine do
@@ -25,33 +31,29 @@ class MachinesController < ApplicationController
   end
 
   def show
-    @machine = Infra::Machine.find params[:id]
-
     @disk_types = Infra::DiskType.all
     @disk = Infra::Disk.new
     @iso_images = Plans::IsoImage.all
   end
 
   def destroy
-    machine = Infra::Machine.find params[:id]
-    machine.delete
+    @meta_machine.delete
+    @machine.delete
     redirect_to machines_path
   end
 
   %w(start pause resume stop force_stop restart force_restart).each do |operation|
     define_method operation do
-      machine = Infra::Machine.find params[:id]
       handle_errors :power do
-        machine.send operation
+        @machine.send operation
       end
-      redirect_to machine_path machine, anchor: 'power'
+      redirect_to machine_path @machine, anchor: 'power'
     end
   end
 
   def mount_iso
-    machine = Infra::Machine.find params[:id]
     iso_image = Plans::IsoImage.find params[:machine][:iso_image_id]
-    machine.mount_iso iso_image
-    redirect_to machine_path machine, anchor: 'settings'
+    @machine.mount_iso iso_image
+    redirect_to machine_path @machine, anchor: 'settings'
   end
 end

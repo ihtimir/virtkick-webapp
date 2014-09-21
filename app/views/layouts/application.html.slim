@@ -34,7 +34,6 @@ html
         .action.col-md-3
           = yield :action
 
-
       .row
         .col-md-3
           nav.navbar.navbar-default role="navigation"
@@ -51,9 +50,17 @@ html
                   span.kick kick
               #navbar-collapsable.collapse.navbar-collapse
                 ul.nav.navbar-nav
-                  = navbar_item '/' do
-                    span.oi.oi-monitor
-                    | Machines
+                  - if user_signed_in?
+                    = navbar_item '/' do
+                      span.oi.oi-monitor
+                      | Machines
+                    = navbar_item destroy_user_session_path, method: :delete do
+                      span.fa.fa-sign-out
+                      | Sign out
+                  - else
+                    = navbar_item new_user_session_path do
+                      span.fa.fa-sign-in
+                      | Sign in
                   = navbar_item 'https://www.virtkick.io', class: 'home' do
                     span.fa.fa-rocket
                     | VirtKick.io
@@ -63,6 +70,11 @@ html
 
 
         .col-md-9
+          - if notice
+            .alert.alert-info = notice
+          - if alert
+            .alert.alert-warning = alert
+
           = yield
 
 

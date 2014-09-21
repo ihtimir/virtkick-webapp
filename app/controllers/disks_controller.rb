@@ -1,7 +1,6 @@
 class DisksController < ApplicationController
-  before_filter do
-    @machine = Infra::Machine.find params[:machine_id]
-  end
+  include FindMachine
+  find_machine_before_action :machine_id
 
 
   def index
