@@ -19,7 +19,7 @@ html
     .container.main
       .row.header
         .menu.col-md-3.hidden-xs.hidden-sm
-          a href='/'
+          = link_to machines_path do
             = image_tag 'logo/virtkick-logo-pixelart-64.png'
 
         .header.col-md-6
@@ -51,12 +51,9 @@ html
               #navbar-collapsable.collapse.navbar-collapse
                 ul.nav.navbar-nav
                   - if user_signed_in?
-                    = navbar_item '/' do
+                    = navbar_item machines_path do
                       span.oi.oi-monitor
                       | Machines
-                    = navbar_item destroy_user_session_path, method: :delete do
-                      span.fa.fa-sign-out
-                      | Sign out
                   - else
                     = navbar_item new_user_session_path do
                       span.fa.fa-sign-in
