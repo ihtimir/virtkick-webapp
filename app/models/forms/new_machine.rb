@@ -10,12 +10,18 @@ class Forms::NewMachine
   validates :iso_distro_id, presence: true, numericality: {only_integer: true}
 
   attr_reader :machine
+  attr_accessor :current_user
 
 
   def save
     return if invalid?
 
-    Wvm::Machine.create self
+    machine = Wvm::Machine.create self
+    current_user.meta_machines.create! \
+        hostname: hostname,
+        libvirt_machine_name: hostname,
+        libvirt_hypervisor_id: 1 # TODO: support for multiple hypervisors
+    machine
   end
 
   def plan_id
@@ -42,7 +48,9 @@ class Forms::NewMachine
     Plans::IsoImage.find iso_image_id if @iso_image_id
   end
 
-  def self.check_params params
-    params.require(:machine).permit(:hostname, :image_type, :plan_id, :iso_distro_id, :iso_image_id)
+  def self.check_params params, current_user
+    params = params.require(:machine).permit(:hostname, :image_type, :plan_id, :iso_distro_id, :iso_image_id)
+    params[:current_user] = current_user
+    params
   end
 end

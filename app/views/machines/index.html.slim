@@ -2,7 +2,8 @@
 - @icon = 'monitor'
 
 - content_for :action do
-  = link_to 'Create a new machine', new_machine_path, class: 'btn btn-primary btn-block'
+  - if user_signed_in?
+    = link_to 'Create a new machine', new_machine_path, class: 'btn btn-primary btn-block'
 
 #page-index
   .items
@@ -43,3 +44,5 @@
               a href=machine_path(machine) = machine.hostname
             td.memory = number_to_human_size(machine.memory.megabytes)
             td.storage = number_to_human_size(machine.disks.sum &:size)
+  - else
+    p You don't have a machine yet. Kick things off and #{link_to 'create one!', new_machine_path}

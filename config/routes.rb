@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  root 'machines#index'
+  root 'guests#index'
+
+  resources :guests, only: [:index, :create]
 
   resources :machines do
     member do
