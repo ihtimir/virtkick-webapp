@@ -22,7 +22,7 @@
           var rfb = new RFB({
             'target': $canvas[0],
             'repeaterID': '',
-            'encrypt': false, // TODO
+            'encrypt': location.protocol === 'https:',
             'true_color': true,
             'local_cursor': true,
             'shared': true,
