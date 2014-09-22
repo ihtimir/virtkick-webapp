@@ -2,11 +2,11 @@ require 'active_hash'
 
 class Defaults::MachinePlan < ActiveHash::Base
   plans = [
-      [0.5, 20, 'SSD', 1],
-      [1, 30, 'SSD', 1],
-      [2, 50, 'SSD', 2],
-      [4, 70, 'SSD', 2],
-      [8, 90, 'SSD', 3]
+      [0.5, 20, 'HDD', 1],
+      [1, 30, 'HDD', 1],
+      [2, 50, 'HDD', 2],
+      [4, 70, 'HDD', 2],
+      [8, 90, 'HDD', 3]
   ]
 
   self.data = plans.map.with_index do |plan, i|
