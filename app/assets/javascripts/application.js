@@ -18,7 +18,7 @@ $(function() {
         }
       } else {
         resultElement.text(resultElement.data('success'));
-        ga('send', 'event', 'newsletter_proto', 'subscribe');
+        ga('send', 'event', 'newsletter_alpha', 'subscribe');
       }
     }
   });
