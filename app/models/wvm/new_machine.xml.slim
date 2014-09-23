@@ -52,7 +52,7 @@ domain type='kvm'
     input bus='usb' type='tablet'
     input bus='ps2' type='mouse'
     input bus='ps2' type='keyboard'
-    graphics type='vnc' listen='127.0.0.1' autoport='yes' passwd=machine.vnc_password
+    graphics type='vnc' listen=machine.vnc_listen_ip autoport='yes' passwd=machine.vnc_password
     video
       model heads='1' type='cirrus' vram='9216'
       address bus='0x00' domain='0x0000' function='0x0' slot='0x02' type='pci'

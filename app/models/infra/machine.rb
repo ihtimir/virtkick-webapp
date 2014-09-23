@@ -4,7 +4,7 @@ class Infra::Machine < Infra::Base
   attr_accessor :hostname, :uuid, :memory
   attr_accessor :processors, :processor_usage
   attr_accessor :status
-  attr_accessor :vnc_password, :vnc_port
+  attr_accessor :vnc_password, :vnc_port, :vnc_listen_ip
   attr_accessor :disks
   attr_accessor :networks
   attr_accessor :iso_distro_id, :iso_image_id

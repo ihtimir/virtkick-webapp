@@ -142,7 +142,9 @@ class Wvm::Machine < Wvm::Base
         processors: new_machine.plan.cpu,
         iso_distro_id: new_machine.iso_distro.id,
         iso_image_id: new_machine.iso_distro.iso_images.first.id,
-        networks: networks
+        networks: networks,
+        vnc_listen_ip: '10.255.2.10', # TODO: extract to settings
+        vnc_password: SecureRandom.urlsafe_base64(32)
   end
 
   def self.setup_networks uuid
