@@ -14,17 +14,17 @@ class Infra::Machine < Infra::Base
     Wvm::Machine.all
   end
 
-  def self.find id
-    Wvm::Machine.find id
+  def self.find hostname
+    Wvm::Machine.find hostname
   end
 
   def id
-    hostname
+    MetaMachine.where(hostname: hostname).first.id
   end
 
   %w(start pause resume stop force_stop restart force_restart).each do |operation|
     define_method operation do
-      Wvm::Machine.send operation, id
+      Wvm::Machine.send operation, hostname
     end
   end
 

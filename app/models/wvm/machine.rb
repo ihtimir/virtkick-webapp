@@ -42,7 +42,7 @@ class Wvm::Machine < Wvm::Base
     call :post, 'create', create_xml: '',
         from_xml: xml
 
-    machine = Infra::Machine.find machine.id
+    machine = Infra::Machine.find machine.hostname
 
     machine.create_disk Infra::Disk.new \
         size: new_machine.plan.storage,
@@ -75,24 +75,24 @@ class Wvm::Machine < Wvm::Base
     disk.device = machine.disks.next_device_name
     Wvm::Disk.create disk, machine.uuid
 
-    call :post, "instance/#{machine.id}", assign_volume: '',
+    call :post, "instance/#{machine.hostname}", assign_volume: '',
         file: disk.path, device: disk.device
   end
 
   def self.delete_disk disk, machine
-    call :post, "instance/#{machine.id}", unassign_volume: '',
+    call :post, "instance/#{machine.hostname}", unassign_volume: '',
         device: disk.device
 
     Wvm::Disk.delete disk
   end
 
   def self.mount_iso machine, iso_image
-    call :post, "instance/#{machine.id}", mount_iso: '',
+    call :post, "instance/#{machine.hostname}", mount_iso: '',
         media: iso_image.file # device purposely omitted
   end
 
   def self.delete machine
-    call :post, "instance/#{machine.id}", delete: '',
+    call :post, "instance/#{machine.hostname}", delete: '',
         delete_disk: ''
   end
 

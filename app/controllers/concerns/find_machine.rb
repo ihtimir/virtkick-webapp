@@ -6,7 +6,7 @@ module FindMachine
 
     def self.find_machine_before_action key, *options
       before_action(*options) do
-        @meta_machine = current_user.find_meta_machine params[key]
+        @meta_machine = current_user.meta_machines.find params[key]
         @machine = @meta_machine.machine
       end
     end
