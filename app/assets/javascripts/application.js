@@ -11,7 +11,11 @@ $(function() {
       resultElement = $('.newsletter .result');
 
       if (response.result == 'error') {
-        resultElement.text(response.msg);
+        if (response.msg.indexOf('is already subscribed') != -1) {
+          resultElement.text("Nothing to do. You're already subscribed!");
+        } else {
+          resultElement.text(response.msg);
+        }
       } else {
         resultElement.text(resultElement.data('success'));
         ga('send', 'event', 'newsletter_proto', 'subscribe');
