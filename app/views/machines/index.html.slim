@@ -17,12 +17,12 @@
         p
           i.oi.oi-puzzle-piece
           | Memory
-        p.value = number_to_human_size @machines.sum(&:memory).megabytes
+        p.value = number_to_human_size_with_unit @machines.sum(&:memory).megabytes, min_unit: 'MB'
       li
         p
           i.fa.fa-database
           | Storage
-        p.value = number_to_human_size @machines.deep_sum(:disks, :size)
+        p.value = number_to_human_size_with_unit @machines.deep_sum(:disks, :size), min_unit: 'GB'
       li
         p
           i.oi.oi-credit-card
