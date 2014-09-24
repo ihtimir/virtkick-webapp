@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root 'guests#index'
 
-  devise_for :users
+  devise_for :users, skip: [:sessions]
 
   resources :guests, only: [:index, :create]
 
