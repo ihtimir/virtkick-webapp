@@ -3,6 +3,7 @@ namespace :alpha do
   task cleanup: :environment do
     User.guest.to_delete.each do |user|
       begin
+        puts user.email
         user.destroy
       rescue Exception => e
         puts "#{e.class}: #{e.message}"

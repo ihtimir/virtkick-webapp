@@ -1,10 +1,6 @@
 class User < ActiveRecord::Base
   devise :database_authenticatable, :rememberable, :trackable
 
-  before_destroy do
-    meta_machines
-  end
-
   has_many :meta_machines, dependent: :destroy
 
   scope :guest, -> {
