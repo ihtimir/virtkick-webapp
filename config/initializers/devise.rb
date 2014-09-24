@@ -2,6 +2,11 @@ Devise.setup do |config|
   config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
   require 'devise/orm/active_record'
 
+  if Rails.env.production?
+    config.secret_key = ENV['DEVISE_SECRET_KEY']
+    raise 'Set the DEVISE_SECRET_KEY environment variable for production.' unless config.secret_key
+  end
+
   config.authentication_keys = [:email]
   config.case_insensitive_keys = [:email]
   config.strip_whitespace_keys = [:email]
