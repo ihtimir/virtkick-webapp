@@ -21,7 +21,7 @@ class Wvm::Machine < Wvm::Base
       disks: Wvm::Disk.array_of(response.disks)
     }
 
-    unless response.media.empty?
+    if response.media and not response.media.empty?
       file = response.media.first.image
       iso_image = Plans::IsoImage.by_file(file).first
 
