@@ -161,6 +161,11 @@ h3 {
   font-size: 20px;
 }
 
+.field_with_errors {
+  // Rails wraps invalid fields with div.field_with_errors. Don't clutter the interface with it.
+  display: inline;
+}
+
 .mobile-newsletter {
   padding-top: 20px;
   padding-bottom: 10px;

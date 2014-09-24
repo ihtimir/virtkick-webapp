@@ -5,7 +5,7 @@ class Forms::NewMachine
   attr_accessor :image_type
   attr_writer :plan_id, :iso_distro_id, :iso_image_id
 
-  validates :hostname, presence: true
+  validates :hostname, presence: true, format: {with: /\A[a-zA-Z0-9\.]+\z/}
   validates :plan_id, presence: true, numericality: {only_integer: true}
   validates :iso_distro_id, presence: true, numericality: {only_integer: true}
 
