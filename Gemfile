@@ -40,4 +40,5 @@ end
 
 group :test do
   gem 'codeclimate-test-reporter'
+  gem 'timecop'
 end

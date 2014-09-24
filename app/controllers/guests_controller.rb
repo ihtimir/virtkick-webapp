@@ -10,10 +10,7 @@ class GuestsController < ApplicationController
   end
 
   def create
-    email = "guest_#{SecureRandom.uuid}@alpha.virtkick.io"
-    user = User.new email: email
-    user.save validate: false
-    sign_in user
+    sign_in User.create_guest!
     redirect_to machines_path
   end
 end
