@@ -1,6 +1,7 @@
 class MetaMachine < ActiveRecord::Base
   belongs_to :user
 
+
   before_destroy do
     machine.delete
   end

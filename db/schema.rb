@@ -11,7 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140923234648) do
+ActiveRecord::Schema.define(version: 20140929024912) do
+
+  create_table "delayed_jobs", force: true do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
 
   create_table "ip_ranges", force: true do |t|
     t.string  "netmask"
@@ -35,7 +51,24 @@ ActiveRecord::Schema.define(version: 20140923234648) do
     t.datetime "updated_at",            null: false
   end
 
+  add_index "meta_machines", ["hostname"], name: "index_meta_machines_on_hostname", unique: true
   add_index "meta_machines", ["user_id"], name: "index_meta_machines_on_user_id"
+
+  create_table "new_machines", force: true do |t|
+    t.string   "hostname"
+    t.integer  "user_id"
+    t.integer  "plan_id"
+    t.integer  "iso_distro_id"
+    t.integer  "iso_image_id"
+    t.string   "current_step",                default: "create_machine"
+    t.boolean  "step_create_machine"
+    t.boolean  "finished",                    default: false
+    t.integer  "given_libvirt_hypervisor_id"
+    t.string   "given_libvirt_machine_name"
+    t.string   "error_message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "",    null: false

@@ -9,6 +9,10 @@ Rails.application.configure do
   config.action_view.raise_on_missing_translations = true
   config.middleware.insert_after(ActionDispatch::Static, Rack::LiveReload)
 
+  if ENV['INLINE']
+    config.active_job.queue_adapter = :inline
+  end
+
   config.assets.debug = true
   config.assets.raise_runtime_errors = true
 end

@@ -29,7 +29,7 @@
           | Monthly
         p.value free
 
-  - if @machines.count > 0
+  - if @machines.count + @new_machines.count > 0
     table.table.table-striped
       thead
         tr
@@ -37,6 +37,21 @@
           th.memory Memory
           th.storage Storage
       tbody
+        - @new_machines.each do |new_machine|
+          - next if new_machine.finished? and new_machine.error_message.nil?
+          tr
+            - if new_machine.error_message
+              - style = {class: 'failed', icon: 'fa-warning'}
+            - else
+              - style = {class: 'creating', icon: 'fa-spinner fa-spin'}
+
+            td.name class=style[:class]
+              i class="fa #{style[:icon]}"
+              = new_machine.hostname
+              - if new_machine.error_message
+                span.error = new_machine.error_message
+            td.memory  = number_to_human_size(new_machine.plan.memory.gigabytes)
+            td.storage = number_to_human_size(new_machine.plan.storage)
         - @machines.each do |machine|
           tr
             td.name class=(machine.status.running? ? 'on' : 'off')

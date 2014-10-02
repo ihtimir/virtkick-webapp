@@ -1,6 +1,6 @@
-describe Forms::NewMachine do
+describe NewMachine do
   let(:new_machine) {
-    Forms::NewMachine.new plan_id: 1, iso_distro_id: 1
+    NewMachine.new plan_id: 1, iso_distro_id: 1
   }
 
 

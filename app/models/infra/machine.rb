@@ -18,6 +18,10 @@ class Infra::Machine < Infra::Base
     Wvm::Machine.find hostname
   end
 
+  def self.create new_machine
+    Wvm::Machine.create new_machine
+  end
+
   def id
     MetaMachine.where(hostname: hostname).first.id
   end

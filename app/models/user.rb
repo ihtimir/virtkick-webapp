@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :rememberable, :trackable
 
   has_many :meta_machines, dependent: :destroy
+  has_many :new_machines, dependent: :destroy
 
   scope :guest, -> {
     where(guest: true)

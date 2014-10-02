@@ -30,6 +30,8 @@ module VirtkickWebapp
     config.assets.precompile += %w(.svg .eot .woff .ttf)
     config.stylesheets_dir = '/css'
 
+    config.active_job.queue_adapter = :delayed_job
+
     config.x.api_url = 'http://0.0.0.0:8000/1'
   end
 end

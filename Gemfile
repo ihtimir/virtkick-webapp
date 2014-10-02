@@ -43,3 +43,6 @@ group :test do
   gem 'codeclimate-test-reporter'
   gem 'timecop'
 end
+
+# Gems that need to be required as last
+gem 'delayed_job_active_record', '~> 4.0'

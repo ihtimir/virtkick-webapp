@@ -1,5 +1,3 @@
-@import 'bootstrap-customize';
-
 #page-index {
   $item-total-width: 200px;
 
@@ -54,8 +52,9 @@
 
     .name {
       i {
-        min-width: 25px;
+        margin-right: 5px;
       }
+
       width: 70%;
 
       &.on * {
@@ -63,6 +62,11 @@
       }
       &.off * {
         color: $brand-primary;
+      }
+
+      .error {
+        margin-left: 15px;
+        font-size: 13px;
       }
     }
     .memory, .storage {

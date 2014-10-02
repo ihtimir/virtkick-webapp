@@ -7,23 +7,23 @@ class MachinesController < ApplicationController
 
   def index
     @machines = current_user.machines
+    @new_machines = current_user.new_machines
   end
 
   def new
-    @machine ||= Forms::NewMachine.new
+    @machine ||= NewMachine.new
     @plans ||= Defaults::MachinePlan.all
     @isos ||= Plans::IsoDistro.all
   end
 
   def create
-    machine_params = Forms::NewMachine.check_params params, current_user
-    @machine = Forms::NewMachine.new machine_params
+    machine_params = NewMachine.check_params params
+    @machine = current_user.new_machines.build machine_params
 
-    handle_errors :new_machine do
-      if created = @machine.save
-        redirect_to created
-        return
-      end
+    if @machine.save
+      MachineCreateJob.perform_later @machine.id
+      redirect_to machines_path
+      return
     end
 
     new
