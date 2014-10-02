@@ -15,9 +15,12 @@ class MachineCreateJob < ActiveJob::Base
           libvirt_hypervisor_id: 1, # TODO
           libvirt_machine_name: @new_machine.hostname # TODO
       machine.save!
-    end
 
-    finish
+      @new_machine.update_attributes! \
+          given_meta_machine_id: machine.id,
+          finished: true,
+          current_step: nil
+    end
   end
 
   private
@@ -36,14 +39,9 @@ class MachineCreateJob < ActiveJob::Base
         error_message: message,
         current_step: nil,
         finished: true
+    puts e.message
     puts e.backtrace.join "\n"
     raise
-  end
-
-  def finish
-    @new_machine.update_attributes \
-        finished: true,
-        current_step: nil
   end
 
   # TODO: doesn't work with ActiveJob. https://github.com/collectiveidea/delayed_job/issues/715

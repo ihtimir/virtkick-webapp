@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20140929024912) do
     t.boolean  "finished",                    default: false
     t.integer  "given_libvirt_hypervisor_id"
     t.string   "given_libvirt_machine_name"
+    t.integer  "given_meta_machine_id"
     t.string   "error_message"
     t.datetime "created_at"
     t.datetime "updated_at"

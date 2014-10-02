@@ -45,11 +45,10 @@
             - else
               - style = {class: 'creating', icon: 'fa-spinner fa-spin'}
 
-            td.name class=style[:class]
+            td.name class=style[:class] data-url=machine_progress_path(new_machine)
               i class="fa #{style[:icon]}"
               = new_machine.hostname
-              - if new_machine.error_message
-                span.error = new_machine.error_message
+              span.error = new_machine.error_message
             td.memory  = number_to_human_size(new_machine.plan.memory.gigabytes)
             td.storage = number_to_human_size(new_machine.plan.storage)
         - @machines.each do |machine|
@@ -61,3 +60,19 @@
             td.storage = number_to_human_size(machine.disks.sum &:size)
   - else
     p You don't have a machine yet. Kick things off and #{link_to 'create one!', new_machine_path}
+
+- content_for :scripts do
+  javascript:
+    $(function() {
+      var $creating = $('.creating')
+      if ($creating.length > 0) {
+        var url = $creating.attr('data-url');
+        setInterval(function() {
+          $.ajax(url).success(function(data) {
+            if (data.finished) {
+              document.location.href = '/machines/' + data.given_meta_machine_id;
+            }
+          });
+        }, 500);
+      }
+    });

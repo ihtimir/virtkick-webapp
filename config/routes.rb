@@ -25,4 +25,6 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  get '/machine_progress/:id', to: 'machine_progress#progress', as: 'machine_progress'
 end

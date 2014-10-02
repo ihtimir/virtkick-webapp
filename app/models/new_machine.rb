@@ -30,6 +30,7 @@ class NewMachine < ActiveRecord::Base
 
   private
   def hostname_unique
+    return if persisted?
     if MetaMachine.where(hostname: hostname).count > 0
       errors.add :hostname, 'already exists'
     end

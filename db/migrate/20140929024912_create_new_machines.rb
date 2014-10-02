@@ -1,7 +1,6 @@
 class CreateNewMachines < ActiveRecord::Migration
   def change
     create_table :new_machines do |t|
-      # meta_machines
       t.string :hostname
       t.integer :user_id
       t.integer :plan_id
@@ -18,6 +17,7 @@ class CreateNewMachines < ActiveRecord::Migration
       # t.string :given_hypervisor
       t.integer :given_libvirt_hypervisor_id
       t.string :given_libvirt_machine_name
+      t.integer :given_meta_machine_id
       t.string :error_message
       t.timestamps
     end
