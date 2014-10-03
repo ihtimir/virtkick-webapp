@@ -37,23 +37,20 @@ class MachinesController < ApplicationController
   end
 
   def destroy
-    @meta_machine.delete
-    @machine.delete
+    MachineDeleteJob.perform_later @meta_machine.id
     redirect_to machines_path
   end
 
   %w(start pause resume stop force_stop restart force_restart).each do |operation|
     define_method operation do
-      handle_errors :power do
-        @machine.send operation
-      end
+      MachineActionJob.perform_later @meta_machine.id, operation
       redirect_to machine_path @machine, anchor: 'power'
     end
   end
 
   def mount_iso
-    iso_image = Plans::IsoImage.find params[:machine][:iso_image_id]
-    @machine.mount_iso iso_image
+    iso_image_id = params[:machine][:iso_image_id]
+    MachineMountIsoJob.perform_later @meta_machine.id, iso_image_id
     redirect_to machine_path @machine, anchor: 'settings'
   end
 end

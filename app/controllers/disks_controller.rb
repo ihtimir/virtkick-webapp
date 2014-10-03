@@ -12,17 +12,13 @@ class DisksController < ApplicationController
   end
 
   def create
-    handle_errors :storage, :index do
-      disk = params.require(:disk).permit(:size_plan, :type)
-      @disk = Infra::Disk.new disk
-      @machine.create_disk @disk
-    end
+    disk_params = params.require(:disk).permit(:size_plan, :type)
+    DiskCreateJob.perform_later @meta_machine.id, disk_params
+    index
   end
 
   def destroy
-    handle_errors :storage, :index do
-      disk = @machine.disks.find params[:id]
-      @machine.delete_disk disk
-    end
+    DiskDeleteJob.perform_later @meta_machine.id, params[:id]
+    index
   end
 end

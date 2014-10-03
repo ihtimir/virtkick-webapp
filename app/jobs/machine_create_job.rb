@@ -1,11 +1,10 @@
-class MachineCreateJob < ActiveJob::Base
-  queue_as :default
-
+class MachineCreateJob < BaseJob
   def perform new_machine_id
     job_initalize new_machine_id
 
     step :create_machine do
       Infra::Machine.create @new_machine
+      # TODO: extract disk create to a new step
     end
 
     step do
@@ -39,12 +38,9 @@ class MachineCreateJob < ActiveJob::Base
         error_message: message,
         current_step: nil,
         finished: true
-    puts e.message
-    puts e.backtrace.join "\n"
     raise
   end
 
-  # TODO: doesn't work with ActiveJob. https://github.com/collectiveidea/delayed_job/issues/715
   def max_attempts
     1
   end

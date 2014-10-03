@@ -6,6 +6,10 @@ class Errors < StandardError
   end
 
   def message
-    @errors.map(&:to_s).to_s
+    if @errors.size == 0
+      @errors.first.to_s
+    else
+      @errors.map(&:to_s).to_s
+    end
   end
 end

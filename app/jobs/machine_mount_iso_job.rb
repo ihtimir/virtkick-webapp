@@ -1,0 +1,7 @@
+class MachineMountIsoJob < BaseRepeatableJob
+  def perform meta_machine_id, iso_image_id
+    iso_image = Plans::IsoImage.find iso_image_id
+    machine = MetaMachine.find(meta_machine_id).machine
+    machine.mount_iso iso_image
+  end
+end
