@@ -43,6 +43,10 @@
 
           rfb.connect(host, port, password, uuid);
 
+          $('ul.nav a:not(.console)').click(function() {
+            rfb.disconnect();
+          });
+
           $('.ctrlaltdel').click(function() {
             rfb.sendCtrlAltDel();
           });
