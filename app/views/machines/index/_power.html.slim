@@ -30,27 +30,27 @@
             | %)
     .col-sm-3
       .key State:
-      .val.power-state.bigger
+      .val.power-state.bigger data-running="#{@machine.status.running?}"
         span
-          i class=@machine.status.icon
-          = @machine.status.name
+          i class="icon #{@machine.status.icon}"
+          span.status = @machine.status.name
 
   = render partial: '/flash', locals: {section: 'power'}
 
   .controls
     .btn-group
       = power_action start_machine_path(@machine), 'start' do
-        i.fa.fa-play
-        | &nbsp; Start
+        i.icon.fa.fa-play
+        span.status Start
       = power_action pause_machine_path(@machine), 'pause only-on' do
-        i.fa.fa-pause
-        | &nbsp; Pause
+        i.icon.fa.fa-pause
+        span.status Pause
       = power_action resume_machine_path(@machine), 'resume only-on' do
-        i.fa.fa-forward
-        | &nbsp; Resume
+        i.icon.fa.fa-forward
+        span.status Resume
       = power_action stop_machine_path(@machine), 'stop only-on' do
-        i.fa.fa-stop
-        | &nbsp; Stop
+        i.icon.fa.fa-stop
+        span.status Stop
       .btn-group
         button.only-on.btn.btn-default.dropdown-toggle type='button' data-toggle='dropdown'
           i.fa.fa-caret-down
@@ -58,15 +58,82 @@
           li
             = power_action force_stop_machine_path(@machine), 'force-stop only-on', false do
               span.fa.fa-power-off
-              | &nbsp; Hard stop
+              span.status Hard stop
       = power_action restart_machine_path(@machine), 'restart only-on' do
-        i.fa.fa-repeat
-        | &nbsp; Restart
+        i.icon.fa.fa-repeat
+        span.status Restart
       .btn-group
         button.only-on.btn.btn-default.dropdown-toggle type='button' data-toggle='dropdown'
           i.fa.fa-caret-down
         ul.dropdown-menu
           li
             = power_action force_restart_machine_path(@machine), 'force-restart only-on', false do
-              span.fa.fa-power-off
-              | &nbsp; Hard reset
+              span.icon.fa.fa-power-off
+              span.status Hard reset
+
+- content_for :scripts do
+  javascript:
+    $(function() {
+      var actions = {
+        // label, new icons, poll?, until?
+        'start': ['Starting', 'icon fa fa-spinner fa-spin', true, 'Running'],
+        'pause': ['Paused', 'icon fa fa-pause'],
+        'resume': ['Running', 'icon fa fa-play'],
+        'stop': ['Stopping', 'icon fa fa-spinner fa-spin', true, 'Stopped'],
+        'restart': ['Restart requested', 'icon fa fa-play'],
+        'hard-stop': ['Hard stopping', 'icon fa fa-spinner fa-spin', true, 'Running'],
+        'hard-reset': ['Resetting', 'icon fa fa-spinner fa-spin', true, 'Running']
+      };
+
+      var $powerState = $('.power-state');
+
+      var reloadButtonState = function() {
+        var running = $powerState.data('running').toString() === 'true';
+        if (running) {
+          $('.only-on').removeClass('disabled');
+          $('.start').addClass('disabled');
+        } else {
+          $('.only-on').addClass('disabled');
+          $('.start').removeClass('disabled');
+        }
+      };
+
+      reloadButtonState();
+
+      $('.controls a.action').click(function () {
+        var $this = $(this);
+        var action = $this.text().toLowerCase().trim();
+        var actionUrl = $this.attr('href');
+
+        var tempState = actions[action][0];
+        var tempClasses = actions[action][1];
+        var poll = actions[action][2];
+        var untilState = actions[action][3];
+
+        var $powerState = $('.power-state');
+        var $icon = $powerState.find('.icon');
+        var $status = $powerState.find('.status');
+
+        $icon.attr('class', tempClasses);
+        $status.text(tempState);
+
+        $.post(actionUrl).success(function() {
+          if (poll) {
+            var id = setInterval(function() {
+              $.ajax(window.location.pathname + '/state').success(function(data) {
+                console.log(data);
+                if (data.name == untilState) {
+                  clearInterval(id);
+                  $icon.attr('class', 'icon ' + data.icon);
+                  $status.text(data.name);
+                  $powerState.data('running', data.running);
+                  reloadButtonState();
+                }
+              });
+            }, 1000);
+          }
+        });
+
+        return false;
+      });
+    });

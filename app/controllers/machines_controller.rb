@@ -53,4 +53,8 @@ class MachinesController < ApplicationController
     MachineMountIsoJob.perform_later @meta_machine.id, iso_image_id
     redirect_to machine_path @machine, anchor: 'settings'
   end
+
+  def state
+    render json: @machine.status.attributes
+  end
 end

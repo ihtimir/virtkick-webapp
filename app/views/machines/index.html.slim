@@ -76,7 +76,7 @@
             if (data.error_message) {
               window.location.reload(false);
             } else {
-              window.location.href = '/machines/' + data.given_meta_machine_id;
+              window.location.pathname = '/machines/' + data.given_meta_machine_id;
             }
           });
         }, 500);
