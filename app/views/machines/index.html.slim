@@ -64,13 +64,19 @@
 - content_for :scripts do
   javascript:
     $(function() {
-      var $creating = $('.creating')
+      var $creating = $('.creating');
       if ($creating.length > 0) {
         var url = $creating.attr('data-url');
         setInterval(function() {
           $.ajax(url).success(function(data) {
-            if (data.finished) {
-              document.location.href = '/machines/' + data.given_meta_machine_id;
+            if (!data.finished) {
+              return;
+            }
+
+            if (data.error_message) {
+              window.location.reload(false);
+            } else {
+              window.location.href = '/machines/' + data.given_meta_machine_id;
             }
           });
         }, 500);
