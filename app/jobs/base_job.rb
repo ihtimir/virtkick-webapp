@@ -12,7 +12,7 @@ class BaseJob
   end
 
   def self.set_max_attempts attempts, reschedule_interval = nil
-    def self.max_attempts
+    define_method :max_attempts do
       attempts
     end
 
@@ -20,7 +20,7 @@ class BaseJob
   end
 
   def self.set_reschedule_interval interval
-    def self.reschedule_at current_time, attempts
+    define_method :reschedule_at do |current_time, attempts|
       current_time + interval
     end
   end
