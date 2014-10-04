@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140929024912) do
+ActiveRecord::Schema.define(version: 20141003233726) do
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -70,6 +70,16 @@ ActiveRecord::Schema.define(version: 20140929024912) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "progresses", force: true do |t|
+    t.integer  "user_id",                    null: false
+    t.boolean  "finished",   default: false, null: false
+    t.string   "error"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "progresses", ["user_id"], name: "index_progresses_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "",    null: false

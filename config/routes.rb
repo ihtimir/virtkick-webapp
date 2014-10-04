@@ -28,5 +28,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/machine_progress/:id', to: 'machine_progress#progress', as: 'machine_progress'
+  get '/progress/:id', to: 'progress#progress', as: 'progress'
+  get '/machine_progress/:id', to: 'progress#machine', as: 'machine_progress'
 end

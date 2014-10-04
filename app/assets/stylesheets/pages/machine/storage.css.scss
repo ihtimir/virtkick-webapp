@@ -51,6 +51,10 @@
   }
 
   table {
+    tr {
+      height: 60px;
+    }
+
     @mixin nowrap {
       width: 1px !important;
       white-space: nowrap;
@@ -58,6 +62,19 @@
 
     .name {
       @include nowrap;
+
+      i {
+        margin-left: 7px;
+      }
+
+      i.fa-warning {
+        margin-left: 15px;
+        margin-right: 7px;
+      }
+
+      .message {
+        font-size: 13px;
+      }
     }
 
     .actions {

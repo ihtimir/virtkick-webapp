@@ -1,4 +1,6 @@
 class MachineCreateJob < BaseJob
+  self.run_once
+
   def perform new_machine_id
     job_initalize new_machine_id
 

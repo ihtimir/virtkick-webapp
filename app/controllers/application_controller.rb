@@ -21,4 +21,8 @@ class ApplicationController < ActionController::Base
       }
     end
   end
+
+  def render_progress progress_id
+    render json: {progress_id: progress_id}
+  end
 end

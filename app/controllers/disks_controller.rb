@@ -13,12 +13,10 @@ class DisksController < ApplicationController
 
   def create
     disk_params = params.require(:disk).permit(:size_plan, :type)
-    DiskCreateJob.perform_later @meta_machine.id, disk_params
-    index
+    render_progress DiskCreateJob.perform_later current_user, @meta_machine.id, disk_params
   end
 
   def destroy
-    DiskDeleteJob.perform_later @meta_machine.id, params[:id]
-    index
+    render_progress DiskDeleteJob.perform_later current_user, @meta_machine.id, params[:id]
   end
 end

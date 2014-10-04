@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
 
   has_many :meta_machines, dependent: :destroy
   has_many :new_machines, dependent: :destroy
+  has_many :progresses, dependent: :destroy
 
   scope :guest, -> {
     where(guest: true)

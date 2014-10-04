@@ -2,7 +2,7 @@
 
   = render partial: '/flash', locals: {section: 'storage'}
 
-  = form_for @disk, url: machine_disks_path(@machine) do |f|
+  = form_for @disk, remote: true, url: machine_disks_path(@machine) do |f|
     .create.text-right
       a.btn.btn-primary.create-button
         | Create a new disk
@@ -35,12 +35,23 @@
           td.actions
             div.buttons
               / TODO: resize. (virStorageVol.resize)
-              = link_to machine_disk_path(@machine, disk), method: 'delete', class: 'btn',
+              = link_to machine_disk_path(@machine, disk), method: 'delete', remote: true, class: 'btn',
                     data: {confirm: 'Are you sure? This cannot be undone.', confirm_title: "Delete #{disk.device}"} do
                 span.oi.oi-delete
                 span.action Delete
           td.type = disk.type
           td.size = number_to_human_size disk.size
+      tr.example.hidden
+        td.name
+          span.name
+          i.fa.fa-spinner.fa-spin
+          i.fa.fa-check.hidden
+          i.fa.error.fa-warning.hidden
+          span.error.message
+        td.actions
+          div.buttons
+        td.type
+        td.size
 
 
 - content_for :scripts do
@@ -57,4 +68,32 @@
           $('#page-storage .create-button').fadeIn(200);
         });
       });
+    });
+
+    $('#new_disk').submit(function() {
+      var form = $(this);
+      var example = $('.example');
+      var row = example.clone();
+      row.removeClass('example hidden');
+      row.find('.name .name').text(form.find('.name').text());
+      row.find('.type').text(form.find('.type select :selected').text());
+      row.find('.size').text(form.find('.size select :selected').text() + ' GB');
+      example.closest('table').prepend(row);
+
+      $.post(form.attr('action'), form.serializeArray()).success(function(data) {
+        handleProgress(data.progress_id, function () {
+          row.find('.name .fa-spinner').remove();
+          var tick = row.find('.name .fa-check');
+          tick.removeClass('hidden');
+          setTimeout(function() {
+            tick.fadeOut('slow');
+          }, 500);
+        }, function (error) {
+          row.find('.name .fa-spinner').remove();
+          row.find('.name .error').removeClass('hidden');
+          row.find('.name .message').text(error);
+        });
+      });
+
+      return false;
     });
