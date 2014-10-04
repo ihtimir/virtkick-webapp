@@ -4,6 +4,8 @@
 - if app_key and app_id
   javascript:
     window.doorbellOptions = {
+      #{raw doorbell_signature}
       appKey: '#{app_key}'
     };
+
   script#doorbellScript type='text/javascript' src="https://doorbell.io/button/#{app_id}" async='true'
