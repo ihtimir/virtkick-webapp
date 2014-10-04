@@ -50,8 +50,7 @@ class MachinesController < ApplicationController
 
   def mount_iso
     iso_image_id = params[:machine][:iso_image_id]
-    MachineMountIsoJob.perform_later @meta_machine.id, iso_image_id
-    redirect_to machine_path @machine, anchor: 'settings'
+    render_progress MachineMountIsoJob.perform_later current_user, @meta_machine.id, iso_image_id
   end
 
   def state

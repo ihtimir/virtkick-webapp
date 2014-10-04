@@ -1,4 +1,4 @@
-class MachineMountIsoJob < BaseJob
+class MachineMountIsoJob < TrackableJob
   self.set_max_attempts 5, 1.second
 
   def perform meta_machine_id, iso_image_id
