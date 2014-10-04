@@ -49,4 +49,6 @@ end
 gem 'delayed_job_active_record', '~> 4.0'
 
 
-load 'Gemfile.local' if File.exist? 'Gemfile.local'
+if File.exists?('Gemfile.local')
+  eval File.read('Gemfile.local'), nil, 'Gemfile.local'
+end
