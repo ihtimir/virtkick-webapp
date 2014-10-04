@@ -32,10 +32,14 @@
         tr
           td.name
             = disk.device
+            i.fa.fa-spinner.fa-spin.hidden
+            i.fa.fa-check.hidden
+            i.fa.error.fa-warning.hidden
+            span.error.message
           td.actions
             div.buttons
               / TODO: resize. (virStorageVol.resize)
-              = link_to machine_disk_path(@machine, disk), method: 'delete', remote: true, class: 'btn',
+              = link_to machine_disk_path(@machine, disk), method: 'delete', remote: true, class: 'btn delete-disk',
                     data: {confirm: 'Are you sure? This cannot be undone.', confirm_title: "Delete #{disk.device}"} do
                 span.oi.oi-delete
                 span.action Delete
@@ -81,7 +85,7 @@
       example.closest('table').prepend(row);
 
       $.post(form.attr('action'), form.serializeArray()).success(function(data) {
-        handleProgress(data.progress_id, function () {
+        handleProgress(data.progress_id, function() {
           row.find('.name .fa-spinner').remove();
           var tick = row.find('.name .fa-check');
           tick.removeClass('hidden');
@@ -96,4 +100,22 @@
       });
 
       return false;
+    });
+
+    $('a.delete-disk').on('ajax:success', function(e, data) {
+      console.log(e.currentTarget);
+      var link = $(e.currentTarget);
+      var row = link.closest('tr');
+      row.find('.name .fa-spinner').removeClass('hidden');
+
+      handleProgress(data.progress_id, function() {
+        row.fadeOut('slow');
+        setTimeout(function () {
+          row.remove();
+        }, 1000);
+      }, function (error) {
+        row.find('.name .fa-spinner').addClass('hidden');
+        row.find('.name .error').removeClass('hidden');
+        row.find('.name .message').text(error);
+      });
     });
