@@ -47,3 +47,6 @@ end
 
 # Gems that need to be required as last
 gem 'delayed_job_active_record', '~> 4.0'
+
+
+load 'Gemfile.local' if File.exist? 'Gemfile.local'
