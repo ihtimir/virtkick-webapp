@@ -48,9 +48,18 @@ Run `INLINE=1 x rails s` to inline execute jobs instead of sending them to backg
 
 ## Deployment
 
-There are a variety of ways to run a production Rails website.
-You can go for Passenger, Thin or just WEBrick ([yes](http://stackoverflow.com/a/20941090/504845)).
+```
+x rails s -e production
+x ./bin/delayed_job -n 5 start
+```
 
+Environment variables:
+
+- SECRET_KEY_BASE
+- DEVISE_SECRET_KEY
+- BUGSNAG_API_KEY - optional for [Bugsnag](https://bugsnag.com/)
+
+Use `pwgen -sn 128` or `x rake secret` to generate secret keys.
 
 ## Contributing
 
