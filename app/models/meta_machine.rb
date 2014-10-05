@@ -7,6 +7,8 @@ class MetaMachine < ActiveRecord::Base
   end
 
   def machine
-    Infra::Machine.find libvirt_machine_name
+    machine = Infra::Machine.find libvirt_machine_name
+    machine.id = self.id
+    machine
   end
 end

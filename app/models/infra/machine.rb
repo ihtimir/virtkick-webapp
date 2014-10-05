@@ -1,6 +1,7 @@
 require 'active_hash'
 
 class Infra::Machine < Infra::Base
+  attr_accessor :id
   attr_accessor :hostname, :uuid, :memory
   attr_accessor :processors, :processor_usage
   attr_accessor :status
@@ -23,7 +24,7 @@ class Infra::Machine < Infra::Base
   end
 
   def id
-    MetaMachine.where(hostname: hostname).first.id
+    @id ||= MetaMachine.where(hostname: hostname).first.id
   end
 
   %w(start pause resume stop force_stop restart force_restart).each do |operation|
