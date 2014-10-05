@@ -34,17 +34,27 @@ gem install bundler
 
 ## Development
 
+#### Setup
 ```
 alias x='bundle exec'
 x install
 x rake db:migrate
-x rails s
-x guard
-x rake jobs:work
-xdg-open http://0.0.0.0:3000/ # open a browser
 ```
 
+#### Start
+In separate sessions:
+```
+x rails s
+```
 Run `INLINE=1 x rails s` to inline execute jobs instead of sending them to background.
+
+```
+x rake jobs:work
+```
+
+Now test with  `xdg-open http://0.0.0.0:3000/ # open a browser`
+
+
 
 ## Deployment
 
