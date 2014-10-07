@@ -28,4 +28,6 @@ class BaseJob
   def self.run_once
     self.set_max_attempts 1
   end
+
+  self.set_reschedule_interval 30.seconds
 end

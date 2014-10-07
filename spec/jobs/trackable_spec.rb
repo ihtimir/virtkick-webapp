@@ -6,7 +6,7 @@ describe TrackableJob do
 
   class ExampleFailingJob < TrackableJob
     def perform
-      raise 'unexpected error'
+      raise 'expected error'
     end
   end
 
@@ -22,11 +22,11 @@ describe TrackableJob do
 
   it 'failed job' do
     # when
-    progress_id = expect { ExampleFailingJob.perform_later 1 }.to raise_error
+    progress_id = expect { ExampleFailingJob.perform_later 1 }.to raise_error StandardError, 'expected error'
     # then
     progress = Progress.find progress_id
     expect(progress.id).to eq 1
     expect(progress.finished).to eq true
-    expect(progress.error).to eq 'unexpected error'
+    expect(progress.error).to eq 'expected error'
   end
 end

@@ -9,7 +9,6 @@ class TrackableJob < BaseJob
 
   def error job, e
     Progress.find(@progress_id).update! finished: true, error: e.message
-    super
   end
 
   def self.perform_later user, *args

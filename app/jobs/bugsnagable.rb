@@ -1,5 +1,5 @@
 module Bugsnagable
-  def error job, e
+  def failure job, e
     unless Rails.env.test?
       puts e.message
       puts e.backtrace.map { |e| '    ' + e }.join "\n"

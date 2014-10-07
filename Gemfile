@@ -46,6 +46,7 @@ group :test do
 end
 
 # Gems that need to be required as last
+gem 'delayed_job', git: 'https://github.com/Nowaker/delayed_job.git', branch: 'feature/exception-in-failure-hook'
 gem 'delayed_job_active_record', '~> 4.0'
 
 

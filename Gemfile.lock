@@ -1,4 +1,12 @@
 GIT
+  remote: https://github.com/Nowaker/delayed_job.git
+  revision: d913e922ac483a99e38b35fc0ab785b3144939eb
+  branch: feature/exception-in-failure-hook
+  specs:
+    delayed_job (4.0.4)
+      activesupport (>= 3.0, < 4.2)
+
+GIT
   remote: https://github.com/bluerail/twitter-bootstrap-rails-confirm.git
   revision: 98ab27a7573002138b6743567add10744e93ab79
   specs:
@@ -110,8 +118,6 @@ GEM
     daemons (1.1.9)
     debug_inspector (0.0.2)
     debugger-linecache (1.2.0)
-    delayed_job (4.0.4)
-      activesupport (>= 3.0, < 4.2)
     delayed_job_active_record (4.0.2)
       activerecord (>= 3.0, < 4.2)
       delayed_job (>= 3.0, < 4.1)
@@ -280,6 +286,7 @@ DEPENDENCIES
   codeclimate-test-reporter
   coffee-rails (~> 4.0.0)
   daemons
+  delayed_job!
   delayed_job_active_record (~> 4.0)
   devise!
   font-awesome-rails
