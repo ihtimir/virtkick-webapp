@@ -3,6 +3,7 @@ class MetaMachine < ActiveRecord::Base
 
 
   before_destroy do
+    machine.force_stop rescue nil
     machine.delete
   end
 
