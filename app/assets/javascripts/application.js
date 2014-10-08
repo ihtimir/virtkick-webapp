@@ -32,7 +32,7 @@ window.handleProgress = function(progressId, onSuccess, onError) {
       }
       clearInterval(id);
 
-      data.error ? onError(data.error) : onSuccess();
+      data.error === null ? onSuccess() : onError(data.error);
     });
   }, 500);
 };
