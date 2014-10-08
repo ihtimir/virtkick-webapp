@@ -88,10 +88,14 @@
       var $powerState = $('.power-state');
 
       var reloadButtonState = function() {
-        var running = $powerState.data('running').toString() === 'true';
-        if (running) {
+        var state = $powerState.text().trim();
+        if (state === 'Running') {
           $('.only-on').removeClass('disabled');
+          $('.start, .resume').addClass('disabled');
+        } else if (state == 'Paused') {
+          $('.only-on, .start').addClass('disabled');
           $('.start').addClass('disabled');
+          $('.resume').removeClass('disabled');
         } else {
           $('.only-on').addClass('disabled');
           $('.start').removeClass('disabled');
@@ -116,6 +120,8 @@
 
         $icon.attr('class', tempClasses);
         $status.text(tempState);
+
+        reloadButtonState();
 
         $.post(actionUrl).success(function() {
           if (poll) {

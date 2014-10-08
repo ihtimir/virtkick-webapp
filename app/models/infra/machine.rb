@@ -64,7 +64,7 @@ class Infra::Machine < Infra::Base
     self.data = [
         {id: :running, name: 'Running', running: true, icon: 'fa fa-play'},
         {id: :saved, name: 'Saved', running: false, icon: 'fa fa-stop'},
-        {id: :suspended, name: 'Suspended', running: false, icon: 'fa fa-pause'},
+        {id: :suspended, name: 'Paused', running: false, icon: 'fa fa-pause'},
         {id: :stopped, name: 'Stopped', running: false, icon: 'fa fa-stop'},
         {id: :unknown, name: 'Unknown', running: nil, icon: 'fa fa-question'}
     ]
