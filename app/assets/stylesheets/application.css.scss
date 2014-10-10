@@ -121,9 +121,12 @@
 
 nav.navbar {
   border: 0 !important;
-  padding-top: 26px;
-  padding-bottom: 26px;
   @include grouping;
+
+  @media(min-width: $screen-md) {
+    padding-top: 26px;
+    padding-bottom: 26px;
+  }
 
   li {
     float: none;
