@@ -13,4 +13,4 @@
 
   p
     = link_to 'Delete machine', machine_path(@machine), method: 'delete', class: 'btn btn-danger',
-          data: {confirm: 'Are you sure? This cannot be undone.', confirm_title: "Delete #{@machine.id}"}
+          data: {confirm: 'Are you sure? This cannot be undone.', confirm_title: "Delete #{@machine.hostname}"}
