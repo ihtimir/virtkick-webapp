@@ -4,7 +4,7 @@
 //= require bootstrap
 //= require twitter/bootstrap/rails/confirm
 //= require novnc
-
+//= require_tree ./pages
 
 $(function() {
   $('.newsletter form').ajaxChimp({

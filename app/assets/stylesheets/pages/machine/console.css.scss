@@ -30,20 +30,24 @@
         text-align: center;
         position: relative;
 
-        .distributions {
+        .iso {
           float: left;
           width: auto;
-          background-color: transparent;
-          color: $bright-violet-color;
-          padding: 8px 30px;
-          border:  1px solid $muted-violet-color !important;
-          border-radius: 4px;
-          cursor: pointer;
-          @include transition(background-color, 0.2s, ease-in, 0s);
 
-          &:focus, &:hover {
-            background-color: darken($cream-color, 10%);
+          .distributions {
+            background-color: transparent;
+            color: $bright-violet-color;
+            padding: 8px 30px;
+            margin-right: 10px;
+            border:  1px solid $muted-violet-color !important;
+            border-radius: 4px;
+            cursor: pointer;
             @include transition(background-color, 0.2s, ease-in, 0s);
+
+            &:focus, &:hover {
+              background-color: darken($cream-color, 10%);
+              @include transition(background-color, 0.2s, ease-in, 0s);
+            }
           }
         }
 
