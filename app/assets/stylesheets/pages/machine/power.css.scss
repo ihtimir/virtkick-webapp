@@ -1,6 +1,9 @@
 #page-machine #power {
   .btn { 
     padding: 10px 35px;
+    &.dropdown-toggle {
+      padding: 10px 15px;
+    }
   }
   .stats {
     margin: 0;
@@ -67,10 +70,10 @@
 
       a.btn {
         width: 140px;
-        @include transition(color, 0.25s, ease-in);
+        @include transition(color, 0.25s, ease-in, 0s);
 
         &:hover {
-          @include transition(color, 0.25s, ease-in);
+          @include transition(color, 0.25s, ease-in, 0s);
         }
       }
       a.disabled {

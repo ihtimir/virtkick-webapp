@@ -3,6 +3,7 @@
 //= require vendor/jquery.ajaxchimp-1.3.0.js
 //= require bootstrap
 //= require twitter/bootstrap/rails/confirm
+//= require novnc
 
 
 $(function() {

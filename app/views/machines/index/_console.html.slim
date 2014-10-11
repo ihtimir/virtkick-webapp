@@ -1,59 +1,112 @@
 #page-console.text-center
-  div
-    canvas { data-password=@machine.vnc_password data-uuid=@machine.uuid
-      data-script=path_to_javascript('novnc.js') }
-  p
-    | VM stuck? Sometimes this may help. &nbsp;
-    button.ctrlaltdel
-      i.fa-refresh.fa
-      |  Send Ctrl+Alt+Del
-  p
-    | If the VNC console doesn't appear, please upgrade your browser or trying a different one.
+  .console-window-wrapper
+    .console-window
+      .canvas-wrapper
+        canvas data-password=@machine.vnc_password data-uuid=@machine.uuid
+      .vm-actions
+        = form_for @machine, as: :machine, url: mount_iso_machine_path(@machine), method: :post, remote: true do |f|
+          = f.collection_select :iso_image_id, @iso_images, :id, :long_name, {prompt: true}, class: 'distributions'
+        .rocket-menu
+          = image_tag 'logo/virtkick-logo-pixelart-gray-24.png'
+        .restart
+          a.btn.btn-default.ctrlaltdel
+            |  Reboot
+          a.btn.btn-default.hardreset
+            |  Hard reset
+      p.bright-violet.browser-info
+        | If the VNC console doesn't appear, please upgrade your browser or try a different one.
+
 
 - content_for :scripts do
   javascript:
     $(function() {
-      $('.console:not(.disabled)').click(function() {
-        var script = $('canvas').attr('data-script');
+      var rfb;
+      var $canvasWrapper = $('#page-console').find('.canvas-wrapper');
 
-        $.getScript(script).done(function() {
-          var $canvas = $('canvas');
+      function updateConsole() {
+        if (!rfb) {
+          var width = 640;
+          var height = 480;
+        } else {
+          var width = rfb.get_display().get_width();
+          var height = rfb.get_display().get_height();
+        }
 
-          var rfb = new RFB({
-            'target': $canvas[0],
-            'repeaterID': '',
-            'encrypt': location.protocol === 'https:',
-            'true_color': true,
-            'local_cursor': true,
-            'shared': true,
-            'updateState': function(rfb, state, oldState, msg) {
-              console.log('VNC: State changed: ' + msg);
-            },
-            'view_only': false,
-            'onPasswordRequired': function() {
-              console.log('VNC: Password required');
+        // after connecting first noVNC frames are not real screens, so catch only
+        // realistic sizes to avoid console flickering
+        if (height <= 20) {
+          return;
+        }
+
+        $canvasWrapper.width(width + "px");
+        $canvasWrapper.height(height + "px");
+
+        var margin = 70;
+        var left = ($("#page-machine").width() - width - margin) / 2;
+        left -= $(".side-menu-wrapper").outerWidth() / 2;
+
+        $('.console-window').css("margin-left", left);
+      }
+
+      $('.console').click(function() {
+
+        rfb = new RFB({
+          'target': $('canvas')[0],
+          'repeaterID': '',
+          'encrypt': location.protocol === 'https:',
+          'true_color': true,
+          'local_cursor': true,
+          'shared': true,
+          'onUpdateState': function(rfb, state, oldstate, statusMsg) {
+            if (state === "normal") {
+              // hide browser monit
+              $(".browser-info").remove();
             }
-          });
-
-          var host = window.location.hostname;
-          var port = 6080;
-          var password = $canvas.attr('data-password');
-          var uuid = $canvas.attr('data-uuid');
-          document.cookie = 'token=1-' + uuid + '; path=/';
-
-          rfb.connect(host, port, password, uuid);
-
-          $('ul.nav a:not(.console)').click(function() {
-            rfb.disconnect();
-          });
-
-          $('.ctrlaltdel').click(function() {
-            rfb.sendCtrlAltDel();
-          });
-
-          $('.nav-tabs a').click(function() {
-            rfb.disconnect();
-          });
+            return;
+          },
+          'onFBUComplete': function (rfb, fbu) {
+            updateConsole();
+          },
+          'view_only': false,
+          'onPasswordRequired': function() {
+            console.log('VNC: Password required');
+          }
         });
+
+        var $canvas = $('#page-console').find('canvas');
+        var host = window.location.hostname;
+        var port = 6080;
+        var password = $canvas.attr('data-password');
+        var uuid = $canvas.attr('data-uuid');
+        document.cookie = 'token=1-' + uuid + '; path=/';
+
+        rfb.connect(host, port, password, '');
+
+        $('.ctrlaltdel').click(function() {
+          rfb.sendCtrlAltDel();
+        });
+
+        $('.nav-tabs a:not(.console)').click(function() {
+          rfb.disconnect();
+        });
+
+        $('.side-menu-wrapper').addClass("collapsed");
       });
+
+      $('#page-machine .nav li').click(function (e) {
+        if ($(e.currentTarget).find(".console").length == 0) {
+          $('.side-menu-wrapper').removeClass("collapsed");
+          $(".side-menu").removeClass("expanded");
+        }
+      });
+
+      $('.side-menu-wrapper .dropdown').click(function () {
+        $(".side-menu").toggleClass("expanded");
+      });
+
+      $(window).resize(function () {
+        updateConsole();
+      });
+
+      updateConsole();
     });

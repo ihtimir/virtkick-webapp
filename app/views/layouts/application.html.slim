@@ -35,33 +35,35 @@ html
           = yield :action
 
       .row
-        .col-md-3
-          nav.navbar.navbar-default role="navigation"
-            .container
-              .navbar-header.hidden-md.hidden-lg
-                button.navbar-toggle data-target="#navbar-collapsable" data-toggle="collapse" type="button"
-                  span.sr-only Toggle navigation
-                  span.icon-bar
-                  span.icon-bar
-                  span.icon-bar
-                a.navbar-brand href='/'
-                  = image_tag 'logo/virtkick-logo-pixelart-48.png', class: 'pix'
-                  |  virt
-                  span.kick kick
-              #navbar-collapsable.collapse.navbar-collapse
-                ul.nav.navbar-nav
-                  - if user_signed_in?
-                    = navbar_item machines_path do
-                      span.oi.oi-monitor
-                      | Machines
-                  - else
-                    = navbar_item new_user_session_path do
-                      span.fa.fa-sign-in
-                      | Sign in
-                  = navbar_item 'https://www.virtkick.io', class: 'home' do
-                    span.fa.fa-rocket
-                    | VirtKick.io
-
+        .col-md-3.side-menu-wrapper
+          nav.navbar.navbar-default.side-menu role="navigation"
+            .navbar-header.hidden-md.hidden-lg
+              button.navbar-toggle data-target="#navbar-collapsable" data-toggle="collapse" type="button"
+                span.sr-only Toggle navigation
+                span.icon-bar
+                span.icon-bar
+                span.icon-bar
+              a.navbar-brand href='/'
+                = image_tag 'logo/virtkick-logo-pixelart-48.png', class: 'pix'
+                |  virt
+                span.kick kick
+            #navbar-collapsable.collapse.navbar-collapse
+              ul.nav.navbar-nav
+                - if user_signed_in?
+                  = navbar_item machines_path do
+                    span.oi.oi-monitor
+                    | Machines
+                - else
+                  = navbar_item new_user_session_path do
+                    span.fa.fa-sign-in
+                    | Sign in
+                = navbar_item 'https://www.virtkick.io', class: 'home' do
+                  span.fa.fa-rocket
+                  | VirtKick.io
+          .dropdown
+            button.btn.btn-primary
+              span.caret
+              
           .desktop-newsletter.hidden-xs.hidden-sm.text-center
             = render partial: 'layouts/newsletter'
 

@@ -87,10 +87,10 @@ label {
 
 .btn {
   @include box-shadow(none !important);
-  @include transition(background-color, 0.15s, ease-in);
+  @include transition(background-color, 0.15s, ease-in, 0);
   
   &:hover, &.active {
-    @include transition(background-color, 0.15s, ease-in);
+    @include transition(background-color, 0.15s, ease-in, 0);
   }
   
   .default {
@@ -114,13 +114,13 @@ label {
 	.navbar-toggle, .navbar-toggle:hover, .navbar-toggle:focus {
 		border: 1px solid $cream-color !important;
 		background-color: transparent !important;
-  	@include transition(background-color, 0.25s, ease-in);
+  	@include transition(background-color, 0.25s, ease-in, 0);
 	  .icon-bar {
       background-color: $red-color !important;
     }
     &:hover {
       background-color: $red-color !important;
-      @include transition(background-color, 0.25s, ease-in);
+      @include transition(background-color, 0.25s, ease-in, 0);
       .icon-bar {
         background-color: white !important;
       }
@@ -132,7 +132,7 @@ input, .form-control input, select, .form-control select, .input-group input {
   @include box-shadow(none !important);
   border-color: $border-pink-color !important;
   border-style: solid !important;
-  border-width: 1px;
+  border-width: 1px !important;
 
   &:focus, &:active {
     border-color: $red-color !important;
@@ -234,12 +234,12 @@ table.table {
               margin: 0px;
               padding: 6px;
               color: $muted-violet-color;
-              @include transition(color, 0.1s, ease-in);
+              @include transition(color, 0.1s, ease-in, 0);
               display: inline-block;
 
               &:hover, &:focus, &:active {
                 color: darken($muted-violet-color, 10%);
-                @include transition(opacity, 0.1s, ease-in);
+                @include transition(opacity, 0.1s, ease-in, 0);
               }
 
               span.action {
@@ -262,7 +262,7 @@ table.table {
     tr:hover {
       td.actions .buttons {
         opacity: 1;
-        @include transition(opacity, 0.2s, ease-in);
+        @include transition(opacity, 0.2s, ease-in, 0);
       }
     }
   }

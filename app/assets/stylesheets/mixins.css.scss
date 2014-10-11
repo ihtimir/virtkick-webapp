@@ -4,12 +4,12 @@
   box-shadow:         $string;
 }
 
-@mixin transition($property, $time, $method) {
-    -webkit-transition: $property $time $method;
-    -moz-transition: $property $time $method;
-    -ms-transition: $property $time $method;
-    -o-transition: $property $time $method;
-    transition: $property $time $method;
+@mixin transition($property, $time, $method, $delay) {
+    -webkit-transition: $property $time $method $delay;
+    -moz-transition: $property $time $method $delay;
+    -ms-transition: $property $time $method $delay;
+    -o-transition: $property $time $method $delay;
+    transition: $property $time $method $delay;
 }
 
 @mixin grouping {
