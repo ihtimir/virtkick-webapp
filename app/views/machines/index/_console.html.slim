@@ -16,7 +16,8 @@
         .restart
           a.btn.btn-default.ctrlaltdel
             | Reboot
-          = link_to force_restart_machine_path(@machine), method: :post, remote: true, class: 'hardreset'
+          = link_to force_restart_machine_path(@machine), method: :post, remote: true, class: 'btn btn-default hardreset',
+              data: {confirm: 'Are you sure? This may cause data loss.', confirm_title: "Hard reset #{@machine.hostname}"}
             | Hard reset
       p.bright-violet.browser-info
         | If the VNC console doesn't appear, please upgrade your browser or try a different one.
