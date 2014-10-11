@@ -81,4 +81,8 @@
 
           $('.create.btn').attr('disabled', selected !== 'isos');
         });
+
+        $('.create').closest('form').submit(function () {
+          $('.create').val('Loading...').attr('disabled', 'disabled');
+        });
       });
