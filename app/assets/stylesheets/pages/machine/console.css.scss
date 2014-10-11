@@ -78,13 +78,15 @@
         }
       }
 
-      p.browser-info {
-        position: absolute;
-        top: 220px;
-        left: 0px;
+      p.browser-info, p.status {
+        position: relative;
+        top: -320px;
+        width: 100%;
         padding-left: 150px;
         padding-right: 150px;
-        margin-top: 20px;
+        float: left;
+        text-align: center;
+        margin: 0 auto;
       }
     }
   }

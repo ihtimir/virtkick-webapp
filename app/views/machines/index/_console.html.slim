@@ -21,12 +21,18 @@
             | Hard reset
       p.bright-violet.browser-info
         | If the VNC console doesn't appear, please upgrade your browser or try a different one.
+      p.bright-violet.status.hidden
+        | Machine killed. Now starting it again... &nbsp;
+        i.fa.fa-spinner.fa-spin
+
 
 
 - content_for :scripts do
   javascript:
     $(function() {
       var rfb;
+      var hardResetRequested = false;
+      var connectLoop = false;
       var $canvasWrapper = $('#page-console').find('.canvas-wrapper');
 
       function updateConsole() {
@@ -49,13 +55,26 @@
         $canvasWrapper.height(height + "px");
 
         var margin = 70;
-        var left = ($("#page-machine").width() - width - margin) / 2;
-        left -= $(".side-menu-wrapper").outerWidth() / 2;
+        var left = ($('#page-machine').width() - width - margin) / 2;
+        left -= $('.side-menu-wrapper').outerWidth() / 2;
 
         $('.console-window').css("margin-left", left);
       }
 
       $('.console').click(function() {
+        var connect = function() {
+          if (!connectLoop) {
+            return;
+          }
+
+          var $canvas = $('#page-console').find('canvas');
+          var host = window.location.hostname;
+          var port = 6080;
+          var password = $canvas.attr('data-password');
+          var uuid = $canvas.attr('data-uuid');
+          document.cookie = 'token=1-' + uuid + '; path=/';
+          rfb.connect(host, port, password, '');
+        };
 
         rfb = new RFB({
           'target': $('canvas')[0],
@@ -65,9 +84,19 @@
           'local_cursor': true,
           'shared': true,
           'onUpdateState': function(rfb, state, oldstate, statusMsg) {
-            if (state === "normal") {
-              // hide browser monit
-              $(".browser-info").remove();
+            if (state === 'normal') {
+              $('#page-console .browser-info').hide();
+              $('#page-console .status').addClass('hidden');
+              hardResetRequested = false;
+            } else if (state === 'failed') {
+              if (hardResetRequested) {
+                $('#page-console .browser-info').hide();
+                $('#page-console .status').removeClass('hidden');
+              } else {
+                $('#page-console .browser-info').show();
+                $('#page-console .status').addClass('hidden');
+              }
+              setTimeout(connect, 1000);
             }
             return;
           },
@@ -80,35 +109,36 @@
           }
         });
 
-        var $canvas = $('#page-console').find('canvas');
-        var host = window.location.hostname;
-        var port = 6080;
-        var password = $canvas.attr('data-password');
-        var uuid = $canvas.attr('data-uuid');
-        document.cookie = 'token=1-' + uuid + '; path=/';
+        $('.side-menu-wrapper').addClass('collapsed');
 
-        rfb.connect(host, port, password, '');
+        connectLoop = true;
+        connect();
+      });
 
-        $('.ctrlaltdel').click(function() {
-          rfb.sendCtrlAltDel();
-        });
+      $('#page-console .ctrlaltdel').click(function() {
+        rfb.sendCtrlAltDel();
+      });
 
-        $('.nav-tabs a:not(.console)').click(function() {
+      $('#page-console .hardreset').click(function() {
+        hardResetRequested = true;
+      });
+
+      $('.nav a:not(.console)').click(function() {
+        if (rfb) {
           rfb.disconnect();
-        });
-
-        $('.side-menu-wrapper').addClass("collapsed");
+        }
+        connectLoop = false;
       });
 
       $('#page-machine .nav li').click(function (e) {
-        if ($(e.currentTarget).find(".console").length == 0) {
-          $('.side-menu-wrapper').removeClass("collapsed");
-          $(".side-menu").removeClass("expanded");
+        if ($(e.currentTarget).find('.console').length == 0) {
+          $('.side-menu-wrapper').removeClass('collapsed');
+          $('.side-menu').removeClass('expanded');
         }
       });
 
       $('.side-menu-wrapper .dropdown').click(function () {
-        $(".side-menu").toggleClass("expanded");
+        $('.side-menu').toggleClass('expanded');
       });
 
       $(window).resize(function () {
