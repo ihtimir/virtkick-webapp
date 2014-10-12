@@ -21,8 +21,6 @@ domain type='kvm'
   on_reboot restart
   on_crash restart
   devices
-    emulator
-      | /usr/sbin/qemu-system-x86_64
     disk device='cdrom' type='file'
       driver name='qemu' type='raw'
       source file=machine.iso_image.path
