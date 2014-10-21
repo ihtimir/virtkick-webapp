@@ -143,7 +143,7 @@ class Wvm::Machine < Wvm::Base
         iso_distro_id: new_machine.iso_distro.id,
         iso_image_id: new_machine.iso_distro.iso_images.first.id,
         networks: networks,
-        vnc_listen_ip: '10.255.2.10', # TODO: extract to settings
+        vnc_listen_ip: ENV['VNC_FORCE_IP'] || '10.255.2.10', # TODO: extract to settings
         vnc_password: SecureRandom.urlsafe_base64(32)
   end
 
