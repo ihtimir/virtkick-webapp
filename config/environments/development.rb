@@ -14,7 +14,6 @@ Rails.application.configure do
   config.active_support.deprecation = :log
   config.active_record.migration_error = :page_load
   config.action_view.raise_on_missing_translations = true
-  config.middleware.insert_after(ActionDispatch::Static, Rack::LiveReload)
 
   if ENV['INLINE']
     config.active_job.queue_adapter = :inline
