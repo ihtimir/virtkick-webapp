@@ -1,1 +1,3 @@
-//= require_tree ./snippets
+define(function(require) {
+
+});

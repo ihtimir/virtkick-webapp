@@ -71,7 +71,7 @@
 
 - content_for :scripts do
     javascript:
-      $(function() {
+      require(['jquery', '!domReady'], function($) {
         $('.image-type-group:not(.active)').hide();
 
         $('.image-type').click(function() {

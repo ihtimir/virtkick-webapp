@@ -29,7 +29,7 @@
 
 - content_for :scripts do
   javascript:
-    $(function() {
+    require(['jquery', 'novnc', '!domReady'], function($, RFB) {
       var rfb;
       var hardResetRequested = false;
       var connectLoop = false;

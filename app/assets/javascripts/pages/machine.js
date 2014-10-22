@@ -1,4 +1,10 @@
-$(function() {
+
+define(function(require) {
+
+  var $ = require('jquery');
+
+  var handleProgress = require('./handleProgress');
+
   return $('.iso_dropdown').change(function() {
     var form = $(this).closest('form');
     form.submit();
@@ -23,4 +29,5 @@ $(function() {
       })
     })
   });
+
 });

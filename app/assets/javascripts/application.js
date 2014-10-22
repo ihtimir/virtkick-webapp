@@ -1,12 +1,14 @@
-//= require jquery
-//= require jquery_ujs
-//= require vendor/jquery.ajaxchimp-1.3.0.js
-//= require bootstrap
-//= require twitter/bootstrap/rails/confirm
-//= require novnc
-//= require_tree ./pages
 
-$(function() {
+define('application', function(require) {
+  var $ = require('jquery');
+  require('jquery_ujs');
+  require('jquery.ajaxchimp')
+  require('bootstrap');
+  require('twitter/bootstrap/rails/confirm');
+  require('!domReady');
+  var ga = require('snippets/analytics');
+
+
   $('.newsletter form').ajaxChimp({
     callback: function(response, element) {
       resultElement = $('.newsletter .result');
@@ -24,16 +26,3 @@ $(function() {
     }
   });
 });
-
-window.handleProgress = function(progressId, onSuccess, onError) {
-  var id = setInterval(function() {
-    return $.ajax('/progress/' + progressId).success(function(data) {
-      if (!data.finished) {
-        return;
-      }
-      clearInterval(id);
-
-      data.error === null ? onSuccess() : onError(data.error);
-    });
-  }, 500);
-};

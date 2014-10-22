@@ -22,9 +22,11 @@ module VirtkickWebapp
     config.autoflush_log = true
 
     config.serve_static_assets = true
-    config.assets.js_compressor = :uglifier
+
+		config.assets.digest = true
+    config.assets.enabled = true
+    # config.assets.js_compressor = :uglifier
     config.assets.compile = true
-    config.assets.digest = true
     config.assets.version = '1.0'
     config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
     config.assets.precompile += %w(.svg .eot .woff .ttf)
@@ -33,5 +35,12 @@ module VirtkickWebapp
     config.active_job.queue_adapter = :delayed_job
 
     config.x.api_url = 'http://0.0.0.0:8000/1'
+
+    # uncomment to debug compiled builds
+    config.requirejs.build_config['optimize'] = 'none'
+    config.requirejs.build_config['wrapShim'] = 'true'
+
+
+
   end
 end

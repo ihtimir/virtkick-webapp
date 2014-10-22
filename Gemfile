@@ -25,7 +25,7 @@ gem 'slim'
 gem 'sqlite3'
 gem 'therubyracer'
 gem 'uglifier', '>= 1.3.0'
-
+gem 'requirejs-rails', git: 'https://github.com/RushPL/requirejs-rails.git'
 
 group :development, :test do
   gem 'byebug'

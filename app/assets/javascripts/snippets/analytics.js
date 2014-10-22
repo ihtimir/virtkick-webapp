@@ -1,3 +1,5 @@
+define(function(require) {
+
 if (window.location.host.indexOf('virtkick.io') != -1) {
   (function (i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
@@ -19,3 +21,5 @@ if (window.location.host.indexOf('virtkick.io') != -1) {
     console.log(arguments);
   }
 }
+	return ga || window.ga;
+});

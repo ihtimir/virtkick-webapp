@@ -63,7 +63,7 @@
 
 - content_for :scripts do
   javascript:
-    $(function() {
+    require(['jquery', '!domReady'], function($) {
       var $creating = $('.creating');
       if ($creating.length > 0) {
         var url = $creating.attr('data-url');

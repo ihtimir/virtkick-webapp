@@ -73,7 +73,7 @@
 
 - content_for :scripts do
   javascript:
-    $(function() {
+    require(['jquery', '!domReady'], function($) {
       var actions = {
         // label, new icons, poll?, until?
         'start': ['Starting', 'icon fa fa-spinner fa-spin', true, 'Running'],

@@ -1,3 +1,10 @@
+class NoCompression
+  def compress(string)
+    # do nothing
+    string
+  end
+end
+
 Rails.application.configure do
   config.cache_classes = false
   config.eager_load = false
@@ -12,7 +19,10 @@ Rails.application.configure do
   if ENV['INLINE']
     config.active_job.queue_adapter = :inline
   end
-
+  config.assets.digest = false
+  config.assets.compress = true
+  config.assets.js_compressor = NoCompression.new
+  config.assets.css_compressor = NoCompression.new
   config.assets.debug = true
   config.assets.raise_runtime_errors = true
 end

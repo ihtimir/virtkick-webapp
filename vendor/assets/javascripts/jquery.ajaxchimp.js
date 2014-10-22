@@ -1,3 +1,6 @@
+//Wrapped in an outer function to preserve global this
+(function (root) { var amdExports; define(['jquery'], function (jQuery) { (function () {
+
 /*!
 Mailchimp Ajax Submit
 jQuery Plugin
@@ -145,3 +148,9 @@ For e.g. 'http://blahblah.us1.list-manage.com/subscribe/post-json?u=5afsdhfuhdsi
         return this;
     };
 })(jQuery);
+
+
+
+}.call(root));
+    return amdExports;
+}); }(this));
