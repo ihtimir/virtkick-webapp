@@ -43,8 +43,7 @@ class MachinesController < ApplicationController
 
   %w(start pause resume stop force_stop restart force_restart).each do |operation|
     define_method operation do
-      MachineActionJob.perform_later @meta_machine.id, operation
-      redirect_to machine_path @machine, anchor: 'power'
+      render_progress MachineActionJob.perform_later current_user, @meta_machine.id, operation
     end
   end
 
