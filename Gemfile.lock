@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/Nowaker/delayed_job.git
-  revision: d913e922ac483a99e38b35fc0ab785b3144939eb
+  revision: d1a9cdee62912379be00433763a4c4801fd4742b
   branch: feature/exception-in-failure-hook
   specs:
     delayed_job (4.0.4)
