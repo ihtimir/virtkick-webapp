@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/RushPL/requirejs-rails.git
-  revision: 3c6d26ed690c5d96976908170f2a49315bf5ab22
+  revision: 09cf6a0d2666d51ca18a840c1770895bce127116
   specs:
     requirejs-rails (0.9.5)
       railties (>= 3.1.1)
