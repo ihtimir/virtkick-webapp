@@ -18,7 +18,7 @@
 
 - content_for :scripts do
   javascript:
-    require(['jquery'], function($) {
+    require(['jquery', 'pages/machine'], function($) {
       $(function() {
         var hash = window.location.hash.substring(1);
         if (hash.length > 0) {
