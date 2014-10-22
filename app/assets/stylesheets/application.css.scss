@@ -341,5 +341,6 @@ h3 {
 }
 
 @import 'pages/*';
+@import 'views/**/*';
 @import 'vendor/*.css.scss';
 // ignore .less for now

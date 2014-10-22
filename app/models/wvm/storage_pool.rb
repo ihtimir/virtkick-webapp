@@ -1,6 +1,6 @@
 class Wvm::StoragePool < Wvm::Base
   def self.all
-    response = call :get, 'storages'
+    response = call :get, '/1/storages'
 
     response.storages.map do |storage_pool|
       Infra::DiskType.new \
@@ -11,7 +11,7 @@ class Wvm::StoragePool < Wvm::Base
 
   def self.find name
     raise unless name =~ /\A[a-zA-Z]+\Z/
-    storage_pool = call :get, "storage/#{name}"
+    storage_pool = call :get, "/1/storage/#{name}"
 
     Infra::DiskType.new \
         name: storage_pool.pool,

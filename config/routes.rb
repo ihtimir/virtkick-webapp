@@ -5,6 +5,9 @@ Rails.application.routes.draw do
 
   resources :guests, only: [:index, :create]
 
+  get '/setup', to: 'setup#index', as: 'setup'
+  post '/setup', to: 'setup#perform', as: 'perform_setup'
+
   resources :machines do
     member do
       post 'start'

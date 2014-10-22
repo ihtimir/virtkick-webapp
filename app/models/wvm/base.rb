@@ -16,7 +16,7 @@ class Wvm::Base
       params[:body] = body
     end
 
-    response = try_twice { send method, "/1/#{url}", params }
+    response = try_twice { send method, url, params }
 
     errors = response['errors']
     if errors and errors.size > 0
@@ -25,6 +25,11 @@ class Wvm::Base
 
     response = response['response'] || {}
     RecursiveOpenStruct.new(response.to_hash, recurse_over_arrays: true)
+  end
+
+  # TODO: support multiple hypervisors
+  def self.hypervisor
+    @@hypervisor ||= YamlConfig.new('hypervisors')[0]
   end
 
   private

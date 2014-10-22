@@ -22,12 +22,12 @@ class Wvm::Disk < Wvm::Base
     gigabytes = disk.size / 1.gigabytes
     meta_prealloc = disk.format == 'qcow2'
 
-    call :post, "storage/#{disk.type}", add_volume: '',
+    call :post, "/1/storage/#{disk.type}", add_volume: '',
         name: disk.name, size: gigabytes, format: disk.format, meta_prealloc: meta_prealloc
   end
 
   def self.delete disk
-    call :post, "storage/#{disk.type}", del_volume: '',
+    call :post, "/1/storage/#{disk.type}", del_volume: '',
         volname: disk.name
   end
 

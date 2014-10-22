@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141003233726) do
+ActiveRecord::Schema.define(version: 20141022184302) do
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -80,6 +80,15 @@ ActiveRecord::Schema.define(version: 20141003233726) do
   end
 
   add_index "progresses", ["user_id"], name: "index_progresses_on_user_id"
+
+  create_table "settings", force: true do |t|
+    t.string   "key",        null: false
+    t.string   "val"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "settings", ["key"], name: "index_settings_on_key"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "",    null: false

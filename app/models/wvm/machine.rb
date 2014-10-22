@@ -2,14 +2,14 @@ require 'ipaddress'
 
 class Wvm::Machine < Wvm::Base
   def self.all
-    response = call :get, 'instances'
+    response = call :get, '/1/instances'
     machines = build_all_instances response
 
     Infra::Elements.new machines
   end
 
   def self.find id
-    response = call :get, "instance/#{id}"
+    response = call :get, "/1/instance/#{id}"
 
     params = {
       hostname: response[:name],
@@ -39,7 +39,7 @@ class Wvm::Machine < Wvm::Base
 
     template = File.dirname(__FILE__) + '/new_machine.xml.slim'
     xml = Slim::Template.new(template, format: :xhtml).render Object.new, {machine: machine}
-    call :post, 'create', create_xml: '',
+    call :post, '/1/create', create_xml: '',
         from_xml: xml
 
     machine = Infra::Machine.find machine.hostname
@@ -75,24 +75,24 @@ class Wvm::Machine < Wvm::Base
     disk.device = machine.disks.next_device_name
     Wvm::Disk.create disk, machine.uuid
 
-    call :post, "instance/#{machine.hostname}", assign_volume: '',
+    call :post, "/1/instance/#{machine.hostname}", assign_volume: '',
         file: disk.path, device: disk.device
   end
 
   def self.delete_disk disk, machine
-    call :post, "instance/#{machine.hostname}", unassign_volume: '',
+    call :post, "/1/instance/#{machine.hostname}", unassign_volume: '',
         device: disk.device
 
     Wvm::Disk.delete disk
   end
 
   def self.mount_iso machine, iso_image
-    call :post, "instance/#{machine.hostname}", mount_iso: '',
+    call :post, "/1/instance/#{machine.hostname}", mount_iso: '',
         media: iso_image.file # device purposely omitted
   end
 
   def self.delete machine
-    call :post, "instance/#{machine.hostname}", delete: '',
+    call :post, "/1/instance/#{machine.hostname}", delete: '',
         delete_disk: ''
   end
 
@@ -103,7 +103,7 @@ class Wvm::Machine < Wvm::Base
   end
 
   def self.operation operation, id
-    call :post, 'instances', operation => '', name: id
+    call :post, '/1/instances', operation => '', name: id
   end
 
   def self.determine_status response
@@ -143,15 +143,15 @@ class Wvm::Machine < Wvm::Base
         iso_distro_id: new_machine.iso_distro.id,
         iso_image_id: new_machine.iso_distro.iso_images.first.id,
         networks: networks,
-        vnc_listen_ip: ENV['VNC_FORCE_IP'] || '10.255.2.10', # TODO: extract to settings
+        vnc_listen_ip: hypervisor[:vnc_listen_ip],
         vnc_password: SecureRandom.urlsafe_base64(32)
   end
 
   def self.setup_networks uuid
     networks = Infra::Networks.new
     networks.public = Infra::Network.new \
-        pool_name: 'default',
-        dhcp_network: IPAddress('192.168.123.0/24') # TODO: extract to settings
+        pool_name: hypervisor[:network][:id],
+        dhcp_network: IPAddress(hypervisor[:network][:address])
     networks
   end
 end

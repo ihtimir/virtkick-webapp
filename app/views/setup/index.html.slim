@@ -1,0 +1,39 @@
+#page-setup
+  .container
+    .row
+      .md-col-12
+        .header
+          = image_tag 'logo/virtkick-logo-pixelart-114.png'
+          .logo
+            span.virt virt
+            span.kick kick
+          .beta
+            | Standalone Alpha
+
+      .md-col-12.text-center
+        p Thanks for trying out VirtKick Standalone Alpha!
+        p
+          | This version is intended for localhost use only.
+          br
+          | Stay tuned for support for remote hypervisors & auto-configuration!
+
+    .text-center
+      .row
+        .md-col-12
+          = button_to perform_setup_path, method: :post, class: 'btn btn-primary btn-lg setup-virtkick', rel: 'nofollow noindex' do
+            .title Setup VirtKick!
+            .disclaimer We'll create a network, storage pools, and download a few Linux images.
+
+      .row
+        .md-col-12.newsletter.text-center
+          h3 Sign up for updates. No spam.
+
+          form.form-inline action='https://virtkick.us8.list-manage.com/subscribe/post?u=b74a227fdbddc9f590a62114e&amp;id=08823d8a7b' method='post' role='form'
+
+            .input-group
+              input.newsletter-email.form-control.input name='EMAIL' placeholder='e-mail address' type='text'
+              span.input-group-btn
+                input.btn.btn-primary name='subscribe' type='submit' value='go!'
+
+          p.result data-success='Thanks! Please check your e-mail.'
+
