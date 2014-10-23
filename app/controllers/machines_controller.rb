@@ -4,6 +4,9 @@ class MachinesController < ApplicationController
   include FindMachine
   find_machine_before_action :id, except: [:index, :new, :create]
 
+  respond_to :html
+  respond_to :json, only: [:create, :show]
+
 
   def index
     @machines = current_user.machines
@@ -14,6 +17,7 @@ class MachinesController < ApplicationController
     @machine ||= NewMachine.new
     @plans ||= Defaults::MachinePlan.all
     @isos ||= Plans::IsoDistro.all
+    respond_with @machine
   end
 
   def create
@@ -27,7 +31,6 @@ class MachinesController < ApplicationController
     end
 
     new
-    render 'new'
   end
 
   def show

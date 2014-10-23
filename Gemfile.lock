@@ -270,6 +270,7 @@ DEPENDENCIES
   rb-fsevent
   recursive-open-struct
   requirejs-rails!
+  responders (~> 2.0)
   rspec-rails
   sass-rails (~> 5.0.0.beta1)
   slim

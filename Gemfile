@@ -20,6 +20,7 @@ gem 'twitter-bootstrap-rails-confirm', git: 'https://github.com/bluerail/twitter
 gem 'rails-html-sanitizer', '~> 1.0'
 gem 'rails_bootstrap_navbar'
 gem 'recursive-open-struct'
+gem 'responders', '~> 2.0'
 gem 'sass-rails', '~> 5.0.0.beta1'
 gem 'slim'
 gem 'sqlite3'
